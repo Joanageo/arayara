@@ -12,31 +12,43 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: transparent;   /* fundo transparente */
   overflow: hidden;
   font-family: 'Montserrat', Arial, sans-serif;
 }
 
+/* Fundo com imagem */
+body {
+  background-image: url('https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fundo_COESUS_ok.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Faixa do ticker */
 .ticker-wrapper {
   width: 100vw;
-  height: 40px;              /* altura reduzida */
+  height: 28px;              /* bem fino */
   display: flex;
   align-items: center;
   overflow: hidden;
+  background: rgba(0,0,0,0.15); /* leve escurecimento para leitura */
 }
 
+/* Trilho animado */
 .ticker-track {
   display: flex;
   width: max-content;
-  animation: scroll 28s linear infinite;
+  animation: scroll 35s linear infinite;
 }
 
+/* Texto */
 .ticker-text {
   white-space: nowrap;
-  font-size: 16px;           /* fonte menor */
+  font-size: 12px;           /* drasticamente menor */
   font-weight: 400;
-  color: #111111;            /* pode mudar para #ffffff se quiser branco */
-  padding-right: 80px;       /* espaçamento entre repetições */
+  color: #ffffff;
+  padding-right: 60px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
 }
 
 @keyframes scroll {
@@ -51,10 +63,10 @@ html, body {
 <div class="ticker-wrapper">
   <div class="ticker-track">
     <div class="ticker-text">
-      FRACKING PROIBIDO NO MUNDO: FRANÇA • ALEMANHA • ESPANHA • IRLANDA • DINAMARCA • ITÁLIA • HOLANDA • LUXEMBURGO • ÁUSTRIA • BULGÁRIA • REPÚBLICA TCHECA • URUGUAI • COLÔMBIA • ÁFRICA DO SUL • NOVA ZELÂNDIA
+      PAÍSES QUE JÁ PROIBIRAM O FRACKING: FRANÇA • ALEMANHA • ESPANHA • IRLANDA • DINAMARCA • ITÁLIA • HOLANDA • LUXEMBURGO • ÁUSTRIA • BULGÁRIA • REPÚBLICA TCHECA • URUGUAI • COLÔMBIA • ÁFRICA DO SUL • NOVA ZELÂNDIA
     </div>
     <div class="ticker-text">
-      FRACKING PROIBIDO NO MUNDO: FRANÇA • ALEMANHA • ESPANHA • IRLANDA • DINAMARCA • ITÁLIA • HOLANDA • LUXEMBURGO • ÁUSTRIA • BULGÁRIA • REPÚBLICA TCHECA • URUGUAI • COLÔMBIA • ÁFRICA DO SUL • NOVA ZELÂNDIA
+      PAÍSES QUE JÁ PROIBIRAM O FRACKING: FRANÇA • ALEMANHA • ESPANHA • IRLANDA • DINAMARCA • ITÁLIA • HOLANDA • LUXEMBURGO • ÁUSTRIA • BULGÁRIA • REPÚBLICA TCHECA • URUGUAI • COLÔMBIA • ÁFRICA DO SUL • NOVA ZELÂNDIA
     </div>
   </div>
 </div>
