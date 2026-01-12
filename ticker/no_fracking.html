@@ -12,14 +12,14 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: #ffffff;   /* pode mudar depois */
+  background: transparent;   /* fundo transparente */
   overflow: hidden;
   font-family: 'Montserrat', Arial, sans-serif;
 }
 
 .ticker-wrapper {
   width: 100vw;
-  height: 80px;
+  height: 40px;              /* altura reduzida */
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -33,10 +33,10 @@ html, body {
 
 .ticker-text {
   white-space: nowrap;
-  font-size: 28px;
+  font-size: 16px;           /* fonte menor */
   font-weight: 400;
-  color: #111111;
-  padding-right: 140px;
+  color: #111111;            /* pode mudar para #ffffff se quiser branco */
+  padding-right: 80px;       /* espaçamento entre repetições */
 }
 
 @keyframes scroll {
