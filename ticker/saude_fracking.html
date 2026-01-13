@@ -6,22 +6,20 @@
 <title>Fracking e Saúde</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
-
 :root{
   --shadow: 0 10px 26px rgba(0,0,0,.55);
   --text: #ffffff;
   --accent: #ffd9d9;
 }
 
-/* base */
 html, body{
   margin:0;
   padding:0;
   width:100%;
   height:100%;
   overflow:hidden;
-  font-family:'Montserrat', Arial, sans-serif;
+  /* sem fonte importada */
+  font-family: Arial, Helvetica, sans-serif;
   background:#000;
 }
 
@@ -32,17 +30,31 @@ html, body{
   overflow:hidden;
 }
 
-/* SLIDE */
+/* SLIDES (mais robusto: display + z-index) */
 .slide{
   position:absolute;
   inset:0;
-  opacity:0;
-  transition: opacity 1.2s ease;
+  display:none;
+  z-index:1;
 }
-.slide.active{ opacity:1; }
+.slide.active{
+  display:block;
+  z-index:2;
+}
 
-/* fundo desfocado (usa a mesma imagem) */
-.slide .bg{
+/* fade suave (em vez de opacity no container todo) */
+.fade{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  animation: fadeIn 1.2s ease forwards;
+}
+@keyframes fadeIn{
+  to{ opacity:1; }
+}
+
+/* fundo desfocado */
+.bg{
   position:absolute;
   inset:-18px;
   background-size:cover;
@@ -50,31 +62,30 @@ html, body{
   filter: blur(18px) saturate(1.05);
   transform: scale(1.08);
 }
-
-/* camada escura em cima do blur */
-.slide .bg::after{
+.bg::after{
   content:"";
   position:absolute;
   inset:0;
   background: rgba(0,0,0,.55);
 }
 
-/* imagem principal (inteira) */
+/* imagem inteira */
 .slide img{
   position:absolute;
   inset:0;
   margin:auto;
   width:100%;
   height:100%;
-  object-fit: contain;          /* <-- mostra INTEIRA */
+  object-fit: contain;
   object-position: center;
   filter: drop-shadow(var(--shadow));
 }
 
-/* overlay geral (melhora leitura do texto) */
+/* overlay geral para leitura */
 .overlay{
   position:absolute;
   inset:0;
+  z-index:3;
   background: linear-gradient(
     to top,
     rgba(0,0,0,0.78),
@@ -84,44 +95,44 @@ html, body{
   pointer-events:none;
 }
 
-/* CRÉDITOS (texto subindo) */
+/* créditos */
 .credits-container{
   position:absolute;
   inset:0;
+  z-index:4;
   display:flex;
   justify-content:center;
   pointer-events:none;
 }
 
-/* começa mais embaixo e sobe mais alto (pra não cortar) */
 .credits{
   width: 86%;
   max-width: 980px;
   text-align:center;
   color: var(--text);
-  font-size: 16px;              /* levemente menor pra caber melhor */
+  font-size: 15px;
   line-height: 1.65;
   text-shadow: 0 2px 8px rgba(0,0,0,.85);
-  transform: translateY(115%);
-  animation: scrollCredits 28s linear infinite; /* <-- MAIS LENTO */
+  transform: translateY(125%);
+  animation: scrollCredits 45s linear infinite; /* MAIS LENTO */
   padding: 0 8px;
 }
 
 .credits strong{
   color: var(--accent);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .title{
-  font-size: 18px;
+  font-size: 17px;
   letter-spacing:.4px;
 }
 
 @keyframes scrollCredits{
-  0%   { transform: translateY(120%); opacity: 0; }
+  0%   { transform: translateY(135%); opacity: 0; }
   8%   { opacity: 1; }
   92%  { opacity: 1; }
-  100% { transform: translateY(-190%); opacity: 0; } /* <-- sobe mais */
+  100% { transform: translateY(-220%); opacity: 0; }
 }
 
 /* assinatura */
@@ -129,6 +140,7 @@ html, body{
   position:absolute;
   right: 12px;
   bottom: 8px;
+  z-index:5;
   font-size: 11px;
   color: rgba(255,255,255,0.75);
   text-shadow: 0 1px 2px rgba(0,0,0,.75);
@@ -136,8 +148,8 @@ html, body{
 
 /* responsivo */
 @media (max-width: 900px){
-  .credits{ font-size: 14px; }
-  .title{ font-size: 16px; }
+  .credits{ font-size: 13px; }
+  .title{ font-size: 15px; }
 }
 </style>
 </head>
@@ -146,32 +158,42 @@ html, body{
 
 <div class="stage">
 
-  <!-- SLIDES -->
-  <div class="slide active">
-    <div class="bg" style="background-image:url('https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude1.png')"></div>
-    <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude1.png" alt="Fracking saúde 1">
+  <!-- SLIDE 1 -->
+  <div class="slide active" data-bg="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude1.png">
+    <div class="fade">
+      <div class="bg"></div>
+      <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude1.png" alt="Fracking saúde 1">
+    </div>
   </div>
 
-  <div class="slide">
-    <div class="bg" style="background-image:url('https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude2.jpg')"></div>
-    <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude2.jpg" alt="Fracking saúde 2">
+  <!-- SLIDE 2 -->
+  <div class="slide" data-bg="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude2.jpg">
+    <div class="fade">
+      <div class="bg"></div>
+      <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude2.jpg" alt="Fracking saúde 2">
+    </div>
   </div>
 
-  <div class="slide">
-    <div class="bg" style="background-image:url('https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude3.jpg')"></div>
-    <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude3.jpg" alt="Fracking saúde 3">
+  <!-- SLIDE 3 -->
+  <div class="slide" data-bg="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude3.jpg">
+    <div class="fade">
+      <div class="bg"></div>
+      <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude3.jpg" alt="Fracking saúde 3">
+    </div>
   </div>
 
-  <div class="slide">
-    <div class="bg" style="background-image:url('https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude4.jpg')"></div>
-    <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude4.jpg" alt="Fracking saúde 4">
+  <!-- SLIDE 4 -->
+  <div class="slide" data-bg="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude4.jpg">
+    <div class="fade">
+      <div class="bg"></div>
+      <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude4.jpg" alt="Fracking saúde 4">
+    </div>
   </div>
 
   <div class="overlay"></div>
 
-  <!-- TEXTO EM CRÉDITOS -->
   <div class="credits-container">
-    <div class="credits" id="creditsText">
+    <div class="credits">
       <div class="title"><strong>SAÚDE E FRACKING</strong></div><br>
 
       Causa danos graves e irreversíveis à saúde das pessoas que vivem no entorno de áreas onde há fracking.<br><br>
@@ -179,6 +201,8 @@ html, body{
       Em um raio de até <strong>80 quilômetros</strong> dos poços, estudos relacionam o fracking à ocorrência de problemas respiratórios, cardíacos e neurológicos, diversos tipos de câncer, malformações congênitas, esterilidade em mulheres e aumento da mortalidade infantil e perinatal — incluindo baixo peso ao nascer, parto prematuro e câncer em bebês e crianças.<br><br>
 
       <strong>39% mais risco de morte</strong> de recém-nascidos entre 0 e 28 dias de vida em áreas próximas ao fracking.<br><br>
+
+      Fonte: <strong>Science</strong><br><br>
 
       A prevenção é a melhor política. Proteger a água e as comunidades significa dizer:<br><br>
 
@@ -191,19 +215,39 @@ html, body{
 </div>
 
 <script>
-const slides = document.querySelectorAll('.slide');
+const slides = Array.from(document.querySelectorAll('.slide'));
 let current = 0;
 
-// tempo por slide (ms)
-const SLIDE_MS = 9000; // <-- mais tempo pra ver a imagem inteira
+// mais tempo pra ver cada imagem
+const SLIDE_MS = 11000;
 
-function nextSlide(){
-  slides[current].classList.remove('active');
-  current = (current + 1) % slides.length;
-  slides[current].classList.add('active');
+// aplica o fundo desfocado de cada slide (robusto)
+function applyBg(slide){
+  const bgUrl = slide.getAttribute('data-bg');
+  const bgEl = slide.querySelector('.bg');
+  if (bgEl && bgUrl) bgEl.style.backgroundImage = `url('${bgUrl}')`;
 }
 
-setInterval(nextSlide, SLIDE_MS);
+slides.forEach(applyBg);
+
+function activate(i){
+  slides.forEach((s, idx) => {
+    s.classList.toggle('active', idx === i);
+    // reinicia fade
+    const f = s.querySelector('.fade');
+    if (f){
+      f.style.animation = 'none';
+      // força reflow
+      void f.offsetWidth;
+      f.style.animation = '';
+    }
+  });
+}
+
+setInterval(() => {
+  current = (current + 1) % slides.length;
+  activate(current);
+}, SLIDE_MS);
 </script>
 
 </body>
