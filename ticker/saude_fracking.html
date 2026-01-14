@@ -14,7 +14,6 @@
   --accent: #ffd9d9;
 }
 
-/* base */
 html, body{
   margin:0;
   padding:0;
@@ -32,7 +31,6 @@ html, body{
   overflow:hidden;
 }
 
-/* SLIDE */
 .slide{
   position:absolute;
   inset:0;
@@ -41,7 +39,6 @@ html, body{
 }
 .slide.active{ opacity:1; }
 
-/* fundo desfocado (usa a mesma imagem) */
 .slide .bg{
   position:absolute;
   inset:-18px;
@@ -51,7 +48,6 @@ html, body{
   transform: scale(1.08);
 }
 
-/* camada escura em cima do blur */
 .slide .bg::after{
   content:"";
   position:absolute;
@@ -59,19 +55,17 @@ html, body{
   background: rgba(0,0,0,.55);
 }
 
-/* imagem principal (inteira) */
 .slide img{
   position:absolute;
   inset:0;
   margin:auto;
   width:100%;
   height:100%;
-  object-fit: contain;          /* <-- mostra INTEIRA */
+  object-fit: contain;
   object-position: center;
   filter: drop-shadow(var(--shadow));
 }
 
-/* overlay geral (melhora leitura do texto) */
 .overlay{
   position:absolute;
   inset:0;
@@ -84,7 +78,6 @@ html, body{
   pointer-events:none;
 }
 
-/* CRÉDITOS (texto subindo) */
 .credits-container{
   position:absolute;
   inset:0;
@@ -93,17 +86,16 @@ html, body{
   pointer-events:none;
 }
 
-/* começa mais embaixo e sobe mais alto (pra não cortar) */
 .credits{
   width: 86%;
   max-width: 980px;
   text-align:center;
   color: var(--text);
-  font-size: 16px;              /* levemente menor pra caber melhor */
+  font-size: 16px;
   line-height: 1.65;
   text-shadow: 0 2px 8px rgba(0,0,0,.85);
   transform: translateY(115%);
-  animation: scrollCredits 28s linear infinite; /* <-- MAIS LENTO */
+  animation: scrollCredits 42s linear infinite; /* MAIS LENTO */
   padding: 0 8px;
 }
 
@@ -119,12 +111,11 @@ html, body{
 
 @keyframes scrollCredits{
   0%   { transform: translateY(120%); opacity: 0; }
-  8%   { opacity: 1; }
-  92%  { opacity: 1; }
-  100% { transform: translateY(-190%); opacity: 0; } /* <-- sobe mais */
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(-190%); opacity: 0; }
 }
 
-/* assinatura */
 .signature{
   position:absolute;
   right: 12px;
@@ -134,7 +125,6 @@ html, body{
   text-shadow: 0 1px 2px rgba(0,0,0,.75);
 }
 
-/* responsivo */
 @media (max-width: 900px){
   .credits{ font-size: 14px; }
   .title{ font-size: 16px; }
@@ -146,45 +136,43 @@ html, body{
 
 <div class="stage">
 
-  <!-- SLIDES -->
   <div class="slide active">
     <div class="bg" style="background-image:url('https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude1.png')"></div>
-    <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude1.png" alt="Fracking saúde 1">
+    <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude1.png">
   </div>
 
   <div class="slide">
     <div class="bg" style="background-image:url('https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude2.jpg')"></div>
-    <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude2.jpg" alt="Fracking saúde 2">
+    <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude2.jpg">
   </div>
 
   <div class="slide">
     <div class="bg" style="background-image:url('https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude3.jpg')"></div>
-    <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude3.jpg" alt="Fracking saúde 3">
+    <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude3.jpg">
   </div>
 
   <div class="slide">
     <div class="bg" style="background-image:url('https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude4.jpg')"></div>
-    <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude4.jpg" alt="Fracking saúde 4">
+    <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude4.jpg">
   </div>
 
   <div class="overlay"></div>
 
-  <!-- TEXTO EM CRÉDITOS -->
   <div class="credits-container">
-    <div class="credits" id="creditsText">
+    <div class="credits">
+
       <div class="title"><strong>SAÚDE E FRACKING</strong></div><br>
 
       Causa danos graves e irreversíveis à saúde das pessoas que vivem no entorno de áreas onde há fracking.<br><br>
 
-      Em um raio de até <strong>80 quilômetros</strong> dos poços, estudos relacionam o fracking à ocorrência de problemas respiratórios, cardíacos e neurológicos, diversos tipos de câncer, malformações congênitas, esterilidade em mulheres e aumento da mortalidade infantil e perinatal — incluindo baixo peso ao nascer, parto prematuro e câncer em bebês e crianças.<br><br>
+      Em um raio de até <strong>80 quilômetros</strong> dos poços, estudos relacionam o fracking à ocorrência de problemas respiratórios, cardíacos e neurológicos, diversos tipos de câncer, malformações congênitas, esterilidade em mulheres e aumento da mortalidade infantil e perinatal, incluindo baixo peso ao nascer, parto prematuro e câncer em bebês e crianças.<br><br>
 
       <strong>39% mais risco de morte</strong> de recém-nascidos entre 0 e 28 dias de vida em áreas próximas ao fracking.<br><br>
-
-      Fonte: <strong>Science</strong><br><br>
 
       A prevenção é a melhor política. Proteger a água e as comunidades significa dizer:<br><br>
 
       <strong>NÃO AO FRACKING</strong>
+
     </div>
   </div>
 
@@ -196,8 +184,7 @@ html, body{
 const slides = document.querySelectorAll('.slide');
 let current = 0;
 
-// tempo por slide (ms)
-const SLIDE_MS = 9000; // <-- mais tempo pra ver a imagem inteira
+const SLIDE_MS = 12000; // mais lento (12s)
 
 function nextSlide(){
   slides[current].classList.remove('active');
