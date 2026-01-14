@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fracking e Saúde</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+:root{
+  --shadow: 0 10px 26px rgba(0,0,0,.55);
+  --text: #ffffff;
+  --accent: #ffd9d9;
+}
+
+html, body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  font-family:'Montserrat', Arial, sans-serif;
+
+  /* FUNDO COESUS EMPILHADO */
+  background-image: url('https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fundo_COESUS_ok.jpg');
+  background-repeat: repeat;
+  background-size: 420px auto; /* controla o tamanho do tile */
+  background-position: center;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,0.55); /* escurece o fundo lateral */
+  z-index:0;
+}
+
+.stage{
+  position:relative;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  z-index:1;
+}
+
+.slide{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transition: opacity 1.2s ease;
+}
+.slide.active{ opacity:1; }
+
+.slide .bg{
+  position:absolute;
+  inset:-18px;
+  background-size:cover;
+  background-position:center;
+  filter: blur(18px) saturate(1.05);
+  transform: scale(1.08);
+}
+
+.slide .bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,.55);
+}
+
+.slide img{
+  position:absolute;
+  inset:0;
+  margin:auto;
+  width:100%;
+  height:100%;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(var(--shadow));
+}
+
+.overlay{
+  position:absolute;
+  inset:0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.78),
+    rgba(0,0,0,0.35),
+    rgba(0,0,0,0.15)
+  );
+  pointer-events:none;
+}
+
+.credits-container{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  pointer-events:none;
+}
+
+.credits{
+  width: 86%;
+  max-width: 980px;
+  text-align:center;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.65;
+  text-shadow: 0 2px 8px rgba(0,0,0,.85);
+  transform: translateY(115%);
+  animation: scrollCredits 42s linear infinite;
+  padding: 0 8px;
+}
+
+.credits strong{
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.title{
+  font-size: 18px;
+  letter-spacing:.4px;
+}
+
+@keyframes scrollCredits{
+  0%   { transform: translateY(120%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(-190%); opacity: 0; }
+}
+
+.signature{
+  position:absolute;
+  right: 12px;
+  bottom: 8px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.75);
+  text-shadow: 0 1px 2px rgba(0,0,0,.75);
+}
+
+@media (max-width: 900px){
+  .credits{ font-size: 14px; }
+  .title{ font-size: 16px; }
+
+  html,body{
+    background-size: 300px auto;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="stage">
+
+  <div class="slide active">
+    <div class="bg" style="background-image:url('https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude1.png')"></div>
+    <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude1.png">
+  </div>
+
+  <div class="slide">
+    <div class="bg" style="background-image:url('https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude2.jpg')"></div>
+    <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude2.jpg">
+  </div>
+
+  <div class="slide">
+    <div class="bg" style="background-image:url('https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude3.jpg')"></div>
+    <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude3.jpg">
+  </div>
+
+  <div class="slide">
+    <div class="bg" style="background-image:url('https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude4.jpg')"></div>
+    <img src="https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fracking_saude4.jpg">
+  </div>
+
+  <div class="overlay"></div>
+
+  <div class="credits-container">
+    <div class="credits">
+
+      <div class="title"><strong>SAÚDE E FRACKING</strong></div><br>
+
+      Causa danos graves e irreversíveis à saúde das pessoas que vivem no entorno de áreas onde há fracking.<br><br>
+
+      Em um raio de até <strong>80 quilômetros</strong> dos poços, estudos relacionam o fracking à ocorrência de problemas respiratórios, cardíacos e neurológicos, diversos tipos de câncer, malformações congênitas, esterilidade em mulheres e aumento da mortalidade infantil e perinatal, incluindo baixo peso ao nascer, parto prematuro e câncer em bebês e crianças.<br><br>
+
+      <strong>39% mais risco de morte</strong> de recém-nascidos entre 0 e 28 dias de vida em áreas próximas ao fracking.<br><br>
+
+      A prevenção é a melhor política. Proteger a água e as comunidades significa dizer:<br><br>
+
+      <strong>NÃO AO FRACKING</strong>
+
+    </div>
+  </div>
+
+  <div class="signature">ARAYARA • Não Fracking Brasil</div>
+
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let current = 0;
+
+const SLIDE_MS = 12000;
+
+function nextSlide(){
+  slides[current].classList.remove('active');
+  current = (current + 1) % slides.length;
+  slides[current].classList.add('active');
+}
+
+setInterval(nextSlide, SLIDE_MS);
+</script>
+
+</body>
+</html>
