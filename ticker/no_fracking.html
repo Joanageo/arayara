@@ -1,1 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fracking e Saúde — Tabela (vídeo)</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+:root{
+  --shadow: 0 10px 26px rgba(0,0,0,.55);
+  --text: #ffffff;
+  --accent: #ffd9d9;
+  --grid: rgba(255,255,255,.12);
+  --card: rgba(0,0,0,.45);
+}
+
+html, body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  font-family:'Montserrat', Arial, sans-serif;
+  background:#000;
+}
+
+.stage{
+  position:relative;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+
+/* Fundo “vídeo” */
+.bg{
+  position:absolute;
+  inset:-18px;
+  background:
+    radial-gradient(1100px 620px at 12% 18%, rgba(255,255,255,.09), rgba(0,0,0,0)),
+    radial-gradient(900px 540px at 88% 82%, rgba(255,120,120,.10), rgba(0,0,0,0)),
+    linear-gradient(135deg, rgba(30,0,0,.55), rgba(0,0,0,.90));
+  filter: blur(18px) saturate(1.06);
+  transform: scale(1.08);
+}
+.bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,.55);
+}
+
+.overlay{
+  position:absolute;
+  inset:0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.78),
+    rgba(0,0,0,0.35),
+    rgba(0,0,0,0.15)
+  );
+  pointer-events:none;
+}
+
+.frame{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 26px 22px;
+  box-sizing:border-box;
+}
+
+.card{
+  position:relative;
+  width: min(1600px, 96vw);
+  height: min(860px, 92vh);
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+
+/* Cabeçalho */
+.header{
+  position:relative;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 14px;
+  padding: 16px 18px 10px 18px;
+  border-bottom: 1px solid rgba(255,255,255,.10);
+}
+
+.h-left{
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+}
+.kicker{
+  font-size: 12px;
+  letter-spacing:.9px;
+  text-transform:uppercase;
+  color: rgba(255,255,255,.80);
+}
+.title{
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+.subtitle{
+  font-size: 12.5px;
+  color: rgba(255,255,255,.82);
+  line-height: 1.35;
+}
+.subtitle strong{ color: var(--accent); }
+
+.h-right{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  opacity: .95;
+  user-select:none;
+  white-space:nowrap;
+}
+.logo-pill{
+  font-size: 12px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.28);
+}
+.logo-pill strong{ color: var(--accent); }
+
+.legend{
+  margin-top: 6px;
+  font-size: 12px;
+  color: rgba(255,255,255,.85);
+}
+.legend .ok{
+  display:inline-flex;
+  align-items:center;
+  gap: 6px;
+  margin-right: 12px;
+}
+.legend .ok .chk{
+  font-size: 14px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.55));
+}
+.legend .na{
+  opacity:.85;
+}
+
+/* Área da tabela (estilo “vídeo”) */
+.table-viewport{
+  position:relative;
+  height: calc(100% - 92px);
+  padding: 12px 12px 44px 12px;
+  box-sizing:border-box;
+  overflow:hidden;            /* importante p/ parecer vídeo */
+}
+
+.table-motion{
+  position:absolute;
+  inset: 12px 12px 44px 12px;
+  transform-origin: center;
+  animation: drift 56s ease-in-out infinite alternate;
+}
+
+/* spotlight varrendo colunas */
+.spotlight{
+  position:absolute;
+  top: 12px;
+  bottom: 44px;
+  left: -25%;
+  width: 22%;
+  background: linear-gradient(
+    to right,
+    rgba(0,0,0,0),
+    rgba(255,217,217,.18),
+    rgba(0,0,0,0)
+  );
+  filter: blur(2px);
+  animation: sweep 18s linear infinite;
+  pointer-events:none;
+  mix-blend-mode: screen;
+  opacity: .85;
+}
+
+/* Tabela */
+table{
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  color: var(--text);
+  font-size: 12px;
+}
+
+thead th{
+  position:sticky; /* mantém topo “estável” visualmente */
+  top:0;
+  z-index:2;
+  background: rgba(0,0,0,.65);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,.18);
+  padding: 10px 8px;
+  text-align:center;
+  font-weight: 700;
+}
+
+tbody td{
+  border-bottom: 1px solid var(--grid);
+  border-right: 1px solid rgba(255,255,255,.06);
+  padding: 8px 8px;
+  text-align:center;
+  vertical-align:middle;
+}
+
+tbody tr:nth-child(odd){
+  background: rgba(255,255,255,.03);
+}
+
+th:first-child, td:first-child{
+  text-align:left;
+  width: 320px;
+}
+th:nth-child(2), td:nth-child(2){
+  width: 120px;
+  text-align:center;
+}
+
+.cell-chem{
+  text-align:left !important;
+  font-weight: 600;
+  color: rgba(255,255,255,.92);
+}
+.cell-pct{
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: rgba(255,255,255,.92);
+}
+
+.chk{
+  font-size: 14px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.70));
+}
+.empty{
+  opacity:.35;
+}
+
+/* Rodapé / fonte */
+.footer{
+  position:absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 10px;
+  display:flex;
+  justify-content:space-between;
+  gap: 10px;
+  font-size: 11px;
+  color: rgba(255,255,255,.78);
+  line-height: 1.25;
+}
+.footer strong{ color: var(--accent); }
+
+.signature{
+  position:absolute;
+  right: 14px;
+  bottom: 8px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.75);
+  text-shadow: 0 1px 2px rgba(0,0,0,.75);
+}
+
+/* Animações */
+@keyframes drift{
+  0%   { transform: translate(0%, 0%) scale(1.06); }
+  45%  { transform: translate(-6%, -1.8%) scale(1.08); }
+  100% { transform: translate(-12%, -3.2%) scale(1.10); }
+}
+@keyframes sweep{
+  0%   { transform: translateX(0%); }
+  100% { transform: translateX(170%); }
+}
+
+@media (max-width: 900px){
+  .card{ height: 92vh; }
+  th:first-child, td:first-child{ width: 240px; }
+  th:nth-child(2), td:nth-child(2){ width: 110px; }
+  table{ font-size: 11px; }
+}
+</style>
+</head>
+
+<body>
+<div class="stage">
+  <div class="bg"></div>
+
+  <div class="frame">
+    <div class="card">
+      <div class="header">
+        <div class="h-left">
+          <div class="kicker">Não Fracking Brasil • COESUS • ARAYARA</div>
+          <div class="title">Efeitos à saúde associados a substâncias químicas em fluido de fracking</div>
+          <div class="subtitle">
+            Nesta tabela, <strong>✅</strong> indica evidência de associação/efeito reportado para a categoria.
+          </div>
+          <div class="legend">
+            <span class="ok"><span class="chk">✅</span> <span>Sim</span></span>
+            <span class="na">— Sem registro / não disponível</span>
+          </div>
+        </div>
+
+        <div class="h-right">
+          <div class="logo-pill"><strong>NÃO</strong> FRACKING</div>
+          <div class="logo-pill"><strong>COESUS</strong></div>
+          <div class="logo-pill"><strong>ARAYARA</strong>.org</div>
+        </div>
+      </div>
+
+      <div class="table-viewport">
+        <div class="spotlight"></div>
+        <div class="table-motion">
+          <table id="tabela"></table>
+        </div>
+
+        <div class="footer">
+          <div>
+            <strong>Leitura rápida:</strong> quanto maior o percentual em volume, maior a presença relativa no fluido.
+            Categorias à direita indicam possíveis efeitos à saúde por grau/rota de exposição.
+          </div>
+          <div style="text-align:right;">
+            <strong>Fonte:</strong> compilação a partir da tabela original (Wyoming Oil and Gas Conservation Commission; The Endocrine Disruption Exchange).
+          </div>
+        </div>
+      </div>
+
+      <div class="signature">ARAYARA • Não Fracking Brasil</div>
+    </div>
+  </div>
+
+  <div class="overlay"></div>
+</div>
+
+<script>
+/**
+ * DADOS (vindos do seu Excel):
+ * "sim" => ✅ | vazio => —
+ */
+const HEADERS = ["Produto químico","Percentual em volume (%)","Pele, olhos e órgãos sensoriais","Sistema respiratório","Trato gastrointestinal e fígado","Cérebro e sistema nervoso","Sistema imunológico","Rins","Sistema cardiovascular e sangue","Carcinogênico","Mutagênico","Efeitos no desenvolvimento","Efeitos reprodutivos","Desregulador endócrino"];
+
+const ROWS = [["Diammonium peroxodisulphate",29,"sim","sim","sim","","sim","","sim","","","","",""],["Distillates (petroleum), hydrotreated light",17,"sim","sim","sim","sim","","","","","","","sim",""],["Guar gum",15,"sim","sim","","","sim","","","","","","",""],["Tetramethylammonium chloride",9,"sim","sim","sim","sim","","","sim","","","","",""],["Vinylidene chloride/ methylacrylate copolymer",6,"sim","","","","","","","","","","",""],["Methanol",5,"sim","sim","sim","sim","","","sim","","","","",""],["1,2,3-Propanetriol",4,"sim","sim","","","","","","","","","",""],["2,2,2-nitrotriethanol",2,"sim","sim","sim","sim","","","","","","","",""],["Sorbitol",2,"sim","sim","","","","","","","","","",""],["Sodium tetraborate decahydrate",2,"sim","sim","sim","","","sim","","","","","","","sim"],["Sodium borate (borax)",2,"sim","sim","sim","","","sim","","","","","","","sim"],["Acrylamide-sodium 2-acrylamido-2-methyl-1-propanesulfonate",0.9,"","","","","","","","","","","",""],["Ethoxylated branched C7-9, C8rich alcohols",0.8,"sim","sim","","","","","","","","","",""],["Ethoxylated branched C9-11, C10rich alcohols",0.8,"sim","sim","","","","","","","","","",""],["Sodium hydroxide (lye)",0.8,"sim","sim","sim","sim","","","sim","","","","",""],["Bis(hydrogenated tallow alkyl)dimethylammonium bentonite",0.6,"","","","","","","","","","","",""],["Ethoxylated propoxylated 4-nonylphenol-formaldehyde",0.6,"","","","","","","","","","","",""],["Heavy aromatic naphtha",0.4,"sim","sim","sim","sim","","","","","","","",""],["Alcohols, C11-14isoalk, C13-rich, ethoxylated",0.4,"sim","sim","","","","","","","","","",""],["Alkylbenzyldimethylammonium chlorides, benzyl C10-16",0.4,"sim","sim","sim","sim","","","sim","","","","",""],["Magnesium silicate hydrate (talc)",0.3,"","","","","","","","","","","",""],["Poly(oxy-1,2-ethanediyl)",0.2,"","","","","","","","","","","",""],["Alcohols, C12-13 alkyl, ethoxylated",0.2,"sim","sim","","","","","","","","","",""],["Alcohol ethoxylate C10-16 with 6.5 EO",0.2,"sim","sim","","","","","","","","","",""],["Sodium chloride",0.1,"","","","","","","","","","","",""],["Tetrakis(hydroxymethyl)phosphonium sulfate",0.1,"sim","sim","sim","sim","","","sim","","","","",""],["Non-crystalline silica",0.1,"sim","sim","sim","","","","","sim","","","","",""],["Boric acid",0.0042,"sim","sim","sim","","","","","","","","","","sim"]];
+
+function buildTable(){
+  const table = document.getElementById("tabela");
+
+  const thead = document.createElement("thead");
+  const trh = document.createElement("tr");
+  HEADERS.forEach((h, i) => {
+    const th = document.createElement("th");
+    th.textContent = h;
+    trh.appendChild(th);
+  });
+  thead.appendChild(trh);
+
+  const tbody = document.createElement("tbody");
+  ROWS.forEach(r => {
+    const tr = document.createElement("tr");
+
+    r.forEach((v, idx) => {
+      const td = document.createElement("td");
+
+      if(idx === 0){
+        td.textContent = v;
+        td.className = "cell-chem";
+      } else if(idx === 1){
+        td.textContent = (v === "" ? "—" : String(v));
+        td.className = "cell-pct";
+      } else {
+        const yes = (String(v).toLowerCase().trim() === "sim");
+        td.innerHTML = yes ? '<span class="chk">✅</span>' : '<span class="empty">—</span>';
+      }
+
+      tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(thead);
+  table.appendChild(tbody);
+}
+
+buildTable();
+</script>
+</body>
+</html>
 
