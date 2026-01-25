@@ -10,22 +10,18 @@
 
 :root{
   --text:#ffffff;
-
-  /* ✅ cor pedida (sem preto) */
   --red:#9e0202;
   --card: rgba(158,2,2,.58);
   --panel: rgba(158,2,2,.34);
 
-  /* grades */
   --grid: rgba(255,255,255,.12);
-  --gridStrong: rgba(255,255,255,.34);     /* ✅ mais evidente no cabeçalho */
+  --gridStrong: rgba(255,255,255,.34);
   --gridStrong2: rgba(255,255,255,.26);
 
   --green:#2ecc71;
 
-  /* scroll (JS recalibra) */
   --scroll-distance: 900px;
-  --scroll-duration: 110s;
+  --scroll-duration: 140s;
 }
 
 html, body{
@@ -35,12 +31,11 @@ html, body{
   height:100%;
   overflow:hidden;
   font-family:'Montserrat', Arial, sans-serif;
-  background: var(--red);                  /* ✅ fundo #9e0202 */
+  background: var(--red);
 }
 
 .stage{ position:relative; width:100%; height:100%; overflow:hidden; }
 
-/* Fundo COESUS com tinta vermelha por cima */
 .bg{
   position:absolute;
   inset:-18px;
@@ -60,53 +55,45 @@ html, body{
 .frame{
   position:absolute; inset:0;
   display:flex; align-items:center; justify-content:center;
-  padding:14px; box-sizing:border-box;
+  padding:10px; box-sizing:border-box;
 }
 
 .card{
   position:relative;
-  width:min(1800px, 98vw);
-  height:min(900px, 92vh);
+  width: min(1900px, 99vw);
+  height: min(900px, 92vh);
   background: var(--card);
   border:1px solid rgba(255,255,255,.14);
-  border-radius:18px;
+  border-radius:16px;
   overflow:hidden;
 }
 
-/* ✅ Sem título: tabela ocupa tudo */
 .table-viewport{
   position:relative;
   height:100%;
-  padding:12px 12px 44px 12px; /* espaço do rodapé */
+  padding:10px 10px 40px 10px;
   box-sizing:border-box;
   overflow:hidden;
 }
 
-/* Cabeçalho FIXO */
 .table-header{
   position:absolute;
-  top:12px; left:12px; right:12px;
+  top:10px; left:10px; right:10px;
   z-index:10;
-
   border-radius:12px 12px 0 0;
   overflow:hidden;
-
-  background: rgba(158,2,2,.92);           /* ✅ vermelho */
+  background: rgba(158,2,2,.92);
   backdrop-filter: blur(8px);
-
   border:1px solid rgba(255,255,255,.16);
   border-bottom:none;
 }
 
-/* Corpo animado */
 .table-body-wrapper{
   position:absolute;
-  top:64px;                                /* altura reservada ao cabeçalho */
-  left:12px; right:12px; bottom:44px;      /* espaço do rodapé */
+  top: 58px;               /* ✅ ligeiramente menor para caber melhor */
+  left:10px; right:10px; bottom:40px;
   overflow:hidden;
-
   border-radius:0 0 12px 12px;
-
   background: var(--panel);
   border:1px solid rgba(255,255,255,.16);
   border-top:none;
@@ -119,16 +106,14 @@ html, body{
   animation: panY var(--scroll-duration) linear infinite;
 }
 
-/* ✅ tabelas com layout travado (para alinhar head e body) */
 table{
   width:100%;
   border-collapse: collapse;
-  table-layout: fixed;
+  table-layout: fixed;     /* ✅ precisa pra colgroup controlar */
   color: var(--text);
-  font-size:12px;
+  font-size: 11px;         /* ✅ base um pouco menor pra caber tudo */
 }
 
-/* ✅ impedir texto invadir coluna vizinha */
 th, td{
   white-space: normal;
   overflow-wrap: anywhere;
@@ -136,43 +121,41 @@ th, td{
   hyphens: auto;
 }
 
-/* ✅ colunas ajustadas ao texto (não padronizadas) */
-col.c1{  width: 360px; }  /* Produto químico */
-col.c2{  width: 140px; }  /* Percentual */
-col.c3{  width: 150px; }  /* Pele, olhos... */
-col.c4{  width: 120px; }  /* Respiratório */
-col.c5{  width: 165px; }  /* Gastro/fígado */
-col.c6{  width: 140px; }  /* Nervoso */
-col.c7{  width: 135px; }  /* Imunológico */
-col.c8{  width: 85px;  }  /* Rins */
-col.c9{  width: 170px; }  /* Cardiovascular */
-col.c10{ width: 112px; }  /* Carcinogênico */
-col.c11{ width: 108px; }  /* Mutagênico */
-col.c12{ width: 160px; }  /* Desenvolvimento */
-col.c13{ width: 135px; }  /* Reprodutivos */
-col.c14{ width: 150px; }  /* Endócrino */
+/* ✅ LARGURAS padrão (desktop) */
+col.c1{  width: 330px; } /* Produto */
+col.c2{  width: 120px; } /* Percentual */
 
-/* ✅ Cabeçalho: fonte menor + divisórias mais evidentes */
+col.c3{  width: 130px; }
+col.c4{  width: 105px; }
+col.c5{  width: 145px; }
+col.c6{  width: 125px; }
+col.c7{  width: 120px; }
+col.c8{  width: 75px;  }
+col.c9{  width: 150px; }
+col.c10{ width: 100px; }
+col.c11{ width: 95px;  }
+col.c12{ width: 140px; }
+col.c13{ width: 120px; }
+col.c14{ width: 130px; }
+
+/* Cabeçalho */
 thead th{
-  padding: 9px 8px;
+  padding: 7px 6px;
   text-align:center;
   font-weight:700;
-  font-size:11px;            /* ✅ menor */
-  line-height:1.15;
+  font-size: 10px;         /* ✅ menor ainda no cabeçalho */
+  line-height: 1.10;
 
   background: rgba(158,2,2,.94);
-
   border-bottom: 2px solid var(--gridStrong);
-  border-right: 2px solid var(--gridStrong2); /* ✅ mais evidentes */
+  border-right: 2px solid var(--gridStrong2);
 }
 thead th:last-child{ border-right:none; }
 
-/* Corpo */
 tbody td{
-  padding: 8px 8px;
+  padding: 7px 6px;
   text-align:center;
   vertical-align:middle;
-
   border-bottom: 1px solid var(--grid);
   border-right: 1px solid rgba(255,255,255,.12);
 }
@@ -182,53 +165,86 @@ tbody tr:nth-child(odd){ background: rgba(255,255,255,.03); }
 th:first-child, td:first-child{ text-align:left; }
 td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
 
-/* Check verde */
 .chk{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  width:18px;
-  height:18px;
-  border-radius:4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
   background: rgba(46,204,113,.16);
   border: 1px solid rgba(46,204,113,.40);
-  box-shadow: 0 2px 10px rgba(0,0,0,.22);
 }
-.chk svg{ width:14px; height:14px; display:block; }
+.chk svg{ width: 12px; height: 12px; display:block; }
 .empty{ opacity:.35; }
 
-/* Rodapé: só Fonte */
 .footer{
   position:absolute;
-  left:14px;
-  right:14px;
-  bottom:10px;
+  left:12px;
+  right:12px;
+  bottom:8px;
   display:flex;
   justify-content:flex-start;
-  font-size:11px;
-  color: rgba(255,255,255,.90);
-  line-height:1.25;
+  font-size: 10px;
+  color: rgba(255,255,255,.92);
 }
 
-/* Assinatura direita */
 .signature{
   position:absolute;
-  right:14px;
-  bottom:8px;
-  font-size:11px;
-  color: rgba(255,255,255,.90);
-  text-shadow: 0 1px 2px rgba(0,0,0,.28);
+  right:12px;
+  bottom:7px;
+  font-size: 10px;
+  color: rgba(255,255,255,.92);
+}
+
+/* ✅ MODO COMPACTO: quando embed estiver estreito (AGOL) */
+@media (max-width: 1350px){
+  table{ font-size: 10px; }
+
+  col.c1{ width: 260px; }
+  col.c2{ width: 105px; }
+
+  col.c3{  width: 110px; }
+  col.c4{  width: 95px;  }
+  col.c5{  width: 120px; }
+  col.c6{  width: 108px; }
+  col.c7{  width: 105px; }
+  col.c8{  width: 65px;  }
+  col.c9{  width: 125px; }
+  col.c10{ width: 88px;  }
+  col.c11{ width: 82px;  }
+  col.c12{ width: 118px; }
+  col.c13{ width: 100px; }
+  col.c14{ width: 112px; }
+
+  thead th{ font-size: 9.2px; padding: 6px 5px; }
+  tbody td{ padding: 6px 5px; }
+}
+
+/* ✅ SUPER compacto (se ainda assim cortar) */
+@media (max-width: 1150px){
+  col.c1{ width: 220px; }
+  col.c2{ width: 95px; }
+
+  col.c3{  width: 95px; }
+  col.c4{  width: 85px; }
+  col.c5{  width: 105px; }
+  col.c6{  width: 95px; }
+  col.c7{  width: 92px; }
+  col.c8{  width: 58px; }
+  col.c9{  width: 110px; }
+  col.c10{ width: 78px; }
+  col.c11{ width: 74px; }
+  col.c12{ width: 102px; }
+  col.c13{ width: 90px; }
+  col.c14{ width: 98px; }
+
+  thead th{ font-size: 9px; }
 }
 
 @keyframes panY{
   from { transform: translateY(0); }
   to   { transform: translateY(calc(-1 * var(--scroll-distance))); }
-}
-
-@media (max-width: 1100px){
-  col.c1{ width: 280px; }
-  col.c2{ width: 120px; }
-  table{ font-size:11px; }
 }
 </style>
 </head>
@@ -359,7 +375,6 @@ function buildBodyTable(){
 
   ROWS.forEach(row=>{
     const tr = document.createElement("tr");
-
     row.forEach((v, idx)=>{
       const td = document.createElement("td");
 
@@ -371,10 +386,8 @@ function buildBodyTable(){
         const yes = (String(v).toLowerCase().trim() === "sim");
         td.innerHTML = yes ? CHECK_HTML : '<span class="empty">—</span>';
       }
-
       tr.appendChild(td);
     });
-
     tbody.appendChild(tr);
   });
 
@@ -388,7 +401,7 @@ function calibrateScroll(){
   const world = document.getElementById("world");
   const wrapper = document.querySelector(".table-body-wrapper");
 
-  const contentHeight = world.scrollHeight / 2; // metade, pois duplicamos
+  const contentHeight = world.scrollHeight / 2;
   const viewportHeight = wrapper.clientHeight;
 
   const dist = Math.max(0, Math.round(contentHeight - viewportHeight));
@@ -397,9 +410,9 @@ function calibrateScroll(){
     return;
   }
 
-  // ✅ 2x mais lento: 16 px/s
+  // ✅ bem mais lento (2x mais lento do que o "rápido"): 16 px/s
   const pxPerSec = 16;
-  const seconds = Math.max(70, Math.min(240, Math.round(dist / pxPerSec)));
+  const seconds = Math.max(90, Math.min(260, Math.round(dist / pxPerSec)));
 
   document.documentElement.style.setProperty("--scroll-distance", dist + "px");
   document.documentElement.style.setProperty("--scroll-duration", seconds + "s");
