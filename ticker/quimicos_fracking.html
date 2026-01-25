@@ -34,7 +34,7 @@ html, body{
   overflow:hidden;
 }
 
-/* ✅ FUNDO COM IMAGEM COESUS (sem “preto chapado”) */
+/* FUNDO COESUS */
 .bg{
   position:absolute;
   inset:-18px;
@@ -48,7 +48,7 @@ html, body{
   content:"";
   position:absolute;
   inset:0;
-  background: rgba(0,0,0,.40); /* só para leitura da tabela */
+  background: rgba(0,0,0,.40);
 }
 
 .overlay{
@@ -89,52 +89,38 @@ html, body{
   position:relative;
   display:flex;
   align-items:flex-start;
-  justify-content:space-between;
+  justify-content:flex-start; /* ✅ não tem mais bloco à direita */
   gap: 14px;
-  padding: 16px 18px 10px 18px;
+  padding: 16px 18px 12px 18px;
   border-bottom: 1px solid rgba(255,255,255,.10);
 }
 
-.h-left{ display:flex; flex-direction:column; gap: 6px; }
+.h-left{
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+}
+
 .kicker{
-  font-size: 12px; letter-spacing:.9px; text-transform:uppercase;
+  font-size: 12px;
+  letter-spacing:.9px;
+  text-transform:uppercase;
   color: rgba(255,255,255,.85);
 }
-.title{ font-size: 18px; font-weight: 700; color: var(--text); }
 
-/* ✅ REMOVIDO: “Nesta tabela, ... indica evidência...” */
-/* Agora só a legenda curta */
-.legend{
-  margin-top: 4px;
-  font-size: 12px;
-  color: rgba(255,255,255,.88);
-  display:flex;
-  align-items:center;
-  gap: 14px;
-  flex-wrap:wrap;
+.title{
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
 }
-.legend .ok{
-  display:inline-flex;
-  align-items:center;
-  gap: 8px;
-}
-.legend .na{ opacity:.85; }
 
-/* “pílulas” direita */
-.h-right{ display:flex; align-items:center; gap: 10px; user-select:none; white-space:nowrap; opacity:.95; }
-.logo-pill{
-  font-size: 12px;
-  padding: 7px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.14);
-  background: rgba(0,0,0,.18);
-}
-.logo-pill strong{ color: var(--accent); }
+/* ✅ Removido: legenda abaixo do título */
+/* .legend foi eliminada */
 
 /* Área tabela */
 .table-viewport{
   position:relative;
-  height: calc(100% - 72px);
+  height: calc(100% - 64px);
   padding: 12px 12px 44px 12px;
   box-sizing:border-box;
   overflow:hidden;
@@ -147,7 +133,6 @@ html, body{
   border-radius: 12px;
 }
 
-/* “mundo” maior para pan horizontal */
 .world{
   position:absolute;
   top:0;
@@ -157,7 +142,6 @@ html, body{
   animation: panX 34s ease-in-out infinite alternate;
 }
 
-/* Spotlight */
 .spotlight{
   position:absolute;
   top: 12px;
@@ -300,24 +284,7 @@ th:nth-child(2), td:nth-child(2){
         <div class="h-left">
           <div class="kicker">NÃO FRACKING BRASIL • COESUS • ARAYARA</div>
           <div class="title">Efeitos à saúde associados a substâncias químicas em fluido de fracking</div>
-
-          <div class="legend">
-            <span class="ok">
-              <span class="chk" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M20 6L9 17l-5-5" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <span>Sim</span>
-            </span>
-            <span class="na">— Sem registro / não disponível</span>
-          </div>
-        </div>
-
-        <div class="h-right">
-          <div class="logo-pill"><strong>NÃO</strong></div>
-          <div class="logo-pill"><strong>COESUS</strong></div>
-          <div class="logo-pill"><strong>ARAYARA</strong></div>
+          <!-- ✅ Sem legenda aqui -->
         </div>
       </div>
 
