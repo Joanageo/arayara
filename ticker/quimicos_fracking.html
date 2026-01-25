@@ -14,119 +14,224 @@
   --grid: rgba(255,255,255,.12);
   --card: rgba(0,0,0,.40);
   --green: #2ecc71;
+
+  /* JS preenche automaticamente */
+  --scroll-distance: 900px;  /* fallback */
+  --scroll-duration: 42s;    /* fallback */
 }
 
 html, body{
-  margin:0; padding:0; width:100%; height:100%;
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
   overflow:hidden;
   font-family:'Montserrat', Arial, sans-serif;
   background:#000;
 }
 
-.stage{position:relative;width:100%;height:100%;}
+.stage{
+  position:relative;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
 
+/* FUNDO COESUS */
 .bg{
-  position:absolute; inset:-18px;
-  background:url('https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fundo_COESUS_ok.jpg') center/cover;
+  position:absolute;
+  inset:-18px;
+  background-image:url('https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fundo_COESUS_ok.jpg');
+  background-size:cover;
+  background-position:center;
   filter: blur(18px) saturate(1.08);
   transform: scale(1.08);
 }
-.bg::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.40);}
+.bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,.40);
+}
 
-.frame{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:26px 22px;}
+.frame{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:26px 22px;
+  box-sizing:border-box;
+}
 
 .card{
-  width:min(1700px,96vw);height:min(900px,92vh);
-  background:var(--card);
-  border-radius:18px;
-  box-shadow:var(--shadow);
+  position:relative;
+  width: min(1700px, 96vw);
+  height: min(900px, 92vh);
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
   overflow:hidden;
 }
 
-/* Cabeçalho */
+/* Cabeçalho (sem legenda e sem botões à direita) */
 .header{
-  padding:16px 18px 12px;
-  border-bottom:1px solid rgba(255,255,255,.1);
+  position:relative;
+  padding: 16px 18px 12px 18px;
+  border-bottom: 1px solid rgba(255,255,255,.10);
 }
-.kicker{font-size:12px;letter-spacing:.9px;color:rgba(255,255,255,.85);}
-.title{font-size:18px;font-weight:700;color:#fff}
+.kicker{
+  font-size: 12px;
+  letter-spacing:.9px;
+  text-transform:uppercase;
+  color: rgba(255,255,255,.85);
+  margin-bottom: 6px;
+}
+.title{
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
 
-/* Área tabela */
+/* Área da tabela */
 .table-viewport{
   position:relative;
-  height:calc(100% - 64px);
-  padding:12px 12px 44px;
+  height: calc(100% - 64px);
+  padding: 12px 12px 44px 12px;
+  box-sizing:border-box;
   overflow:hidden;
 }
 
-/* Cabeçalho fixo */
+/* ✅ Cabeçalho FIXO (tabela 1) */
 .table-header{
   position:absolute;
-  top:12px; left:12px; right:12px;
-  z-index:5;
-  background:rgba(0,0,0,.75);
-  backdrop-filter:blur(6px);
+  top:12px;
+  left:12px;
+  right:12px;
+  z-index: 10;
+  border-radius: 12px 12px 0 0;
+  overflow:hidden;
+  background: rgba(0,0,0,.72);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.10);
+  border-bottom: none;
 }
 
+/* corpo (tabela 2) */
 .table-body-wrapper{
   position:absolute;
-  top:60px; left:12px; right:12px; bottom:44px;
+  top: 64px;               /* altura reservada p/ cabeçalho fixo */
+  left:12px;
+  right:12px;
+  bottom:44px;             /* espaço do rodapé */
   overflow:hidden;
+  border-radius: 0 0 12px 12px;
+  background: rgba(0,0,0,.12);
+  border: 1px solid rgba(255,255,255,.10);
+  border-top: none;
 }
 
+/* mundo que anima verticalmente */
 .world{
   position:absolute;
-  animation: panY 42s linear infinite;
+  top:0;
+  left:0;
+  right:0;
+  will-change: transform;
+  animation: panY var(--scroll-duration) linear infinite;
+  transform: translateY(0);
 }
 
+/* tabelas */
 table{
-  border-collapse:collapse;
   width:100%;
-  color:#fff;
-  font-size:12px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  color: var(--text);
+  font-size: 12px;
 }
 
-thead th, tbody td{
-  border-bottom:1px solid var(--grid);
-  border-right:1px solid rgba(255,255,255,.06);
-  padding:8px;
-  text-align:center;
-}
+/* colunas iguais nos dois cabeçalhos/tabelas */
+col.c1{ width: 380px; }
+col.c2{ width: 140px; }
 
 thead th{
-  background:rgba(0,0,0,.6);
+  padding: 10px 8px;
+  text-align:center;
+  font-weight:700;
+  background: rgba(0,0,0,.60);
+  border-bottom: 1px solid rgba(255,255,255,.18);
+  border-right: 1px solid rgba(255,255,255,.06);
+}
+
+tbody td{
+  padding: 8px 8px;
+  text-align:center;
+  vertical-align:middle;
+  border-bottom: 1px solid var(--grid);
+  border-right: 1px solid rgba(255,255,255,.06);
+}
+
+tbody tr:nth-child(odd){
+  background: rgba(255,255,255,.03);
+}
+
+td:first-child, th:first-child{
+  text-align:left;
+}
+td:nth-child(2){
+  font-variant-numeric: tabular-nums;
   font-weight:700;
 }
 
-th:first-child, td:first-child{width:360px;text-align:left}
-th:nth-child(2), td:nth-child(2){width:140px}
-
-tbody tr:nth-child(odd){background:rgba(255,255,255,.03)}
-
+/* check verde */
 .chk{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:18px;height:18px;border-radius:4px;
-  background:rgba(46,204,113,.16);
-  border:1px solid rgba(46,204,113,.4);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(46, 204, 113, .16);
+  border: 1px solid rgba(46, 204, 113, .40);
+  box-shadow: 0 2px 10px rgba(0,0,0,.35);
 }
-.chk svg{width:14px;height:14px}
+.chk svg{ width: 14px; height: 14px; display:block; }
+.empty{ opacity:.35; }
 
-.empty{opacity:.3}
-
-/* Rodapé */
+/* ✅ Rodapé: apenas FONTE (sem “Leitura…”) */
 .footer{
-  position:absolute;left:14px;right:14px;bottom:10px;
-  font-size:11px;color:rgba(255,255,255,.75);
+  position:absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 10px;
+  display:flex;
+  justify-content:flex-start; /* só à esquerda */
+  font-size: 11px;
+  color: rgba(255,255,255,.78);
+  line-height: 1.25;
 }
 
 .signature{
-  position:absolute;right:14px;bottom:8px;font-size:11px;color:rgba(255,255,255,.7)
+  position:absolute;
+  right: 14px;
+  bottom: 8px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.75);
+  text-shadow: 0 1px 2px rgba(0,0,0,.75);
 }
 
-/* Animação vertical */
+/* ✅ animação vertical */
 @keyframes panY{
-  from{transform:translateY(0)}
-  to{transform:translateY(-900px)}
+  from { transform: translateY(0); }
+  to   { transform: translateY(calc(-1 * var(--scroll-distance))); }
+}
+
+@media (max-width: 900px){
+  col.c1{ width: 300px; }
+  col.c2{ width: 120px; }
+  table{ font-size: 11px; }
 }
 </style>
 </head>
@@ -145,20 +250,21 @@ tbody tr:nth-child(odd){background:rgba(255,255,255,.03)}
 
       <div class="table-viewport">
 
-        <!-- Cabeçalho fixo -->
+        <!-- ✅ Cabeçalho FIXO -->
         <div class="table-header">
-          <table id="thead-table"></table>
+          <table id="headTable"></table>
         </div>
 
-        <!-- Corpo animado -->
+        <!-- ✅ Corpo animado -->
         <div class="table-body-wrapper">
-          <div class="world">
-            <table id="tbody-table"></table>
+          <div class="world" id="world">
+            <table id="bodyTable"></table>
           </div>
         </div>
 
+        <!-- ✅ Rodapé só com a FONTE -->
         <div class="footer">
-          <strong>Fonte:</strong> Wyoming Oil & Gas Conservation Commission; The Endocrine Disruption Exchange (TEDX).
+          <span><strong>Fonte:</strong> Wyoming Oil &amp; Gas Conservation Commission; The Endocrine Disruption Exchange (TEDX).</span>
         </div>
 
       </div>
@@ -170,59 +276,168 @@ tbody tr:nth-child(odd){background:rgba(255,255,255,.03)}
 </div>
 
 <script>
+/* Cabeçalhos */
 const HEADERS = [
-"Produto químico","Percentual em volume (%)","Pele/olhos","Respiratório","Gastro/fígado",
-"Nervoso","Imunológico","Rins","Cardiovascular","Carcinogênico","Mutagênico",
-"Desenvolvimento","Reprodutivo","Endócrino"
+  "Produto químico",
+  "Percentual em volume (%)",
+  "Pele, olhos e órgãos sensoriais",
+  "Sistema respiratório",
+  "Trato gastrointestinal e fígado",
+  "Cérebro e sistema nervoso",
+  "Sistema imunológico",
+  "Rins",
+  "Sistema cardiovascular e sangue",
+  "Carcinogênico",
+  "Mutagênico",
+  "Efeitos no desenvolvimento",
+  "Efeitos reprodutivos",
+  "Desregulador endócrino"
 ];
 
+/* Linhas (conjunto completo do script atual) */
 const ROWS = [
-["Diammonium peroxodisulphate",29,"sim","sim","sim","","sim","","sim","","","","",""],
-["Distillates (petroleum), hydrotreated light",17,"sim","sim","sim","sim","","","","","","","sim",""],
-["Guar gum",15,"sim","sim","","","sim","","","","","","",""],
-["Tetramethylammonium chloride",9,"sim","sim","sim","sim","","","sim","","","","",""],
-["Methanol",5,"sim","sim","sim","sim","","","sim","","","","",""],
-["Sodium borate (borax)",2,"sim","sim","sim","","","sim","","","","","","","sim"]
+  ["Diammonium peroxodisulphate",29,"sim","sim","sim","","sim","","sim","","","","",""],
+  ["Distillates (petroleum), hydrotreated light",17,"sim","sim","sim","sim","","","","","","","sim",""],
+  ["Guar gum",15,"sim","sim","","","sim","","","","","","",""],
+  ["Tetramethylammonium chloride",9,"sim","sim","sim","sim","","","sim","","","","",""],
+  ["Vinylidene chloride/ methylacrylate copolymer",6,"sim","","","","","","","","","","",""],
+  ["Methanol",5,"sim","sim","sim","sim","","","sim","","","","",""],
+  ["1,2,3-Propanetriol",4,"sim","sim","","","","","","","","","",""],
+  ["2,2,2-nitrotriethanol",2,"sim","sim","sim","sim","","","","","","","",""],
+  ["Sorbitol",2,"sim","sim","","","","","","","","","",""],
+  ["Sodium tetraborate decahydrate",2,"sim","sim","sim","","","sim","","","","","","","sim"],
+  ["Sodium borate (borax)",2,"sim","sim","sim","","","sim","","","","","","","sim"],
+  ["Acrylamide-sodium 2-acrylamido-2-methyl-1-propanesulfonate",0.9,"","","","","","","","","","","",""],
+  ["Ethoxylated branched C7-9, C8rich alcohols",0.8,"sim","sim","","","","","","","","","",""],
+  ["Ethoxylated branched C9-11, C10rich alcohols",0.8,"sim","sim","","","","","","","","","",""],
+  ["Sodium hydroxide (lye)",0.8,"sim","sim","sim","sim","","","sim","","","","",""],
+  ["Bis(hydrogenated tallow alkyl)dimethylammonium bentonite",0.6,"","","","","","","","","","","",""],
+  ["Ethoxylated propoxylated 4-nonylphenol-formaldehyde",0.6,"","","","","","","","","","","",""],
+  ["Heavy aromatic naphtha",0.4,"sim","sim","sim","sim","","","","","","","",""],
+  ["Alcohols, C11-14isoalk, C13-rich, ethoxylated",0.4,"sim","sim","","","","","","","","","",""],
+  ["Alkylbenzyldimethylammonium chlorides, benzyl C10-16",0.4,"sim","sim","sim","sim","","","sim","","","","",""],
+  ["Magnesium silicate hydrate (talc)",0.3,"","","","","","","","","","","",""],
+  ["Poly(oxy-1,2-ethanediyl)",0.2,"","","","","","","","","","","",""],
+  ["Alcohols, C12-13 alkyl, ethoxylated",0.2,"sim","sim","","","","","","","","","",""],
+  ["Alcohol ethoxylate C10-16 with 6.5 EO",0.2,"sim","sim","","","","","","","","","",""],
+  ["Sodium chloride",0.1,"","","","","","","","","","","",""],
+  ["Tetrakis(hydroxymethyl)phosphonium sulfate",0.1,"sim","sim","sim","sim","","","sim","","","","",""],
+  ["Non-crystalline silica",0.1,"sim","sim","sim","","","","","sim","","","","",""],
+  ["Boric acid",0.0042,"sim","sim","sim","","","","","","","","","","sim"]
 ];
 
-const CHECK = `<span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#2ecc71" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`;
+const CHECK_HTML = `
+  <span class="chk" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none">
+      <path d="M20 6L9 17l-5-5" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </span>
+`;
 
-function buildHead(){
-  const t = document.getElementById("thead-table");
-  const tr = document.createElement("tr");
-  HEADERS.forEach(h=>{
-    const th=document.createElement("th");
-    th.textContent=h;
-    tr.appendChild(th);
-  });
-  const thead=document.createElement("thead");
-  thead.appendChild(tr);
-  t.appendChild(thead);
+/* colgroup p/ manter largura igual no cabeçalho e no corpo */
+function makeColgroup(){
+  const cg = document.createElement("colgroup");
+  const c1 = document.createElement("col"); c1.className = "c1";
+  const c2 = document.createElement("col"); c2.className = "c2";
+  cg.appendChild(c1);
+  cg.appendChild(c2);
+
+  // demais colunas automáticas (ocupam o restante igualmente)
+  for(let i=0;i<HEADERS.length-2;i++){
+    cg.appendChild(document.createElement("col"));
+  }
+  return cg;
 }
 
-function buildBody(){
-  const t = document.getElementById("tbody-table");
-  const tbody=document.createElement("tbody");
+function buildHeaderTable(){
+  const headTable = document.getElementById("headTable");
+  headTable.innerHTML = "";
+  headTable.appendChild(makeColgroup());
 
-  ROWS.forEach(r=>{
-    const tr=document.createElement("tr");
-    r.forEach((v,i)=>{
-      const td=document.createElement("td");
-      if(i>1){
-        td.innerHTML = v==="sim"?CHECK:`<span class="empty">—</span>`;
-      }else{
-        td.textContent=v;
+  const thead = document.createElement("thead");
+  const tr = document.createElement("tr");
+
+  HEADERS.forEach(h=>{
+    const th = document.createElement("th");
+    th.textContent = h;
+    tr.appendChild(th);
+  });
+
+  thead.appendChild(tr);
+  headTable.appendChild(thead);
+}
+
+function buildBodyTable(){
+  const bodyTable = document.getElementById("bodyTable");
+  bodyTable.innerHTML = "";
+  bodyTable.appendChild(makeColgroup());
+
+  const tbody = document.createElement("tbody");
+
+  ROWS.forEach(row=>{
+    const tr = document.createElement("tr");
+
+    row.forEach((v, idx)=>{
+      const td = document.createElement("td");
+
+      if(idx === 0){
+        td.textContent = v;
+      } else if(idx === 1){
+        td.textContent = (v === "" ? "—" : String(v));
+      } else {
+        const yes = (String(v).toLowerCase().trim() === "sim");
+        td.innerHTML = yes ? CHECK_HTML : '<span class="empty">—</span>';
       }
+
       tr.appendChild(td);
     });
+
     tbody.appendChild(tr);
   });
 
-  t.appendChild(tbody);
+  // ✅ duplicar as linhas para scroll contínuo (sem “pulo”)
+  const clone = tbody.cloneNode(true);
+  bodyTable.appendChild(tbody);
+  bodyTable.appendChild(clone);
 }
 
-buildHead();
-buildBody();
+function calibrateScroll(){
+  const world = document.getElementById("world");
+  const bodyWrapper = document.querySelector(".table-body-wrapper");
+
+  // altura real do conteúdo (metade, pois duplicamos)
+  const contentHeight = world.scrollHeight / 2;
+  const viewportHeight = bodyWrapper.clientHeight;
+
+  // distância de rolagem = conteúdo - viewport (mínimo 0)
+  const dist = Math.max(0, Math.round(contentHeight - viewportHeight));
+
+  // se a tabela couber inteira, não anima
+  if(dist <= 0){
+    world.style.animation = "none";
+    return;
+  }
+
+  // duração proporcional para ficar suave (ajuste fino)
+  // ~ 35px por segundo (quanto maior, mais lento)
+  const seconds = Math.max(28, Math.min(75, Math.round(dist / 35)));
+
+  document.documentElement.style.setProperty("--scroll-distance", dist + "px");
+  document.documentElement.style.setProperty("--scroll-duration", seconds + "s");
+}
+
+buildHeaderTable();
+buildBodyTable();
+
+// calibrar depois de renderizar
+requestAnimationFrame(() => {
+  calibrateScroll();
+});
+
+// recalibrar em resize
+window.addEventListener("resize", () => {
+  calibrateScroll();
+});
 </script>
 </body>
 </html>
