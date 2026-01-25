@@ -13,7 +13,7 @@
   --text: #ffffff;
   --accent: #ffd9d9;
   --grid: rgba(255,255,255,.12);
-  --card: rgba(0,0,0,.50);
+  --card: rgba(0,0,0,.40);
   --green: #2ecc71;
 }
 
@@ -34,22 +34,21 @@ html, body{
   overflow:hidden;
 }
 
-/* Fundo */
+/* ✅ FUNDO COM IMAGEM COESUS (sem “preto chapado”) */
 .bg{
   position:absolute;
   inset:-18px;
-  background:
-    radial-gradient(1100px 620px at 12% 18%, rgba(255,255,255,.09), rgba(0,0,0,0)),
-    radial-gradient(900px 540px at 88% 82%, rgba(255,120,120,.10), rgba(0,0,0,0)),
-    linear-gradient(135deg, rgba(30,0,0,.55), rgba(0,0,0,.92));
-  filter: blur(18px) saturate(1.06);
+  background-image:url('https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fundo_COESUS_ok.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(18px) saturate(1.08);
   transform: scale(1.08);
 }
 .bg::after{
   content:"";
   position:absolute;
   inset:0;
-  background: rgba(0,0,0,.60);
+  background: rgba(0,0,0,.40); /* só para leitura da tabela */
 }
 
 .overlay{
@@ -57,9 +56,9 @@ html, body{
   inset:0;
   background: linear-gradient(
     to top,
-    rgba(0,0,0,0.78),
-    rgba(0,0,0,0.35),
-    rgba(0,0,0,0.15)
+    rgba(0,0,0,0.65),
+    rgba(0,0,0,0.25),
+    rgba(0,0,0,0.10)
   );
   pointer-events:none;
 }
@@ -99,20 +98,16 @@ html, body{
 .h-left{ display:flex; flex-direction:column; gap: 6px; }
 .kicker{
   font-size: 12px; letter-spacing:.9px; text-transform:uppercase;
-  color: rgba(255,255,255,.80);
+  color: rgba(255,255,255,.85);
 }
 .title{ font-size: 18px; font-weight: 700; color: var(--text); }
-.subtitle{
-  font-size: 12.5px;
-  color: rgba(255,255,255,.82);
-  line-height: 1.35;
-}
-.subtitle strong{ color: var(--accent); }
 
+/* ✅ REMOVIDO: “Nesta tabela, ... indica evidência...” */
+/* Agora só a legenda curta */
 .legend{
-  margin-top: 6px;
+  margin-top: 4px;
   font-size: 12px;
-  color: rgba(255,255,255,.85);
+  color: rgba(255,255,255,.88);
   display:flex;
   align-items:center;
   gap: 14px;
@@ -132,20 +127,19 @@ html, body{
   padding: 7px 10px;
   border-radius: 999px;
   border: 1px solid rgba(255,255,255,.14);
-  background: rgba(0,0,0,.28);
+  background: rgba(0,0,0,.18);
 }
 .logo-pill strong{ color: var(--accent); }
 
 /* Área tabela */
 .table-viewport{
   position:relative;
-  height: calc(100% - 92px);
+  height: calc(100% - 72px);
   padding: 12px 12px 44px 12px;
   box-sizing:border-box;
-  overflow:hidden; /* “vídeo” */
+  overflow:hidden;
 }
 
-/* Importante: agora a tabela fica num “mundo” maior e a câmera passeia */
 .camera{
   position:absolute;
   inset: 12px 12px 44px 12px;
@@ -153,18 +147,17 @@ html, body{
   border-radius: 12px;
 }
 
-/* Esse é o conteúdo “grande” (pode ser mais largo que a tela) */
+/* “mundo” maior para pan horizontal */
 .world{
   position:absolute;
   top:0;
   left:0;
   transform-origin: left top;
   will-change: transform;
-  /* A “câmera” faz pan horizontal + leve zoom, SEM cortar o início */
   animation: panX 34s ease-in-out infinite alternate;
 }
 
-/* Spotlight opcional */
+/* Spotlight */
 .spotlight{
   position:absolute;
   top: 12px;
@@ -190,7 +183,6 @@ table{
   table-layout: fixed;
   color: var(--text);
   font-size: 12px;
-  /* chave: deixa a tabela mais larga, para o pan mostrar as colunas */
   width: 1900px;
   max-width: none;
 }
@@ -199,13 +191,12 @@ thead th{
   position:sticky;
   top:0;
   z-index:2;
-  background: rgba(0,0,0,.70);
+  background: rgba(0,0,0,.60);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(255,255,255,.18);
   padding: 10px 8px;
   text-align:center;
   font-weight: 700;
-  white-space: normal;
 }
 
 tbody td{
@@ -226,23 +217,21 @@ th:first-child, td:first-child{
 }
 th:nth-child(2), td:nth-child(2){
   width: 140px;
-  text-align:center;
 }
 
 .cell-chem{
   text-align:left !important;
   font-weight: 600;
-  color: rgba(255,255,255,.92);
-  /* evita “sumir” o começo */
+  color: rgba(255,255,255,.95);
   padding-left: 12px;
 }
 .cell-pct{
   font-variant-numeric: tabular-nums;
   font-weight: 700;
-  color: rgba(255,255,255,.92);
+  color: rgba(255,255,255,.95);
 }
 
-/* Ícone check verde REAL (não depende do emoji do sistema) */
+/* Check verde */
 .chk{
   display:inline-flex;
   align-items:center;
@@ -250,8 +239,8 @@ th:nth-child(2), td:nth-child(2){
   width: 18px;
   height: 18px;
   border-radius: 4px;
-  background: rgba(46, 204, 113, .15);
-  border: 1px solid rgba(46, 204, 113, .35);
+  background: rgba(46, 204, 113, .16);
+  border: 1px solid rgba(46, 204, 113, .40);
   box-shadow: 0 2px 10px rgba(0,0,0,.35);
 }
 .chk svg{ width: 14px; height: 14px; display:block; }
@@ -281,14 +270,11 @@ th:nth-child(2), td:nth-child(2){
   text-shadow: 0 1px 2px rgba(0,0,0,.75);
 }
 
-/* ANIMAÇÕES */
+/* Animações */
 @keyframes panX{
-  /* Começa mostrando o INÍCIO (sem corte) */
   0%   { transform: translateX(0px) scale(1.02); }
-  /* Vai até a direita (mostra colunas finais) */
   100% { transform: translateX(-820px) scale(1.06); }
 }
-
 @keyframes sweep{
   0%   { transform: translateX(0%); }
   100% { transform: translateX(190%); }
@@ -312,11 +298,9 @@ th:nth-child(2), td:nth-child(2){
     <div class="card">
       <div class="header">
         <div class="h-left">
-          <div class="kicker">Não Fracking Brasil • COESUS • ARAYARA</div>
+          <div class="kicker">NÃO FRACKING BRASIL • COESUS • ARAYARA</div>
           <div class="title">Efeitos à saúde associados a substâncias químicas em fluido de fracking</div>
-          <div class="subtitle">
-            Nesta tabela, <strong>o check verde</strong> indica evidência de associação/efeito reportado para a categoria.
-          </div>
+
           <div class="legend">
             <span class="ok">
               <span class="chk" aria-hidden="true">
@@ -348,10 +332,10 @@ th:nth-child(2), td:nth-child(2){
 
         <div class="footer">
           <div>
-            <strong>Leitura rápida:</strong> quanto maior o percentual em volume, maior a presença relativa no fluido.
+            <strong>Leitura:</strong> quanto maior o percentual em volume, maior a presença relativa no fluido.
           </div>
           <div style="text-align:right;">
-            <strong>Fonte:</strong> tabela original (Wyoming O&G CC; TEDX).
+            <strong>Fonte:</strong> Wyoming O&amp;G CC; TEDX.
           </div>
         </div>
       </div>
@@ -364,10 +348,6 @@ th:nth-child(2), td:nth-child(2){
 </div>
 
 <script>
-/**
- * DADOS (do seu Excel):
- * "sim" => check verde | vazio => —
- */
 const HEADERS = ["Produto químico","Percentual em volume (%)","Pele, olhos e órgãos sensoriais","Sistema respiratório","Trato gastrointestinal e fígado","Cérebro e sistema nervoso","Sistema imunológico","Rins","Sistema cardiovascular e sangue","Carcinogênico","Mutagênico","Efeitos no desenvolvimento","Efeitos reprodutivos","Desregulador endócrino"];
 
 const ROWS = [
@@ -424,7 +404,6 @@ function buildTable(){
   const tbody = document.createElement("tbody");
   ROWS.forEach(r => {
     const tr = document.createElement("tr");
-
     r.forEach((v, idx) => {
       const td = document.createElement("td");
 
@@ -441,7 +420,6 @@ function buildTable(){
 
       tr.appendChild(td);
     });
-
     tbody.appendChild(tr);
   });
 
