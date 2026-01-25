@@ -13,7 +13,8 @@
   --text: #ffffff;
   --accent: #ffd9d9;
   --grid: rgba(255,255,255,.12);
-  --card: rgba(0,0,0,.45);
+  --card: rgba(0,0,0,.50);
+  --green: #2ecc71;
 }
 
 html, body{
@@ -33,14 +34,14 @@ html, body{
   overflow:hidden;
 }
 
-/* Fundo “vídeo” */
+/* Fundo */
 .bg{
   position:absolute;
   inset:-18px;
   background:
     radial-gradient(1100px 620px at 12% 18%, rgba(255,255,255,.09), rgba(0,0,0,0)),
     radial-gradient(900px 540px at 88% 82%, rgba(255,120,120,.10), rgba(0,0,0,0)),
-    linear-gradient(135deg, rgba(30,0,0,.55), rgba(0,0,0,.90));
+    linear-gradient(135deg, rgba(30,0,0,.55), rgba(0,0,0,.92));
   filter: blur(18px) saturate(1.06);
   transform: scale(1.08);
 }
@@ -48,7 +49,7 @@ html, body{
   content:"";
   position:absolute;
   inset:0;
-  background: rgba(0,0,0,.55);
+  background: rgba(0,0,0,.60);
 }
 
 .overlay{
@@ -75,8 +76,8 @@ html, body{
 
 .card{
   position:relative;
-  width: min(1600px, 96vw);
-  height: min(860px, 92vh);
+  width: min(1700px, 96vw);
+  height: min(900px, 92vh);
   background: var(--card);
   border: 1px solid rgba(255,255,255,.10);
   border-radius: 18px;
@@ -95,22 +96,12 @@ html, body{
   border-bottom: 1px solid rgba(255,255,255,.10);
 }
 
-.h-left{
-  display:flex;
-  flex-direction:column;
-  gap: 6px;
-}
+.h-left{ display:flex; flex-direction:column; gap: 6px; }
 .kicker{
-  font-size: 12px;
-  letter-spacing:.9px;
-  text-transform:uppercase;
+  font-size: 12px; letter-spacing:.9px; text-transform:uppercase;
   color: rgba(255,255,255,.80);
 }
-.title{
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text);
-}
+.title{ font-size: 18px; font-weight: 700; color: var(--text); }
 .subtitle{
   font-size: 12.5px;
   color: rgba(255,255,255,.82);
@@ -118,14 +109,24 @@ html, body{
 }
 .subtitle strong{ color: var(--accent); }
 
-.h-right{
+.legend{
+  margin-top: 6px;
+  font-size: 12px;
+  color: rgba(255,255,255,.85);
   display:flex;
   align-items:center;
-  gap: 10px;
-  opacity: .95;
-  user-select:none;
-  white-space:nowrap;
+  gap: 14px;
+  flex-wrap:wrap;
 }
+.legend .ok{
+  display:inline-flex;
+  align-items:center;
+  gap: 8px;
+}
+.legend .na{ opacity:.85; }
+
+/* “pílulas” direita */
+.h-right{ display:flex; align-items:center; gap: 10px; user-select:none; white-space:nowrap; opacity:.95; }
 .logo-pill{
   font-size: 12px;
   padding: 7px 10px;
@@ -135,52 +136,45 @@ html, body{
 }
 .logo-pill strong{ color: var(--accent); }
 
-.legend{
-  margin-top: 6px;
-  font-size: 12px;
-  color: rgba(255,255,255,.85);
-}
-.legend .ok{
-  display:inline-flex;
-  align-items:center;
-  gap: 6px;
-  margin-right: 12px;
-}
-.legend .ok .chk{
-  font-size: 14px;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,.55));
-}
-.legend .na{
-  opacity:.85;
-}
-
-/* Área da tabela (estilo “vídeo”) */
+/* Área tabela */
 .table-viewport{
   position:relative;
   height: calc(100% - 92px);
   padding: 12px 12px 44px 12px;
   box-sizing:border-box;
-  overflow:hidden;            /* importante p/ parecer vídeo */
+  overflow:hidden; /* “vídeo” */
 }
 
-.table-motion{
+/* Importante: agora a tabela fica num “mundo” maior e a câmera passeia */
+.camera{
   position:absolute;
   inset: 12px 12px 44px 12px;
-  transform-origin: center;
-  animation: drift 56s ease-in-out infinite alternate;
+  overflow:hidden;
+  border-radius: 12px;
 }
 
-/* spotlight varrendo colunas */
+/* Esse é o conteúdo “grande” (pode ser mais largo que a tela) */
+.world{
+  position:absolute;
+  top:0;
+  left:0;
+  transform-origin: left top;
+  will-change: transform;
+  /* A “câmera” faz pan horizontal + leve zoom, SEM cortar o início */
+  animation: panX 34s ease-in-out infinite alternate;
+}
+
+/* Spotlight opcional */
 .spotlight{
   position:absolute;
   top: 12px;
   bottom: 44px;
-  left: -25%;
-  width: 22%;
+  left: -30%;
+  width: 18%;
   background: linear-gradient(
     to right,
     rgba(0,0,0,0),
-    rgba(255,217,217,.18),
+    rgba(255,217,217,.16),
     rgba(0,0,0,0)
   );
   filter: blur(2px);
@@ -192,23 +186,26 @@ html, body{
 
 /* Tabela */
 table{
-  width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
   color: var(--text);
   font-size: 12px;
+  /* chave: deixa a tabela mais larga, para o pan mostrar as colunas */
+  width: 1900px;
+  max-width: none;
 }
 
 thead th{
-  position:sticky; /* mantém topo “estável” visualmente */
+  position:sticky;
   top:0;
   z-index:2;
-  background: rgba(0,0,0,.65);
+  background: rgba(0,0,0,.70);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(255,255,255,.18);
   padding: 10px 8px;
   text-align:center;
   font-weight: 700;
+  white-space: normal;
 }
 
 tbody td{
@@ -225,10 +222,10 @@ tbody tr:nth-child(odd){
 
 th:first-child, td:first-child{
   text-align:left;
-  width: 320px;
+  width: 380px;
 }
 th:nth-child(2), td:nth-child(2){
-  width: 120px;
+  width: 140px;
   text-align:center;
 }
 
@@ -236,6 +233,8 @@ th:nth-child(2), td:nth-child(2){
   text-align:left !important;
   font-weight: 600;
   color: rgba(255,255,255,.92);
+  /* evita “sumir” o começo */
+  padding-left: 12px;
 }
 .cell-pct{
   font-variant-numeric: tabular-nums;
@@ -243,16 +242,22 @@ th:nth-child(2), td:nth-child(2){
   color: rgba(255,255,255,.92);
 }
 
+/* Ícone check verde REAL (não depende do emoji do sistema) */
 .chk{
-  font-size: 14px;
-  line-height: 1;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,.70));
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(46, 204, 113, .15);
+  border: 1px solid rgba(46, 204, 113, .35);
+  box-shadow: 0 2px 10px rgba(0,0,0,.35);
 }
-.empty{
-  opacity:.35;
-}
+.chk svg{ width: 14px; height: 14px; display:block; }
+.empty{ opacity:.35; }
 
-/* Rodapé / fonte */
+/* Rodapé */
 .footer{
   position:absolute;
   left: 14px;
@@ -276,21 +281,24 @@ th:nth-child(2), td:nth-child(2){
   text-shadow: 0 1px 2px rgba(0,0,0,.75);
 }
 
-/* Animações */
-@keyframes drift{
-  0%   { transform: translate(0%, 0%) scale(1.06); }
-  45%  { transform: translate(-6%, -1.8%) scale(1.08); }
-  100% { transform: translate(-12%, -3.2%) scale(1.10); }
+/* ANIMAÇÕES */
+@keyframes panX{
+  /* Começa mostrando o INÍCIO (sem corte) */
+  0%   { transform: translateX(0px) scale(1.02); }
+  /* Vai até a direita (mostra colunas finais) */
+  100% { transform: translateX(-820px) scale(1.06); }
 }
+
 @keyframes sweep{
   0%   { transform: translateX(0%); }
-  100% { transform: translateX(170%); }
+  100% { transform: translateX(190%); }
 }
 
 @media (max-width: 900px){
   .card{ height: 92vh; }
-  th:first-child, td:first-child{ width: 240px; }
-  th:nth-child(2), td:nth-child(2){ width: 110px; }
+  table{ width: 1700px; }
+  th:first-child, td:first-child{ width: 300px; }
+  th:nth-child(2), td:nth-child(2){ width: 120px; }
   table{ font-size: 11px; }
 }
 </style>
@@ -307,34 +315,43 @@ th:nth-child(2), td:nth-child(2){
           <div class="kicker">Não Fracking Brasil • COESUS • ARAYARA</div>
           <div class="title">Efeitos à saúde associados a substâncias químicas em fluido de fracking</div>
           <div class="subtitle">
-            Nesta tabela, <strong>✅</strong> indica evidência de associação/efeito reportado para a categoria.
+            Nesta tabela, <strong>o check verde</strong> indica evidência de associação/efeito reportado para a categoria.
           </div>
           <div class="legend">
-            <span class="ok"><span class="chk">✅</span> <span>Sim</span></span>
+            <span class="ok">
+              <span class="chk" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span>Sim</span>
+            </span>
             <span class="na">— Sem registro / não disponível</span>
           </div>
         </div>
 
         <div class="h-right">
-          <div class="logo-pill"><strong>NÃO</strong> FRACKING</div>
+          <div class="logo-pill"><strong>NÃO</strong></div>
           <div class="logo-pill"><strong>COESUS</strong></div>
-          <div class="logo-pill"><strong>ARAYARA</strong>.org</div>
+          <div class="logo-pill"><strong>ARAYARA</strong></div>
         </div>
       </div>
 
       <div class="table-viewport">
         <div class="spotlight"></div>
-        <div class="table-motion">
-          <table id="tabela"></table>
+
+        <div class="camera">
+          <div class="world">
+            <table id="tabela"></table>
+          </div>
         </div>
 
         <div class="footer">
           <div>
             <strong>Leitura rápida:</strong> quanto maior o percentual em volume, maior a presença relativa no fluido.
-            Categorias à direita indicam possíveis efeitos à saúde por grau/rota de exposição.
           </div>
           <div style="text-align:right;">
-            <strong>Fonte:</strong> compilação a partir da tabela original (Wyoming Oil and Gas Conservation Commission; The Endocrine Disruption Exchange).
+            <strong>Fonte:</strong> tabela original (Wyoming O&G CC; TEDX).
           </div>
         </div>
       </div>
@@ -348,19 +365,56 @@ th:nth-child(2), td:nth-child(2){
 
 <script>
 /**
- * DADOS (vindos do seu Excel):
- * "sim" => ✅ | vazio => —
+ * DADOS (do seu Excel):
+ * "sim" => check verde | vazio => —
  */
 const HEADERS = ["Produto químico","Percentual em volume (%)","Pele, olhos e órgãos sensoriais","Sistema respiratório","Trato gastrointestinal e fígado","Cérebro e sistema nervoso","Sistema imunológico","Rins","Sistema cardiovascular e sangue","Carcinogênico","Mutagênico","Efeitos no desenvolvimento","Efeitos reprodutivos","Desregulador endócrino"];
 
-const ROWS = [["Diammonium peroxodisulphate",29,"sim","sim","sim","","sim","","sim","","","","",""],["Distillates (petroleum), hydrotreated light",17,"sim","sim","sim","sim","","","","","","","sim",""],["Guar gum",15,"sim","sim","","","sim","","","","","","",""],["Tetramethylammonium chloride",9,"sim","sim","sim","sim","","","sim","","","","",""],["Vinylidene chloride/ methylacrylate copolymer",6,"sim","","","","","","","","","","",""],["Methanol",5,"sim","sim","sim","sim","","","sim","","","","",""],["1,2,3-Propanetriol",4,"sim","sim","","","","","","","","","",""],["2,2,2-nitrotriethanol",2,"sim","sim","sim","sim","","","","","","","",""],["Sorbitol",2,"sim","sim","","","","","","","","","",""],["Sodium tetraborate decahydrate",2,"sim","sim","sim","","","sim","","","","","","","sim"],["Sodium borate (borax)",2,"sim","sim","sim","","","sim","","","","","","","sim"],["Acrylamide-sodium 2-acrylamido-2-methyl-1-propanesulfonate",0.9,"","","","","","","","","","","",""],["Ethoxylated branched C7-9, C8rich alcohols",0.8,"sim","sim","","","","","","","","","",""],["Ethoxylated branched C9-11, C10rich alcohols",0.8,"sim","sim","","","","","","","","","",""],["Sodium hydroxide (lye)",0.8,"sim","sim","sim","sim","","","sim","","","","",""],["Bis(hydrogenated tallow alkyl)dimethylammonium bentonite",0.6,"","","","","","","","","","","",""],["Ethoxylated propoxylated 4-nonylphenol-formaldehyde",0.6,"","","","","","","","","","","",""],["Heavy aromatic naphtha",0.4,"sim","sim","sim","sim","","","","","","","",""],["Alcohols, C11-14isoalk, C13-rich, ethoxylated",0.4,"sim","sim","","","","","","","","","",""],["Alkylbenzyldimethylammonium chlorides, benzyl C10-16",0.4,"sim","sim","sim","sim","","","sim","","","","",""],["Magnesium silicate hydrate (talc)",0.3,"","","","","","","","","","","",""],["Poly(oxy-1,2-ethanediyl)",0.2,"","","","","","","","","","","",""],["Alcohols, C12-13 alkyl, ethoxylated",0.2,"sim","sim","","","","","","","","","",""],["Alcohol ethoxylate C10-16 with 6.5 EO",0.2,"sim","sim","","","","","","","","","",""],["Sodium chloride",0.1,"","","","","","","","","","","",""],["Tetrakis(hydroxymethyl)phosphonium sulfate",0.1,"sim","sim","sim","sim","","","sim","","","","",""],["Non-crystalline silica",0.1,"sim","sim","sim","","","","","sim","","","","",""],["Boric acid",0.0042,"sim","sim","sim","","","","","","","","","","sim"]];
+const ROWS = [
+  ["Diammonium peroxodisulphate",29,"sim","sim","sim","","sim","","sim","","","","",""],
+  ["Distillates (petroleum), hydrotreated light",17,"sim","sim","sim","sim","","","","","","","sim",""],
+  ["Guar gum",15,"sim","sim","","","sim","","","","","","",""],
+  ["Tetramethylammonium chloride",9,"sim","sim","sim","sim","","","sim","","","","",""],
+  ["Vinylidene chloride/ methylacrylate copolymer",6,"sim","","","","","","","","","","",""],
+  ["Methanol",5,"sim","sim","sim","sim","","","sim","","","","",""],
+  ["1,2,3-Propanetriol",4,"sim","sim","","","","","","","","","",""],
+  ["2,2,2-nitrotriethanol",2,"sim","sim","sim","sim","","","","","","","",""],
+  ["Sorbitol",2,"sim","sim","","","","","","","","","",""],
+  ["Sodium tetraborate decahydrate",2,"sim","sim","sim","","","sim","","","","","","","sim"],
+  ["Sodium borate (borax)",2,"sim","sim","sim","","","sim","","","","","","","sim"],
+  ["Acrylamide-sodium 2-acrylamido-2-methyl-1-propanesulfonate",0.9,"","","","","","","","","","","",""],
+  ["Ethoxylated branched C7-9, C8rich alcohols",0.8,"sim","sim","","","","","","","","","",""],
+  ["Ethoxylated branched C9-11, C10rich alcohols",0.8,"sim","sim","","","","","","","","","",""],
+  ["Sodium hydroxide (lye)",0.8,"sim","sim","sim","sim","","","sim","","","","",""],
+  ["Bis(hydrogenated tallow alkyl)dimethylammonium bentonite",0.6,"","","","","","","","","","","",""],
+  ["Ethoxylated propoxylated 4-nonylphenol-formaldehyde",0.6,"","","","","","","","","","","",""],
+  ["Heavy aromatic naphtha",0.4,"sim","sim","sim","sim","","","","","","","",""],
+  ["Alcohols, C11-14isoalk, C13-rich, ethoxylated",0.4,"sim","sim","","","","","","","","","",""],
+  ["Alkylbenzyldimethylammonium chlorides, benzyl C10-16",0.4,"sim","sim","sim","sim","","","sim","","","","",""],
+  ["Magnesium silicate hydrate (talc)",0.3,"","","","","","","","","","","",""],
+  ["Poly(oxy-1,2-ethanediyl)",0.2,"","","","","","","","","","","",""],
+  ["Alcohols, C12-13 alkyl, ethoxylated",0.2,"sim","sim","","","","","","","","","",""],
+  ["Alcohol ethoxylate C10-16 with 6.5 EO",0.2,"sim","sim","","","","","","","","","",""],
+  ["Sodium chloride",0.1,"","","","","","","","","","","",""],
+  ["Tetrakis(hydroxymethyl)phosphonium sulfate",0.1,"sim","sim","sim","sim","","","sim","","","","",""],
+  ["Non-crystalline silica",0.1,"sim","sim","sim","","","","","sim","","","","",""],
+  ["Boric acid",0.0042,"sim","sim","sim","","","","","","","","","","sim"]
+];
+
+const CHECK_HTML = `
+  <span class="chk" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none">
+      <path d="M20 6L9 17l-5-5" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </span>
+`;
 
 function buildTable(){
   const table = document.getElementById("tabela");
 
   const thead = document.createElement("thead");
   const trh = document.createElement("tr");
-  HEADERS.forEach((h, i) => {
+  HEADERS.forEach((h) => {
     const th = document.createElement("th");
     th.textContent = h;
     trh.appendChild(th);
@@ -382,7 +436,7 @@ function buildTable(){
         td.className = "cell-pct";
       } else {
         const yes = (String(v).toLowerCase().trim() === "sim");
-        td.innerHTML = yes ? '<span class="chk">✅</span>' : '<span class="empty">—</span>';
+        td.innerHTML = yes ? CHECK_HTML : '<span class="empty">—</span>';
       }
 
       tr.appendChild(td);
