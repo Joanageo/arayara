@@ -20,8 +20,8 @@
 
   --green:#2ecc71;
 
-  --scroll-distance: 900px;
-  --scroll-duration: 140s;
+  /* velocidade do auto-scroll (px por segundo) */
+  --autoScrollPPS: 14;
 }
 
 html, body{
@@ -88,30 +88,36 @@ html, body{
   border-bottom:none;
 }
 
+/* ✅ agora é rolável (vertical + horizontal) */
 .table-body-wrapper{
   position:absolute;
-  top: 58px;               /* ✅ ligeiramente menor para caber melhor */
+  top: 58px;
   left:10px; right:10px; bottom:40px;
-  overflow:hidden;
+
+  overflow: auto;                 /* ✅ barras de rolagem */
   border-radius:0 0 12px 12px;
   background: var(--panel);
   border:1px solid rgba(255,255,255,.16);
   border-top:none;
+
+  /* deixa a barra mais discreta (Chrome/Edge) */
+  scrollbar-width: thin;          /* Firefox */
+  scrollbar-color: rgba(255,255,255,.35) rgba(0,0,0,.15);
 }
 
-.world{
-  position:absolute;
-  top:0; left:0; right:0;
-  will-change: transform;
-  animation: panY var(--scroll-duration) linear infinite;
-}
+/* Webkit scrollbar */
+.table-body-wrapper::-webkit-scrollbar{ height:10px; width:10px; }
+.table-body-wrapper::-webkit-scrollbar-track{ background: rgba(0,0,0,.12); border-radius: 10px; }
+.table-body-wrapper::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.28); border-radius: 10px; }
+.table-body-wrapper::-webkit-scrollbar-thumb:hover{ background: rgba(255,255,255,.38); }
 
 table{
-  width:100%;
   border-collapse: collapse;
-  table-layout: fixed;     /* ✅ precisa pra colgroup controlar */
+  table-layout: fixed;
   color: var(--text);
-  font-size: 11px;         /* ✅ base um pouco menor pra caber tudo */
+  font-size: 11px;
+  width: max-content;            /* ✅ permite horizontal se precisar */
+  min-width: 100%;               /* ✅ ocupa o wrapper quando cabe */
 }
 
 th, td{
@@ -121,10 +127,9 @@ th, td{
   hyphens: auto;
 }
 
-/* ✅ LARGURAS padrão (desktop) */
-col.c1{  width: 330px; } /* Produto */
-col.c2{  width: 120px; } /* Percentual */
-
+/* ✅ LARGURAS padrão */
+col.c1{  width: 330px; }
+col.c2{  width: 120px; }
 col.c3{  width: 130px; }
 col.c4{  width: 105px; }
 col.c5{  width: 145px; }
@@ -143,7 +148,7 @@ thead th{
   padding: 7px 6px;
   text-align:center;
   font-weight:700;
-  font-size: 10px;         /* ✅ menor ainda no cabeçalho */
+  font-size: 10px;
   line-height: 1.10;
 
   background: rgba(158,2,2,.94);
@@ -197,13 +202,11 @@ td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
   color: rgba(255,255,255,.92);
 }
 
-/* ✅ MODO COMPACTO: quando embed estiver estreito (AGOL) */
 @media (max-width: 1350px){
   table{ font-size: 10px; }
 
   col.c1{ width: 260px; }
   col.c2{ width: 105px; }
-
   col.c3{  width: 110px; }
   col.c4{  width: 95px;  }
   col.c5{  width: 120px; }
@@ -221,11 +224,9 @@ td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
   tbody td{ padding: 6px 5px; }
 }
 
-/* ✅ SUPER compacto (se ainda assim cortar) */
 @media (max-width: 1150px){
   col.c1{ width: 220px; }
   col.c2{ width: 95px; }
-
   col.c3{  width: 95px; }
   col.c4{  width: 85px; }
   col.c5{  width: 105px; }
@@ -241,11 +242,6 @@ td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
 
   thead th{ font-size: 9px; }
 }
-
-@keyframes panY{
-  from { transform: translateY(0); }
-  to   { transform: translateY(calc(-1 * var(--scroll-distance))); }
-}
 </style>
 </head>
 
@@ -255,17 +251,15 @@ td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
 
   <div class="frame">
     <div class="card">
-
       <div class="table-viewport">
 
         <div class="table-header">
           <table id="headTable"></table>
         </div>
 
-        <div class="table-body-wrapper">
-          <div class="world" id="world">
-            <table id="bodyTable"></table>
-          </div>
+        <!-- ✅ agora rolável manualmente -->
+        <div class="table-body-wrapper" id="scrollBox">
+          <table id="bodyTable"></table>
         </div>
 
         <div class="footer">
@@ -275,7 +269,6 @@ td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
       </div>
 
       <div class="signature">ARAYARA • Não Fracking Brasil</div>
-
     </div>
   </div>
 </div>
@@ -391,38 +384,55 @@ function buildBodyTable(){
     tbody.appendChild(tr);
   });
 
-  // duplicar para loop contínuo
-  const clone = tbody.cloneNode(true);
   bodyTable.appendChild(tbody);
-  bodyTable.appendChild(clone);
 }
 
-function calibrateScroll(){
-  const world = document.getElementById("world");
-  const wrapper = document.querySelector(".table-body-wrapper");
+/* ✅ Auto-scroll com pausa quando você mexe */
+let rafId = null;
+let lastTs = null;
+let pausedUntil = 0;
 
-  const contentHeight = world.scrollHeight / 2;
-  const viewportHeight = wrapper.clientHeight;
+function autoScrollLoop(ts){
+  const box = document.getElementById("scrollBox");
 
-  const dist = Math.max(0, Math.round(contentHeight - viewportHeight));
-  if(dist <= 0){
-    world.style.animation = "none";
+  if(lastTs == null) lastTs = ts;
+  const dt = (ts - lastTs) / 1000;
+  lastTs = ts;
+
+  const now = performance.now();
+  if(now < pausedUntil){
+    rafId = requestAnimationFrame(autoScrollLoop);
     return;
   }
 
-  // ✅ bem mais lento (2x mais lento do que o "rápido"): 16 px/s
-  const pxPerSec = 16;
-  const seconds = Math.max(90, Math.min(260, Math.round(dist / pxPerSec)));
+  const pps = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--autoScrollPPS")) || 12;
+  box.scrollTop += pps * dt;
 
-  document.documentElement.style.setProperty("--scroll-distance", dist + "px");
-  document.documentElement.style.setProperty("--scroll-duration", seconds + "s");
+  // loop suave ao chegar no fim
+  const max = box.scrollHeight - box.clientHeight;
+  if(box.scrollTop >= max - 1){
+    box.scrollTop = 0;
+  }
+
+  rafId = requestAnimationFrame(autoScrollLoop);
+}
+
+function pauseAutoScroll(ms=2500){
+  pausedUntil = performance.now() + ms;
+}
+
+function bindPauseEvents(){
+  const box = document.getElementById("scrollBox");
+  ["wheel","touchstart","touchmove","mousedown","pointerdown","scroll"].forEach(evt=>{
+    box.addEventListener(evt, ()=>pauseAutoScroll(2500), {passive:true});
+  });
 }
 
 buildHeaderTable();
 buildBodyTable();
+bindPauseEvents();
 
-requestAnimationFrame(calibrateScroll);
-window.addEventListener("resize", calibrateScroll);
+rafId = requestAnimationFrame(autoScrollLoop);
 </script>
 </body>
 </html>
