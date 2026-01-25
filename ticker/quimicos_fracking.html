@@ -12,12 +12,13 @@
   --shadow: 0 10px 26px rgba(0,0,0,.55);
   --text: #ffffff;
   --grid: rgba(255,255,255,.12);
+  --gridStrong: rgba(255,255,255,.28);      /* ✅ mais evidente */
+  --gridStrong2: rgba(255,255,255,.22);     /* ✅ mais evidente */
   --card: rgba(0,0,0,.40);
   --green: #2ecc71;
 
-  /* JS preenche automaticamente */
-  --scroll-distance: 900px;  /* fallback */
-  --scroll-duration: 42s;    /* fallback */
+  --scroll-distance: 900px;
+  --scroll-duration: 42s;
 }
 
 html, body{
@@ -30,14 +31,9 @@ html, body{
   background:#000;
 }
 
-.stage{
-  position:relative;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-}
+.stage{ position:relative; width:100%; height:100%; overflow:hidden; }
 
-/* FUNDO COESUS */
+/* Fundo COESUS */
 .bg{
   position:absolute;
   inset:-18px;
@@ -47,21 +43,12 @@ html, body{
   filter: blur(18px) saturate(1.08);
   transform: scale(1.08);
 }
-.bg::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: rgba(0,0,0,.40);
-}
+.bg::after{ content:""; position:absolute; inset:0; background: rgba(0,0,0,.40); }
 
 .frame{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:26px 22px;
-  box-sizing:border-box;
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  padding:26px 22px; box-sizing:border-box;
 }
 
 .card{
@@ -75,9 +62,8 @@ html, body{
   overflow:hidden;
 }
 
-/* Cabeçalho (sem legenda e sem botões à direita) */
+/* Header (sem legenda e sem botões) */
 .header{
-  position:relative;
   padding: 16px 18px 12px 18px;
   border-bottom: 1px solid rgba(255,255,255,.10);
 }
@@ -103,89 +89,85 @@ html, body{
   overflow:hidden;
 }
 
-/* ✅ Cabeçalho FIXO (tabela 1) */
+/* Cabeçalho fixo */
 .table-header{
   position:absolute;
-  top:12px;
-  left:12px;
-  right:12px;
+  top:12px; left:12px; right:12px;
   z-index: 10;
   border-radius: 12px 12px 0 0;
   overflow:hidden;
-  background: rgba(0,0,0,.72);
+
+  background: rgba(0,0,0,.78);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,.10);
+
+  border: 1px solid rgba(255,255,255,.12);
   border-bottom: none;
 }
 
-/* corpo (tabela 2) */
+/* Corpo animado */
 .table-body-wrapper{
   position:absolute;
-  top: 64px;               /* altura reservada p/ cabeçalho fixo */
-  left:12px;
-  right:12px;
-  bottom:44px;             /* espaço do rodapé */
+  top: 64px;
+  left:12px; right:12px; bottom:44px;
   overflow:hidden;
   border-radius: 0 0 12px 12px;
-  background: rgba(0,0,0,.12);
-  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.10);
+  border: 1px solid rgba(255,255,255,.12);
   border-top: none;
 }
 
-/* mundo que anima verticalmente */
 .world{
   position:absolute;
-  top:0;
-  left:0;
-  right:0;
+  top:0; left:0; right:0;
   will-change: transform;
   animation: panY var(--scroll-duration) linear infinite;
-  transform: translateY(0);
 }
 
-/* tabelas */
+/* ✅ MUITO IMPORTANTE: travar layout igual no cabeçalho e no corpo */
 table{
   width:100%;
   border-collapse: collapse;
-  table-layout: fixed;
+  table-layout: fixed;           /* ✅ garante encaixe */
   color: var(--text);
   font-size: 12px;
 }
 
-/* colunas iguais nos dois cabeçalhos/tabelas */
+/* ✅ colunas iguais: via colgroup (classes) */
 col.c1{ width: 380px; }
 col.c2{ width: 140px; }
+col.cx{ width: 90px; } /* ✅ largura igual para todas as colunas de efeito */
 
+/* Cabeçalho */
 thead th{
   padding: 10px 8px;
   text-align:center;
   font-weight:700;
-  background: rgba(0,0,0,.60);
-  border-bottom: 1px solid rgba(255,255,255,.18);
-  border-right: 1px solid rgba(255,255,255,.06);
-}
+  background: rgba(0,0,0,.62);
 
+  /* ✅ linhas do cabeçalho mais evidentes */
+  border-bottom: 2px solid var(--gridStrong);
+  border-right: 2px solid var(--gridStrong2);
+}
+thead th:last-child{ border-right: none; }
+
+/* Corpo */
 tbody td{
   padding: 8px 8px;
   text-align:center;
   vertical-align:middle;
+
   border-bottom: 1px solid var(--grid);
-  border-right: 1px solid rgba(255,255,255,.06);
+  border-right: 1px solid rgba(255,255,255,.10);
 }
+tbody td:last-child{ border-right: none; }
 
-tbody tr:nth-child(odd){
-  background: rgba(255,255,255,.03);
-}
+tbody tr:nth-child(odd){ background: rgba(255,255,255,.03); }
 
-td:first-child, th:first-child{
-  text-align:left;
-}
-td:nth-child(2){
-  font-variant-numeric: tabular-nums;
-  font-weight:700;
-}
+/* Primeiras colunas alinhadas */
+th:first-child, td:first-child{ text-align:left; }
+td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
 
-/* check verde */
+/* Check verde */
 .chk{
   display:inline-flex;
   align-items:center;
@@ -200,14 +182,14 @@ td:nth-child(2){
 .chk svg{ width: 14px; height: 14px; display:block; }
 .empty{ opacity:.35; }
 
-/* ✅ Rodapé: apenas FONTE (sem “Leitura…”) */
+/* Rodapé */
 .footer{
   position:absolute;
   left: 14px;
   right: 14px;
   bottom: 10px;
   display:flex;
-  justify-content:flex-start; /* só à esquerda */
+  justify-content:flex-start;
   font-size: 11px;
   color: rgba(255,255,255,.78);
   line-height: 1.25;
@@ -222,7 +204,6 @@ td:nth-child(2){
   text-shadow: 0 1px 2px rgba(0,0,0,.75);
 }
 
-/* ✅ animação vertical */
 @keyframes panY{
   from { transform: translateY(0); }
   to   { transform: translateY(calc(-1 * var(--scroll-distance))); }
@@ -231,6 +212,7 @@ td:nth-child(2){
 @media (max-width: 900px){
   col.c1{ width: 300px; }
   col.c2{ width: 120px; }
+  col.cx{ width: 80px; }
   table{ font-size: 11px; }
 }
 </style>
@@ -250,19 +232,18 @@ td:nth-child(2){
 
       <div class="table-viewport">
 
-        <!-- ✅ Cabeçalho FIXO -->
+        <!-- Cabeçalho fixo -->
         <div class="table-header">
           <table id="headTable"></table>
         </div>
 
-        <!-- ✅ Corpo animado -->
+        <!-- Corpo animado -->
         <div class="table-body-wrapper">
           <div class="world" id="world">
             <table id="bodyTable"></table>
           </div>
         </div>
 
-        <!-- ✅ Rodapé só com a FONTE -->
         <div class="footer">
           <span><strong>Fonte:</strong> Wyoming Oil &amp; Gas Conservation Commission; The Endocrine Disruption Exchange (TEDX).</span>
         </div>
@@ -276,7 +257,6 @@ td:nth-child(2){
 </div>
 
 <script>
-/* Cabeçalhos */
 const HEADERS = [
   "Produto químico",
   "Percentual em volume (%)",
@@ -294,7 +274,6 @@ const HEADERS = [
   "Desregulador endócrino"
 ];
 
-/* Linhas (conjunto completo do script atual) */
 const ROWS = [
   ["Diammonium peroxodisulphate",29,"sim","sim","sim","","sim","","sim","","","","",""],
   ["Distillates (petroleum), hydrotreated light",17,"sim","sim","sim","sim","","","","","","","sim",""],
@@ -334,18 +313,21 @@ const CHECK_HTML = `
   </span>
 `;
 
-/* colgroup p/ manter largura igual no cabeçalho e no corpo */
 function makeColgroup(){
   const cg = document.createElement("colgroup");
-  const c1 = document.createElement("col"); c1.className = "c1";
-  const c2 = document.createElement("col"); c2.className = "c2";
-  cg.appendChild(c1);
-  cg.appendChild(c2);
 
-  // demais colunas automáticas (ocupam o restante igualmente)
+  // 1) Produto químico
+  const c1 = document.createElement("col"); c1.className = "c1"; cg.appendChild(c1);
+  // 2) Percentual
+  const c2 = document.createElement("col"); c2.className = "c2"; cg.appendChild(c2);
+
+  // 3..14) Efeitos (todas com mesma largura)
   for(let i=0;i<HEADERS.length-2;i++){
-    cg.appendChild(document.createElement("col"));
+    const cx = document.createElement("col");
+    cx.className = "cx";
+    cg.appendChild(cx);
   }
+
   return cg;
 }
 
@@ -395,7 +377,7 @@ function buildBodyTable(){
     tbody.appendChild(tr);
   });
 
-  // ✅ duplicar as linhas para scroll contínuo (sem “pulo”)
+  // duplicar para scroll contínuo
   const clone = tbody.cloneNode(true);
   bodyTable.appendChild(tbody);
   bodyTable.appendChild(clone);
@@ -403,24 +385,22 @@ function buildBodyTable(){
 
 function calibrateScroll(){
   const world = document.getElementById("world");
-  const bodyWrapper = document.querySelector(".table-body-wrapper");
+  const wrapper = document.querySelector(".table-body-wrapper");
 
-  // altura real do conteúdo (metade, pois duplicamos)
+  // metade da altura real (porque duplicamos)
   const contentHeight = world.scrollHeight / 2;
-  const viewportHeight = bodyWrapper.clientHeight;
+  const viewportHeight = wrapper.clientHeight;
 
-  // distância de rolagem = conteúdo - viewport (mínimo 0)
   const dist = Math.max(0, Math.round(contentHeight - viewportHeight));
 
-  // se a tabela couber inteira, não anima
   if(dist <= 0){
     world.style.animation = "none";
     return;
   }
 
-  // duração proporcional para ficar suave (ajuste fino)
-  // ~ 35px por segundo (quanto maior, mais lento)
-  const seconds = Math.max(28, Math.min(75, Math.round(dist / 35)));
+  // velocidade: px por segundo (menor = mais lento)
+  const pxPerSec = 32;
+  const seconds = Math.max(28, Math.min(90, Math.round(dist / pxPerSec)));
 
   document.documentElement.style.setProperty("--scroll-distance", dist + "px");
   document.documentElement.style.setProperty("--scroll-duration", seconds + "s");
@@ -429,15 +409,8 @@ function calibrateScroll(){
 buildHeaderTable();
 buildBodyTable();
 
-// calibrar depois de renderizar
-requestAnimationFrame(() => {
-  calibrateScroll();
-});
-
-// recalibrar em resize
-window.addEventListener("resize", () => {
-  calibrateScroll();
-});
+requestAnimationFrame(() => calibrateScroll());
+window.addEventListener("resize", calibrateScroll);
 </script>
 </body>
 </html>
