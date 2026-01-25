@@ -121,17 +121,15 @@ th, td{
   hyphens: auto;
 }
 
-/* ✅ Produto com quebras controladas (\n) */
+/* ✅ Produto com quebras controladas */
 td.produto{
-  white-space: pre-line;      /* respeita \n */
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  white-space: pre-line;   /* respeita \n */
   line-height: 1.15;
 }
 
 /* ✅ colunas */
-col.c1{  width: 330px; } /* Produto */
-col.c2{  width: 120px; } /* Percentual */
+col.c1{  width: 330px; }
+col.c2{  width: 120px; }
 
 col.c3{  width: 130px; }
 col.c4{  width: 105px; }
@@ -146,6 +144,7 @@ col.c12{ width: 140px; }
 col.c13{ width: 120px; }
 col.c14{ width: 130px; }
 
+/* Cabeçalho */
 thead th{
   padding: 7px 6px;
   text-align:center;
@@ -204,7 +203,7 @@ td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
   color: rgba(255,255,255,.92);
 }
 
-/* ✅ compactação responsiva */
+/* Responsivo */
 @media (max-width: 1350px){
   table{ font-size: 10px; }
 
@@ -261,7 +260,6 @@ td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
 
   <div class="frame">
     <div class="card">
-
       <div class="table-viewport">
 
         <div class="table-header">
@@ -281,16 +279,14 @@ td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
       </div>
 
       <div class="signature">ARAYARA • Não Fracking Brasil</div>
-
     </div>
   </div>
 </div>
 
 <script>
-/* ✅ Cabeçalho com quebra controlada */
 const HEADERS = [
   "Produto químico",
-  "Percentual em\nvolume (%)",  // ✅ quebra aqui
+  "Percentual em\nvolume (%)",
   "Pele, olhos e órgãos\nsensoriais",
   "Sistema\nrespiratório",
   "Trato gastrointestinal e\nfígado",
@@ -305,7 +301,6 @@ const HEADERS = [
   "Desregulador\nendócrino"
 ];
 
-/* ✅ Produtos traduzidos + quebras exatamente como você pediu (com \n) */
 const ROWS = [
   ["Peroxodissulfato de diamônio",29,"sim","sim","sim","","sim","","sim","","","","",""],
   ["Destilados leves de\npetróleo hidrotratados",17,"sim","sim","sim","sim","","","","","","","sim",""],
@@ -366,7 +361,7 @@ function buildHeaderTable(){
 
   HEADERS.forEach(h=>{
     const th = document.createElement("th");
-    th.style.whiteSpace = "pre-line"; // ✅ respeita \n no cabeçalho
+    th.style.whiteSpace = "pre-line";
     th.textContent = h;
     tr.appendChild(th);
   });
@@ -390,10 +385,9 @@ function buildBodyTable(){
 
       if(idx === 0){
         td.classList.add("produto");
-        td.textContent = v; // contém \n
+        td.textContent = v;   // respeita \n
       } else if(idx === 1){
-        td.textContent = (v === "" ? "—" warning : String(v));
-        td.textContent = (v === "" ? "—" : String(v));
+        td.textContent = (v === "" ? "—" : String(v)); // ✅ sem erro
       } else {
         const yes = (String(v).toLowerCase().trim() === "sim");
         td.innerHTML = yes ? CHECK_HTML : '<span class="empty">—</span>';
@@ -405,6 +399,7 @@ function buildBodyTable(){
     tbody.appendChild(tr);
   });
 
+  // duplicar para loop contínuo
   const clone = tbody.cloneNode(true);
   bodyTable.appendChild(tbody);
   bodyTable.appendChild(clone);
@@ -423,7 +418,7 @@ function calibrateScroll(){
     return;
   }
 
-  // ✅ bem lento
+  // lento
   const pxPerSec = 16;
   const seconds = Math.max(90, Math.min(260, Math.round(dist / pxPerSec)));
 
