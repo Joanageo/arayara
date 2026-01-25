@@ -84,12 +84,12 @@ html, body{
   overflow:hidden;
 }
 
-/* Cabeçalho */
+/* Cabeçalho (SEM legenda abaixo e SEM botões à direita) */
 .header{
   position:relative;
   display:flex;
   align-items:flex-start;
-  justify-content:flex-start; /* ✅ não tem mais bloco à direita */
+  justify-content:flex-start;
   gap: 14px;
   padding: 16px 18px 12px 18px;
   border-bottom: 1px solid rgba(255,255,255,.10);
@@ -113,9 +113,6 @@ html, body{
   font-weight: 700;
   color: var(--text);
 }
-
-/* ✅ Removido: legenda abaixo do título */
-/* .legend foi eliminada */
 
 /* Área tabela */
 .table-viewport{
@@ -280,12 +277,14 @@ th:nth-child(2), td:nth-child(2){
 
   <div class="frame">
     <div class="card">
+
       <div class="header">
         <div class="h-left">
           <div class="kicker">NÃO FRACKING BRASIL • COESUS • ARAYARA</div>
           <div class="title">Efeitos à saúde associados a substâncias químicas em fluido de fracking</div>
-          <!-- ✅ Sem legenda aqui -->
+          <!-- ✅ NÃO existe legenda aqui -->
         </div>
+        <!-- ✅ NÃO existe bloco com “NÃO/COESUS/ARAYARA” aqui -->
       </div>
 
       <div class="table-viewport">
