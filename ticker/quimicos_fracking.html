@@ -12,8 +12,8 @@
   --shadow: 0 10px 26px rgba(0,0,0,.55);
   --text: #ffffff;
   --grid: rgba(255,255,255,.12);
-  --gridStrong: rgba(255,255,255,.28);      /* ✅ mais evidente */
-  --gridStrong2: rgba(255,255,255,.22);     /* ✅ mais evidente */
+  --gridStrong: rgba(255,255,255,.28);
+  --gridStrong2: rgba(255,255,255,.22);
   --card: rgba(0,0,0,.40);
   --green: #2ecc71;
 
@@ -62,7 +62,7 @@ html, body{
   overflow:hidden;
 }
 
-/* Header (sem legenda e sem botões) */
+/* Header */
 .header{
   padding: 16px 18px 12px 18px;
   border-bottom: 1px solid rgba(255,255,255,.10);
@@ -104,7 +104,7 @@ html, body{
   border-bottom: none;
 }
 
-/* Corpo animado */
+/* Corpo */
 .table-body-wrapper{
   position:absolute;
   top: 64px;
@@ -123,28 +123,30 @@ html, body{
   animation: panY var(--scroll-duration) linear infinite;
 }
 
-/* ✅ MUITO IMPORTANTE: travar layout igual no cabeçalho e no corpo */
+/* Tabelas */
 table{
   width:100%;
   border-collapse: collapse;
-  table-layout: fixed;           /* ✅ garante encaixe */
+  table-layout: fixed;
   color: var(--text);
   font-size: 12px;
 }
 
-/* ✅ colunas iguais: via colgroup (classes) */
+/* colunas */
 col.c1{ width: 380px; }
 col.c2{ width: 140px; }
-col.cx{ width: 90px; } /* ✅ largura igual para todas as colunas de efeito */
+col.cx{ width: 90px; }
 
-/* Cabeçalho */
+/* ✅ Cabeçalho com fonte menor + divisórias mais evidentes */
 thead th{
-  padding: 10px 8px;
+  padding: 9px 8px;
   text-align:center;
   font-weight:700;
   background: rgba(0,0,0,.62);
 
-  /* ✅ linhas do cabeçalho mais evidentes */
+  font-size: 11px;       /* ✅ menor */
+  line-height: 1.15;     /* ✅ mais compacto */
+
   border-bottom: 2px solid var(--gridStrong);
   border-right: 2px solid var(--gridStrong2);
 }
@@ -160,14 +162,12 @@ tbody td{
   border-right: 1px solid rgba(255,255,255,.10);
 }
 tbody td:last-child{ border-right: none; }
-
 tbody tr:nth-child(odd){ background: rgba(255,255,255,.03); }
 
-/* Primeiras colunas alinhadas */
 th:first-child, td:first-child{ text-align:left; }
 td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
 
-/* Check verde */
+/* Check */
 .chk{
   display:inline-flex;
   align-items:center;
@@ -232,12 +232,10 @@ td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
 
       <div class="table-viewport">
 
-        <!-- Cabeçalho fixo -->
         <div class="table-header">
           <table id="headTable"></table>
         </div>
 
-        <!-- Corpo animado -->
         <div class="table-body-wrapper">
           <div class="world" id="world">
             <table id="bodyTable"></table>
@@ -315,19 +313,13 @@ const CHECK_HTML = `
 
 function makeColgroup(){
   const cg = document.createElement("colgroup");
-
-  // 1) Produto químico
   const c1 = document.createElement("col"); c1.className = "c1"; cg.appendChild(c1);
-  // 2) Percentual
   const c2 = document.createElement("col"); c2.className = "c2"; cg.appendChild(c2);
-
-  // 3..14) Efeitos (todas com mesma largura)
   for(let i=0;i<HEADERS.length-2;i++){
     const cx = document.createElement("col");
     cx.className = "cx";
     cg.appendChild(cx);
   }
-
   return cg;
 }
 
@@ -338,13 +330,11 @@ function buildHeaderTable(){
 
   const thead = document.createElement("thead");
   const tr = document.createElement("tr");
-
   HEADERS.forEach(h=>{
     const th = document.createElement("th");
     th.textContent = h;
     tr.appendChild(th);
   });
-
   thead.appendChild(tr);
   headTable.appendChild(thead);
 }
@@ -358,10 +348,8 @@ function buildBodyTable(){
 
   ROWS.forEach(row=>{
     const tr = document.createElement("tr");
-
     row.forEach((v, idx)=>{
       const td = document.createElement("td");
-
       if(idx === 0){
         td.textContent = v;
       } else if(idx === 1){
@@ -370,10 +358,8 @@ function buildBodyTable(){
         const yes = (String(v).toLowerCase().trim() === "sim");
         td.innerHTML = yes ? CHECK_HTML : '<span class="empty">—</span>';
       }
-
       tr.appendChild(td);
     });
-
     tbody.appendChild(tr);
   });
 
@@ -387,20 +373,19 @@ function calibrateScroll(){
   const world = document.getElementById("world");
   const wrapper = document.querySelector(".table-body-wrapper");
 
-  // metade da altura real (porque duplicamos)
-  const contentHeight = world.scrollHeight / 2;
+  const contentHeight = world.scrollHeight / 2; // metade (duplicado)
   const viewportHeight = wrapper.clientHeight;
 
   const dist = Math.max(0, Math.round(contentHeight - viewportHeight));
-
   if(dist <= 0){
     world.style.animation = "none";
     return;
   }
 
-  // velocidade: px por segundo (menor = mais lento)
-  const pxPerSec = 32;
-  const seconds = Math.max(28, Math.min(90, Math.round(dist / pxPerSec)));
+  /* ✅ 2x mais lento:
+     antes ~32 px/s, agora ~16 px/s (metade da velocidade) */
+  const pxPerSec = 16;
+  const seconds = Math.max(40, Math.min(140, Math.round(dist / pxPerSec)));
 
   document.documentElement.style.setProperty("--scroll-distance", dist + "px");
   document.documentElement.style.setProperty("--scroll-duration", seconds + "s");
