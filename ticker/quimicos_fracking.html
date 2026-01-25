@@ -130,32 +130,34 @@ html, body{
   border-radius: 12px;
 }
 
+/* ✅ Movimento vertical contínuo (de cima para baixo) */
 .world{
   position:absolute;
   top:0;
   left:0;
   transform-origin: left top;
   will-change: transform;
-  animation: panX 34s ease-in-out infinite alternate;
+  animation: panY 42s linear infinite; /* ajuste o tempo se quiser mais lento/rápido */
 }
 
+/* Spotlight (vertical) opcional — bem sutil */
 .spotlight{
   position:absolute;
-  top: 12px;
-  bottom: 44px;
-  left: -30%;
-  width: 18%;
+  left: 12px;
+  right: 12px;
+  top: -30%;
+  height: 22%;
   background: linear-gradient(
-    to right,
+    to bottom,
     rgba(0,0,0,0),
-    rgba(255,217,217,.16),
+    rgba(255,217,217,.14),
     rgba(0,0,0,0)
   );
   filter: blur(2px);
-  animation: sweep 18s linear infinite;
+  animation: sweepY 16s linear infinite;
   pointer-events:none;
   mix-blend-mode: screen;
-  opacity: .85;
+  opacity: .70;
 }
 
 /* Tabela */
@@ -164,8 +166,9 @@ table{
   table-layout: fixed;
   color: var(--text);
   font-size: 12px;
-  width: 1900px;
-  max-width: none;
+  width: 100%;          /* ✅ agora ocupa a largura inteira */
+  max-width: 100%;
+  min-height: 1400px;   /* ✅ garante espaço para o scroll vertical */
 }
 
 thead th{
@@ -251,19 +254,20 @@ th:nth-child(2), td:nth-child(2){
   text-shadow: 0 1px 2px rgba(0,0,0,.75);
 }
 
-/* Animações */
-@keyframes panX{
-  0%   { transform: translateX(0px) scale(1.02); }
-  100% { transform: translateX(-820px) scale(1.06); }
+/* ✅ Animações verticais */
+@keyframes panY{
+  0%   { transform: translateY(0px) scale(1.02); }
+  100% { transform: translateY(-900px) scale(1.05); }
 }
-@keyframes sweep{
-  0%   { transform: translateX(0%); }
-  100% { transform: translateX(190%); }
+
+/* Spotlight vertical varrendo */
+@keyframes sweepY{
+  0%   { transform: translateY(0%); }
+  100% { transform: translateY(210%); }
 }
 
 @media (max-width: 900px){
   .card{ height: 92vh; }
-  table{ width: 1700px; }
   th:first-child, td:first-child{ width: 300px; }
   th:nth-child(2), td:nth-child(2){ width: 120px; }
   table{ font-size: 11px; }
@@ -282,9 +286,9 @@ th:nth-child(2), td:nth-child(2){
         <div class="h-left">
           <div class="kicker">NÃO FRACKING BRASIL • COESUS • ARAYARA</div>
           <div class="title">Efeitos à saúde associados a substâncias químicas em fluido de fracking</div>
-          <!-- ✅ NÃO existe legenda aqui -->
+          <!-- ✅ legenda removida -->
+          <!-- ✅ botões removidos -->
         </div>
-        <!-- ✅ NÃO existe bloco com “NÃO/COESUS/ARAYARA” aqui -->
       </div>
 
       <div class="table-viewport">
@@ -314,7 +318,22 @@ th:nth-child(2), td:nth-child(2){
 </div>
 
 <script>
-const HEADERS = ["Produto químico","Percentual em volume (%)","Pele, olhos e órgãos sensoriais","Sistema respiratório","Trato gastrointestinal e fígado","Cérebro e sistema nervoso","Sistema imunológico","Rins","Sistema cardiovascular e sangue","Carcinogênico","Mutagênico","Efeitos no desenvolvimento","Efeitos reprodutivos","Desregulador endócrino"];
+const HEADERS = [
+  "Produto químico",
+  "Percentual em volume (%)",
+  "Pele, olhos e órgãos sensoriais",
+  "Sistema respiratório",
+  "Trato gastrointestinal e fígado",
+  "Cérebro e sistema nervoso",
+  "Sistema imunológico",
+  "Rins",
+  "Sistema cardiovascular e sangue",
+  "Carcinogênico",
+  "Mutagênico",
+  "Efeitos no desenvolvimento",
+  "Efeitos reprodutivos",
+  "Desregulador endócrino"
+];
 
 const ROWS = [
   ["Diammonium peroxodisulphate",29,"sim","sim","sim","","sim","","sim","","","","",""],
