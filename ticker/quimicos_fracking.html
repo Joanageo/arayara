@@ -90,7 +90,7 @@ html, body{
 
 .table-body-wrapper{
   position:absolute;
-  top: 58px;               /* ✅ ligeiramente menor para caber melhor */
+  top: 58px;
   left:10px; right:10px; bottom:40px;
   overflow:hidden;
   border-radius:0 0 12px 12px;
@@ -109,9 +109,9 @@ html, body{
 table{
   width:100%;
   border-collapse: collapse;
-  table-layout: fixed;     /* ✅ precisa pra colgroup controlar */
+  table-layout: fixed;
   color: var(--text);
-  font-size: 11px;         /* ✅ base um pouco menor pra caber tudo */
+  font-size: 11px;
 }
 
 th, td{
@@ -121,7 +121,15 @@ th, td{
   hyphens: auto;
 }
 
-/* ✅ LARGURAS padrão (desktop) */
+/* ✅ Produto com quebras controladas (\n) */
+td.produto{
+  white-space: pre-line;      /* respeita \n */
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.15;
+}
+
+/* ✅ colunas */
 col.c1{  width: 330px; } /* Produto */
 col.c2{  width: 120px; } /* Percentual */
 
@@ -138,15 +146,14 @@ col.c12{ width: 140px; }
 col.c13{ width: 120px; }
 col.c14{ width: 130px; }
 
-/* Cabeçalho */
 thead th{
   padding: 7px 6px;
   text-align:center;
   font-weight:700;
-  font-size: 10px;         /* ✅ menor ainda no cabeçalho */
+  font-size: 10px;
   line-height: 1.10;
-
   background: rgba(158,2,2,.94);
+
   border-bottom: 2px solid var(--gridStrong);
   border-right: 2px solid var(--gridStrong2);
 }
@@ -197,7 +204,7 @@ td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
   color: rgba(255,255,255,.92);
 }
 
-/* ✅ MODO COMPACTO: quando embed estiver estreito (AGOL) */
+/* ✅ compactação responsiva */
 @media (max-width: 1350px){
   table{ font-size: 10px; }
 
@@ -221,7 +228,6 @@ td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
   tbody td{ padding: 6px 5px; }
 }
 
-/* ✅ SUPER compacto (se ainda assim cortar) */
 @media (max-width: 1150px){
   col.c1{ width: 220px; }
   col.c2{ width: 95px; }
@@ -281,52 +287,54 @@ td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
 </div>
 
 <script>
+/* ✅ Cabeçalho com quebra controlada */
 const HEADERS = [
   "Produto químico",
-  "Percentual em volume (%)",
-  "Pele, olhos e órgãos sensoriais",
-  "Sistema respiratório",
-  "Trato gastrointestinal e fígado",
-  "Cérebro e sistema nervoso",
-  "Sistema imunológico",
+  "Percentual em\nvolume (%)",  // ✅ quebra aqui
+  "Pele, olhos e órgãos\nsensoriais",
+  "Sistema\nrespiratório",
+  "Trato gastrointestinal e\nfígado",
+  "Cérebro e sistema\nnervoso",
+  "Sistema\nimunológico",
   "Rins",
-  "Sistema cardiovascular e sangue",
+  "Sistema cardiovascular e\nsangue",
   "Carcinogênico",
   "Mutagênico",
-  "Efeitos no desenvolvimento",
-  "Efeitos reprodutivos",
-  "Desregulador endócrino"
+  "Efeitos no\ndesenvolvimento",
+  "Efeitos\nreprodutivos",
+  "Desregulador\nendócrino"
 ];
 
+/* ✅ Produtos traduzidos + quebras exatamente como você pediu (com \n) */
 const ROWS = [
-  ["Diammonium peroxodisulphate",29,"sim","sim","sim","","sim","","sim","","","","",""],
-  ["Distillates (petroleum), hydrotreated light",17,"sim","sim","sim","sim","","","","","","","sim",""],
-  ["Guar gum",15,"sim","sim","","","sim","","","","","","",""],
-  ["Tetramethylammonium chloride",9,"sim","sim","sim","sim","","","sim","","","","",""],
-  ["Vinylidene chloride/ methylacrylate copolymer",6,"sim","","","","","","","","","","",""],
-  ["Methanol",5,"sim","sim","sim","sim","","","sim","","","","",""],
-  ["1,2,3-Propanetriol",4,"sim","sim","","","","","","","","","",""],
-  ["2,2,2-nitrotriethanol",2,"sim","sim","sim","sim","","","","","","","",""],
+  ["Peroxodissulfato de diamônio",29,"sim","sim","sim","","sim","","sim","","","","",""],
+  ["Destilados leves de\npetróleo hidrotratados",17,"sim","sim","sim","sim","","","","","","","sim",""],
+  ["Goma guar",15,"sim","sim","","","sim","","","","","","",""],
+  ["Cloreto de tetrametilamônio",9,"sim","sim","sim","sim","","","sim","","","","",""],
+  ["Copolímero de cloreto de\nvinilideno e metilacrilato",6,"sim","","","","","","","","","","",""],
+  ["Metanol",5,"sim","sim","sim","sim","","","sim","","","","",""],
+  ["1,2,3-propanotriol (glicerol)",4,"sim","sim","","","","","","","","","",""],
+  ["Nitrilotrietanol",2,"sim","sim","sim","sim","","","","","","","",""],
   ["Sorbitol",2,"sim","sim","","","","","","","","","",""],
-  ["Sodium tetraborate decahydrate",2,"sim","sim","sim","","","sim","","","","","","","sim"],
-  ["Sodium borate (borax)",2,"sim","sim","sim","","","sim","","","","","","","sim"],
-  ["Acrylamide-sodium 2-acrylamido-2-methyl-1-propanesulfonate",0.9,"","","","","","","","","","","",""],
-  ["Ethoxylated branched C7-9, C8rich alcohols",0.8,"sim","sim","","","","","","","","","",""],
-  ["Ethoxylated branched C9-11, C10rich alcohols",0.8,"sim","sim","","","","","","","","","",""],
-  ["Sodium hydroxide (lye)",0.8,"sim","sim","sim","sim","","","sim","","","","",""],
-  ["Bis(hydrogenated tallow alkyl)dimethylammonium bentonite",0.6,"","","","","","","","","","","",""],
-  ["Ethoxylated propoxylated 4-nonylphenol-formaldehyde",0.6,"","","","","","","","","","","",""],
-  ["Heavy aromatic naphtha",0.4,"sim","sim","sim","sim","","","","","","","",""],
-  ["Alcohols, C11-14isoalk, C13-rich, ethoxylated",0.4,"sim","sim","","","","","","","","","",""],
-  ["Alkylbenzyldimethylammonium chlorides, benzyl C10-16",0.4,"sim","sim","sim","sim","","","sim","","","","",""],
-  ["Magnesium silicate hydrate (talc)",0.3,"","","","","","","","","","","",""],
-  ["Poly(oxy-1,2-ethanediyl)",0.2,"","","","","","","","","","","",""],
-  ["Alcohols, C12-13 alkyl, ethoxylated",0.2,"sim","sim","","","","","","","","","",""],
-  ["Alcohol ethoxylate C10-16 with 6.5 EO",0.2,"sim","sim","","","","","","","","","",""],
-  ["Sodium chloride",0.1,"","","","","","","","","","","",""],
-  ["Tetrakis(hydroxymethyl)phosphonium sulfate",0.1,"sim","sim","sim","sim","","","sim","","","","",""],
-  ["Non-crystalline silica",0.1,"sim","sim","sim","","","","","sim","","","","",""],
-  ["Boric acid",0.0042,"sim","sim","sim","","","","","","","","","","sim"]
+  ["Tetraborato de sódio\ndecaidratado",2,"sim","sim","sim","","","sim","","","","","","","sim"],
+  ["Borato de sódio (bórax)",2,"sim","sim","sim","","","sim","","","","","","","sim"],
+  ["Copolímero de acrilamida e\n2-acrilamido-2-metilpropanossulfonato\nde sódio",0.9,"","","","","","","","","","","",""],
+  ["Álcoois ramificados C7–C9 etoxilados\n(ricos em C8)",0.8,"sim","sim","","","","","","","","","",""],
+  ["Álcoois ramificados C9–C11 etoxilados\n(ricos em C10)",0.8,"sim","sim","","","","","","","","","",""],
+  ["Hidróxido de sódio (soda cáustica)",0.8,"sim","sim","sim","sim","","","sim","","","","",""],
+  ["Bentonita de dimetilamônio\ncom alquila de sebo hidrogenado",0.6,"","","","","","","","","","","",""],
+  ["Resina de 4-nonilfenol-formaldeído\netoxilada e propoxilada",0.6,"","","","","","","","","","","",""],
+  ["Nafta aromática pesada",0.4,"sim","sim","sim","sim","","","","","","","",""],
+  ["Álcoois C11–C14 (iso),\nricos em C13, etoxilados",0.4,"sim","sim","","","","","","","","","",""],
+  ["Cloretos de alquildimetilamônio\nbenzílicos C10–C16",0.4,"sim","sim","sim","sim","","","sim","","","","",""],
+  ["Silicato de magnésio\nhidratado (talco)",0.3,"","","","","","","","","","","",""],
+  ["Poli(óxi-1,2-etanodiila) (polietilenoglicol)",0.2,"","","","","","","","","","","",""],
+  ["Álcoois alquila C12–C13 etoxilados",0.2,"sim","sim","","","","","","","","","",""],
+  ["Álcool etoxilado C10–C16 com 6,5 EO",0.2,"sim","sim","","","","","","","","","",""],
+  ["Cloreto de sódio",0.1,"","","","","","","","","","","",""],
+  ["Sulfato de tetrakis (hidroximetil) fosfônio",0.1,"sim","sim","sim","sim","","","sim","","","","",""],
+  ["Sílica não cristalina",0.1,"sim","sim","sim","","","","","sim","","","","",""],
+  ["Ácido bórico",0.0042,"sim","sim","sim","","","","","","","","","","sim"]
 ];
 
 const CHECK_HTML = `
@@ -358,6 +366,7 @@ function buildHeaderTable(){
 
   HEADERS.forEach(h=>{
     const th = document.createElement("th");
+    th.style.whiteSpace = "pre-line"; // ✅ respeita \n no cabeçalho
     th.textContent = h;
     tr.appendChild(th);
   });
@@ -375,23 +384,27 @@ function buildBodyTable(){
 
   ROWS.forEach(row=>{
     const tr = document.createElement("tr");
+
     row.forEach((v, idx)=>{
       const td = document.createElement("td");
 
       if(idx === 0){
-        td.textContent = v;
+        td.classList.add("produto");
+        td.textContent = v; // contém \n
       } else if(idx === 1){
+        td.textContent = (v === "" ? "—" warning : String(v));
         td.textContent = (v === "" ? "—" : String(v));
       } else {
         const yes = (String(v).toLowerCase().trim() === "sim");
         td.innerHTML = yes ? CHECK_HTML : '<span class="empty">—</span>';
       }
+
       tr.appendChild(td);
     });
+
     tbody.appendChild(tr);
   });
 
-  // duplicar para loop contínuo
   const clone = tbody.cloneNode(true);
   bodyTable.appendChild(tbody);
   bodyTable.appendChild(clone);
@@ -410,7 +423,7 @@ function calibrateScroll(){
     return;
   }
 
-  // ✅ bem mais lento (2x mais lento do que o "rápido"): 16 px/s
+  // ✅ bem lento
   const pxPerSec = 16;
   const seconds = Math.max(90, Math.min(260, Math.round(dist / pxPerSec)));
 
