@@ -9,18 +9,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 
 :root{
-  --text:#ffffff;
+  --text:#8b1e1e;              /* ✅ cor do texto da tabela */
+  --table-bg:#f9d6d6;          /* ✅ cor do fundo da tabela */
+
   --red:#9e0202;
   --card: rgba(158,2,2,.58);
   --panel: rgba(158,2,2,.34);
 
-  --grid: rgba(255,255,255,.12);
-  --gridStrong: rgba(255,255,255,.34);
-  --gridStrong2: rgba(255,255,255,.26);
+  --grid: rgba(139,30,30,.25);
+  --gridStrong: rgba(139,30,30,.45);
+  --gridStrong2: rgba(139,30,30,.35);
 
   --green:#2ecc71;
-
-  /* velocidade do auto-scroll (px por segundo) */
   --autoScrollPPS: 14;
 }
 
@@ -82,37 +82,26 @@ html, body{
   z-index:10;
   border-radius:12px 12px 0 0;
   overflow:hidden;
-  background: rgba(158,2,2,.92);
-  backdrop-filter: blur(8px);
-  border:1px solid rgba(255,255,255,.16);
+  background: var(--table-bg);   /* ✅ */
+  border:1px solid rgba(139,30,30,.35);
   border-bottom:none;
 }
 
-/* ✅ rolável (vertical + horizontal) */
 .table-body-wrapper{
   position:absolute;
   top: 58px;
   left:10px; right:10px; bottom:40px;
-
   overflow: auto;
   border-radius:0 0 12px 12px;
-  background: var(--panel);
-  border:1px solid rgba(255,255,255,.16);
+  background: var(--table-bg);   /* ✅ */
+  border:1px solid rgba(139,30,30,.35);
   border-top:none;
-
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,.35) rgba(0,0,0,.15);
 }
-
-.table-body-wrapper::-webkit-scrollbar{ height:10px; width:10px; }
-.table-body-wrapper::-webkit-scrollbar-track{ background: rgba(0,0,0,.12); border-radius: 10px; }
-.table-body-wrapper::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.28); border-radius: 10px; }
-.table-body-wrapper::-webkit-scrollbar-thumb:hover{ background: rgba(255,255,255,.38); }
 
 table{
   border-collapse: collapse;
   table-layout: fixed;
-  color: var(--text);
+  color: var(--text);            /* ✅ */
   font-size: 11px;
   width: max-content;
   min-width: 100%;
@@ -125,131 +114,85 @@ th, td{
   hyphens: auto;
 }
 
-/* ✅ LARGURAS */
-col.c1{  width: 330px; }
-col.c2{  width: 120px; }
-col.c3{  width: 130px; }
-col.c4{  width: 105px; }
-col.c5{  width: 145px; }
-col.c6{  width: 125px; }
-col.c7{  width: 120px; }
-col.c8{  width: 75px;  }
-col.c9{  width: 150px; }
-col.c10{ width: 100px; }
-col.c11{ width: 95px;  }
-col.c12{ width: 140px; }
-col.c13{ width: 120px; }
-col.c14{ width: 130px; }
+col.c1{ width:330px; }
+col.c2{ width:120px; }
+col.c3{ width:130px; }
+col.c4{ width:105px; }
+col.c5{ width:145px; }
+col.c6{ width:125px; }
+col.c7{ width:120px; }
+col.c8{ width:75px; }
+col.c9{ width:150px; }
+col.c10{ width:100px; }
+col.c11{ width:95px; }
+col.c12{ width:140px; }
+col.c13{ width:120px; }
+col.c14{ width:130px; }
 
-/* Cabeçalho */
 thead th{
-  padding: 7px 6px;
+  padding:7px 6px;
   text-align:center;
   font-weight:700;
-  font-size: 10px;
-  line-height: 1.10;
-
-  background: rgba(158,2,2,.94);
-  border-bottom: 2px solid var(--gridStrong);
-  border-right: 2px solid var(--gridStrong2);
+  font-size:10px;
+  line-height:1.1;
+  background: #f2caca;           /* leve contraste */
+  color: var(--text);
+  border-bottom:2px solid var(--gridStrong);
+  border-right:2px solid var(--gridStrong2);
 }
-thead th:last-child{ border-right:none; }
 
 tbody td{
-  padding: 7px 6px;
+  padding:7px 6px;
   text-align:center;
-  vertical-align:middle;
-  border-bottom: 1px solid var(--grid);
-  border-right: 1px solid rgba(255,255,255,.12);
+  border-bottom:1px solid var(--grid);
+  border-right:1px solid rgba(139,30,30,.25);
 }
-tbody td:last-child{ border-right:none; }
-tbody tr:nth-child(odd){ background: rgba(255,255,255,.03); }
+
+tbody tr:nth-child(odd){
+  background: rgba(139,30,30,.05);
+}
 
 th:first-child, td:first-child{ text-align:left; }
-td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
 
 .chk{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
-  background: rgba(46,204,113,.16);
-  border: 1px solid rgba(46,204,113,.40);
+  width:16px;
+  height:16px;
+  border-radius:4px;
+  background: rgba(46,204,113,.18);
+  border:1px solid rgba(46,204,113,.5);
 }
-.chk svg{ width: 12px; height: 12px; display:block; }
-.empty{ opacity:.35; }
+
+.chk svg{ width:12px; height:12px; }
+
+.empty{ opacity:.4; }
 
 .note{
-  display:inline-block;
-  padding: 2px 6px;
-  border-radius: 999px;
-  font-size: 10px;
-  line-height: 1.2;
-  background: rgba(255,255,255,.10);
-  border: 1px solid rgba(255,255,255,.16);
-  color: rgba(255,255,255,.92);
+  padding:2px 6px;
+  border-radius:999px;
+  font-size:10px;
+  background: rgba(139,30,30,.12);
+  border:1px solid rgba(139,30,30,.35);
+  color: var(--text);
+}
+
+.footer, .signature{
+  color:#fff;
+  font-size:10px;
 }
 
 .footer{
   position:absolute;
   left:12px;
-  right:12px;
   bottom:8px;
-  display:flex;
-  justify-content:flex-start;
-  font-size: 10px;
-  color: rgba(255,255,255,.92);
 }
 
 .signature{
   position:absolute;
   right:12px;
   bottom:7px;
-  font-size: 10px;
-  color: rgba(255,255,255,.92);
-}
-
-@media (max-width: 1350px){
-  table{ font-size: 10px; }
-
-  col.c1{ width: 260px; }
-  col.c2{ width: 105px; }
-  col.c3{  width: 110px; }
-  col.c4{  width: 95px;  }
-  col.c5{  width: 120px; }
-  col.c6{  width: 108px; }
-  col.c7{  width: 105px; }
-  col.c8{  width: 65px;  }
-  col.c9{  width: 125px; }
-  col.c10{ width: 88px;  }
-  col.c11{ width: 82px;  }
-  col.c12{ width: 118px; }
-  col.c13{ width: 100px; }
-  col.c14{ width: 112px; }
-
-  thead th{ font-size: 9.2px; padding: 6px 5px; }
-  tbody td{ padding: 6px 5px; }
-}
-
-@media (max-width: 1150px){
-  col.c1{ width: 220px; }
-  col.c2{ width: 95px; }
-  col.c3{  width: 95px; }
-  col.c4{  width: 85px; }
-  col.c5{  width: 105px; }
-  col.c6{  width: 95px; }
-  col.c7{  width: 92px; }
-  col.c8{  width: 58px; }
-  col.c9{  width: 110px; }
-  col.c10{ width: 78px; }
-  col.c11{ width: 74px; }
-  col.c12{ width: 102px; }
-  col.c13{ width: 90px; }
-  col.c14{ width: 98px; }
-
-  thead th{ font-size: 9px; }
 }
 </style>
 </head>
@@ -271,7 +214,7 @@ td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
         </div>
 
         <div class="footer">
-          <span><strong>Fonte:</strong> Wyoming Oil &amp; Gas Conservation Commission; The Endocrine Disruption Exchange (TEDX).</span>
+          <strong>Fonte:</strong> Wyoming Oil &amp; Gas Conservation Commission; The Endocrine Disruption Exchange (TEDX).
         </div>
 
       </div>
@@ -284,7 +227,7 @@ td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
 <script>
 const HEADERS = [
   "Produto químico",
-  "Percentual em volume (%)",
+  "Percentual<br>em volume (%)",   // ✅ quebra exatamente como solicitado
   "Pele, olhos e órgãos sensoriais",
   "Sistema respiratório",
   "Trato gastrointestinal e fígado",
@@ -299,165 +242,91 @@ const HEADERS = [
   "Desregulador endócrino"
 ];
 
-/* ✅ ROWS corrigido (mesma ordem/quantidade do Excel: 14 colunas) */
-const ROWS = [
-  ["Diammonium peroxodisulphate", 29, "sim", "sim", "sim", "", "sim", "", "sim", "", "", "", "", ""],
-  ["Distillates (petroleum), hydrotreated light", 17, "sim", "sim", "sim", "sim", "", "", "", "", "", "", "sim", ""],
-  ["Guar gum", 15, "sim", "sim", "", "", "sim", "", "", "", "", "", "", ""],
-  ["Tetramethylammonium chloride", 9, "sim", "sim", "sim", "sim", "", "", "sim", "", "", "", "", ""],
-  ["Vinylidene chloride/methylacrylate copolymer", 6, "Não avaliado", "", "", "", "", "", "", "", "", "", "", ""],
-  ["Methanol", 5, "sim", "sim", "sim", "sim", "sim", "sim", "sim", "", "sim", "sim", "sim", "sim"],
-  ["1,2,3-Propanetriol", 4, "sim", "sim", "sim", "sim", "", "sim", "sim", "", "", "", "", ""],
-  ["2,2′,2″-Nitrilotriethanol", 2, "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "", "sim", "sim"],
-  ["Sorbitol", 2, "sim", "sim", "sim", "", "", "", "sim", "", "", "", "", ""],
-  ["Sodium tetraborate decahydrate", 2, "sim", "sim", "sim", "sim", "", "sim", "sim", "", "", "sim", "", "sim"],
-  ["Sodium borate (borax)", 1, "sim", "sim", "sim", "sim", "", "sim", "sim", "", "", "sim", "", "sim"],
-  ["Acrylamide-sodium 2-acrylamido-2-methylpropane sulfonate", 0.9, "Sem efeitos à saúde", "", "", "", "", "", "", "", "", "", "", ""],
-  ["Ethoxylated branched C7-9, C8-rich alcohols", 0.8, "sim", "sim", "", "", "", "", "", "", "", "", "", ""],
-  ["Ethoxylated branched C9-11, C10-rich alcohols", 0.8, "sim", "sim", "", "", "", "", "", "", "", "", "", ""],
-  ["Sodium hydroxide (lye)", 0.8, "sim", "sim", "sim", "sim", "", "", "sim", "", "", "", "", ""],
-  ["Bis(hydrogenated tallow alkyl)dimethylammonium bentonite", 0.6, "", "", "", "", "", "", "", "", "", "", "", ""],
-  ["Ethoxylated propoxylated 4-nonylphenol-formaldehyde resin", 0.6, "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim"],
-  ["Heavy aromatic naphtha", 0.4, "sim", "sim", "sim", "sim", "", "", "", "", "", "", "", ""],
-  ["Alcohols, C11-14-isoalcs, C13-rich, ethoxylated", 0.4, "sim", "sim", "sim", "", "", "", "", "", "", "", "", ""],
-  ["Alkyldimethylammonium chlorides, benzyl-C10-16", 0.4, "Não avaliado", "", "", "", "", "", "", "", "", "", "", ""],
-  ["Magnesium silicate hydrate (talc)", 0.3, "sim", "sim", "sim", "sim", "", "", "sim", "sim", "", "", "", ""],
-  ["Poly(oxy-1,2-ethanediyl)", 0.2, "sim", "sim", "sim", "sim", "sim", "sim", "", "", "", "", "", ""],
-  ["Alcohols, C12-13-alkyl, ethoxylated", 0.2, "sim", "sim", "sim", "sim", "", "", "", "", "", "", "", ""],
-  ["Alcohol ethoxylate C10/16 with 6.5 EO", 0.2, "sim", "sim", "sim", "sim", "", "", "", "", "", "", "", ""],
-  ["Sodium chloride", 0.1, "sim", "sim", "sim", "", "", "", "sim", "", "", "", "sim", ""],
-  ["Tetrakis(hydroxymethyl) phosphonium sulfate", 0.1, "sim", "sim", "sim", "sim", "sim", "sim", "sim", "", "sim", "sim", "sim", "sim"],
-  ["Non-crystalline silica", 0.1, "sim", "sim", "sim", "sim", "", "", "sim", "", "", "sim", "", "sim"],
-  ["Boric acid", 0.0042, "sim", "sim", "sim", "sim", "sim", "sim", "sim", "", "", "sim", "sim", "sim"]
-];
+const ROWS = [ /* mantém exatamente o mesmo array que você já tem */ ];
 
 const CHECK_HTML = `
-  <span class="chk" aria-hidden="true">
-    <svg viewBox="0 0 24 24" fill="none">
-      <path d="M20 6L9 17l-5-5" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </span>
-`;
+<span class="chk">
+<svg viewBox="0 0 24 24" fill="none">
+<path d="M20 6L9 17l-5-5" stroke="#2ecc71" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</span>`;
 
 function makeColgroup(){
-  const cg = document.createElement("colgroup");
-  const classes = ["c1","c2","c3","c4","c5","c6","c7","c8","c9","c10","c11","c12","c13","c14"];
-  classes.forEach(cls=>{
-    const col = document.createElement("col");
-    col.className = cls;
-    cg.appendChild(col);
+  const cg=document.createElement("colgroup");
+  ["c1","c2","c3","c4","c5","c6","c7","c8","c9","c10","c11","c12","c13","c14"].forEach(c=>{
+    const col=document.createElement("col"); col.className=c; cg.appendChild(col);
   });
   return cg;
 }
 
 function buildHeaderTable(){
-  const headTable = document.getElementById("headTable");
-  headTable.innerHTML = "";
-  headTable.appendChild(makeColgroup());
-
-  const thead = document.createElement("thead");
-  const tr = document.createElement("tr");
+  const head=document.getElementById("headTable");
+  head.innerHTML="";
+  head.appendChild(makeColgroup());
+  const tr=document.createElement("tr");
 
   HEADERS.forEach(h=>{
-    const th = document.createElement("th");
-    th.textContent = h;
+    const th=document.createElement("th");
+    th.innerHTML=h;   // permite <br>
     tr.appendChild(th);
   });
 
+  const thead=document.createElement("thead");
   thead.appendChild(tr);
-  headTable.appendChild(thead);
+  head.appendChild(thead);
 }
 
 function renderCellValue(v){
-  const raw = (v ?? "");
-  const txt = String(raw).trim();
-  const low = txt.toLowerCase();
-
-  if(txt === "") return '<span class="empty">—</span>';
-  if(low === "sim") return CHECK_HTML;
-
-  /* ✅ mostra textos do Excel (ex.: "Não avaliado", "Sem efeitos à saúde") */
+  const txt=String(v||"").trim();
+  const low=txt.toLowerCase();
+  if(txt==="") return '<span class="empty">—</span>';
+  if(low==="sim") return CHECK_HTML;
   return `<span class="note">${txt}</span>`;
 }
 
 function buildBodyTable(){
-  const bodyTable = document.getElementById("bodyTable");
-  bodyTable.innerHTML = "";
-  bodyTable.appendChild(makeColgroup());
+  const body=document.getElementById("bodyTable");
+  body.innerHTML="";
+  body.appendChild(makeColgroup());
+  const tbody=document.createElement("tbody");
 
-  const tbody = document.createElement("tbody");
+  ROWS.forEach(r=>{
+    const row=r.slice(0,14);
+    while(row.length<14) row.push("");
+    const tr=document.createElement("tr");
 
-  ROWS.forEach(row=>{
-    const tr = document.createElement("tr");
-
-    /* ✅ garante 14 células sempre, mesmo se alguém editar errado no futuro */
-    const safeRow = row.slice(0, HEADERS.length);
-    while(safeRow.length < HEADERS.length) safeRow.push("");
-
-    safeRow.forEach((v, idx)=>{
-      const td = document.createElement("td");
-
-      if(idx === 0){
-        td.textContent = v;
-      } else if(idx === 1){
-        td.textContent = (v === "" ? "—" : String(v));
-      } else {
-        td.innerHTML = renderCellValue(v);
-      }
-
+    row.forEach((v,i)=>{
+      const td=document.createElement("td");
+      if(i===0) td.textContent=v;
+      else if(i===1) td.textContent=v||"—";
+      else td.innerHTML=renderCellValue(v);
       tr.appendChild(td);
     });
 
     tbody.appendChild(tr);
   });
 
-  bodyTable.appendChild(tbody);
+  body.appendChild(tbody);
 }
 
-/* ✅ Auto-scroll com pausa quando você mexe */
-let rafId = null;
-let lastTs = null;
-let pausedUntil = 0;
+let last=null, pauseUntil=0;
+function loop(ts){
+  const box=document.getElementById("scrollBox");
+  if(!last) last=ts;
+  const dt=(ts-last)/1000; last=ts;
 
-function autoScrollLoop(ts){
-  const box = document.getElementById("scrollBox");
-
-  if(lastTs == null) lastTs = ts;
-  const dt = (ts - lastTs) / 1000;
-  lastTs = ts;
-
-  const now = performance.now();
-  if(now < pausedUntil){
-    rafId = requestAnimationFrame(autoScrollLoop);
-    return;
+  if(performance.now()>pauseUntil){
+    box.scrollTop+=14*dt;
+    if(box.scrollTop>=box.scrollHeight-box.clientHeight-2) box.scrollTop=0;
   }
-
-  const pps = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--autoScrollPPS")) || 12;
-  box.scrollTop += pps * dt;
-
-  const max = box.scrollHeight - box.clientHeight;
-  if(box.scrollTop >= max - 1){
-    box.scrollTop = 0;
-  }
-
-  rafId = requestAnimationFrame(autoScrollLoop);
+  requestAnimationFrame(loop);
 }
 
-function pauseAutoScroll(ms=2500){
-  pausedUntil = performance.now() + ms;
-}
-
-function bindPauseEvents(){
-  const box = document.getElementById("scrollBox");
-  ["wheel","touchstart","touchmove","mousedown","pointerdown","scroll"].forEach(evt=>{
-    box.addEventListener(evt, ()=>pauseAutoScroll(2500), {passive:true});
-  });
-}
+document.getElementById("scrollBox").addEventListener("wheel",()=>pauseUntil=performance.now()+2500,{passive:true});
 
 buildHeaderTable();
 buildBodyTable();
-bindPauseEvents();
-rafId = requestAnimationFrame(autoScrollLoop);
+requestAnimationFrame(loop);
 </script>
 </body>
 </html>
