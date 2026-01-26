@@ -9,16 +9,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 
 :root{
-  --text:#8b1e1e;              /* ✅ cor do texto da tabela */
-  --table-bg:#f9d6d6;          /* ✅ cor do fundo da tabela */
+  /* ✅ cores pedidas */
+  --text:#8b1e1e;
+  --table-bg:#f9d6d6;
 
   --red:#9e0202;
   --card: rgba(158,2,2,.58);
-  --panel: rgba(158,2,2,.34);
 
-  --grid: rgba(139,30,30,.25);
-  --gridStrong: rgba(139,30,30,.45);
-  --gridStrong2: rgba(139,30,30,.35);
+  /* grid adaptado ao texto vinho */
+  --grid: rgba(139,30,30,.20);
+  --gridStrong: rgba(139,30,30,.38);
+  --gridStrong2: rgba(139,30,30,.30);
 
   --green:#2ecc71;
   --autoScrollPPS: 14;
@@ -82,26 +83,36 @@ html, body{
   z-index:10;
   border-radius:12px 12px 0 0;
   overflow:hidden;
-  background: var(--table-bg);   /* ✅ */
+  background: var(--table-bg);
   border:1px solid rgba(139,30,30,.35);
   border-bottom:none;
 }
 
+/* ✅ rolável (vertical + horizontal) */
 .table-body-wrapper{
   position:absolute;
-  top: 58px;
+  top: 58px; /* altura do cabeçalho */
   left:10px; right:10px; bottom:40px;
+
   overflow: auto;
   border-radius:0 0 12px 12px;
-  background: var(--table-bg);   /* ✅ */
+  background: var(--table-bg);
   border:1px solid rgba(139,30,30,.35);
   border-top:none;
+
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139,30,30,.35) rgba(0,0,0,.10);
 }
+
+.table-body-wrapper::-webkit-scrollbar{ height:10px; width:10px; }
+.table-body-wrapper::-webkit-scrollbar-track{ background: rgba(0,0,0,.10); border-radius: 10px; }
+.table-body-wrapper::-webkit-scrollbar-thumb{ background: rgba(139,30,30,.28); border-radius: 10px; }
+.table-body-wrapper::-webkit-scrollbar-thumb:hover{ background: rgba(139,30,30,.38); }
 
 table{
   border-collapse: collapse;
   table-layout: fixed;
-  color: var(--text);            /* ✅ */
+  color: var(--text);
   font-size: 11px;
   width: max-content;
   min-width: 100%;
@@ -114,85 +125,91 @@ th, td{
   hyphens: auto;
 }
 
-col.c1{ width:330px; }
-col.c2{ width:120px; }
-col.c3{ width:130px; }
-col.c4{ width:105px; }
-col.c5{ width:145px; }
-col.c6{ width:125px; }
-col.c7{ width:120px; }
-col.c8{ width:75px; }
-col.c9{ width:150px; }
-col.c10{ width:100px; }
-col.c11{ width:95px; }
-col.c12{ width:140px; }
-col.c13{ width:120px; }
-col.c14{ width:130px; }
+/* ✅ LARGURAS */
+col.c1{  width: 330px; }
+col.c2{  width: 120px; }
+col.c3{  width: 130px; }
+col.c4{  width: 105px; }
+col.c5{  width: 145px; }
+col.c6{  width: 125px; }
+col.c7{  width: 120px; }
+col.c8{  width: 75px;  }
+col.c9{  width: 150px; }
+col.c10{ width: 100px; }
+col.c11{ width: 95px;  }
+col.c12{ width: 140px; }
+col.c13{ width: 120px; }
+col.c14{ width: 130px; }
 
+/* Cabeçalho */
 thead th{
-  padding:7px 6px;
+  padding: 7px 6px;
   text-align:center;
   font-weight:700;
-  font-size:10px;
-  line-height:1.1;
-  background: #f2caca;           /* leve contraste */
+  font-size: 10px;
+  line-height: 1.10;
+
+  background: #f2caca;
   color: var(--text);
-  border-bottom:2px solid var(--gridStrong);
-  border-right:2px solid var(--gridStrong2);
+  border-bottom: 2px solid var(--gridStrong);
+  border-right: 2px solid var(--gridStrong2);
 }
+thead th:last-child{ border-right:none; }
 
 tbody td{
-  padding:7px 6px;
+  padding: 7px 6px;
   text-align:center;
-  border-bottom:1px solid var(--grid);
-  border-right:1px solid rgba(139,30,30,.25);
+  vertical-align:middle;
+  border-bottom: 1px solid var(--grid);
+  border-right: 1px solid rgba(139,30,30,.18);
 }
-
-tbody tr:nth-child(odd){
-  background: rgba(139,30,30,.05);
-}
+tbody td:last-child{ border-right:none; }
+tbody tr:nth-child(odd){ background: rgba(139,30,30,.05); }
 
 th:first-child, td:first-child{ text-align:left; }
+td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
 
 .chk{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  width:16px;
-  height:16px;
-  border-radius:4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
   background: rgba(46,204,113,.18);
-  border:1px solid rgba(46,204,113,.5);
+  border: 1px solid rgba(46,204,113,.45);
 }
-
-.chk svg{ width:12px; height:12px; }
-
-.empty{ opacity:.4; }
+.chk svg{ width: 12px; height: 12px; display:block; }
+.empty{ opacity:.45; }
 
 .note{
-  padding:2px 6px;
-  border-radius:999px;
-  font-size:10px;
-  background: rgba(139,30,30,.12);
-  border:1px solid rgba(139,30,30,.35);
+  display:inline-block;
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-size: 10px;
+  line-height: 1.2;
+  background: rgba(139,30,30,.10);
+  border: 1px solid rgba(139,30,30,.25);
   color: var(--text);
-}
-
-.footer, .signature{
-  color:#fff;
-  font-size:10px;
 }
 
 .footer{
   position:absolute;
   left:12px;
+  right:12px;
   bottom:8px;
+  display:flex;
+  justify-content:flex-start;
+  font-size: 10px;
+  color: rgba(255,255,255,.92);
 }
 
 .signature{
   position:absolute;
   right:12px;
   bottom:7px;
+  font-size: 10px;
+  color: rgba(255,255,255,.92);
 }
 </style>
 </head>
@@ -214,7 +231,7 @@ th:first-child, td:first-child{ text-align:left; }
         </div>
 
         <div class="footer">
-          <strong>Fonte:</strong> Wyoming Oil &amp; Gas Conservation Commission; The Endocrine Disruption Exchange (TEDX).
+          <span><strong>Fonte:</strong> Wyoming Oil &amp; Gas Conservation Commission; The Endocrine Disruption Exchange (TEDX).</span>
         </div>
 
       </div>
@@ -227,7 +244,7 @@ th:first-child, td:first-child{ text-align:left; }
 <script>
 const HEADERS = [
   "Produto químico",
-  "Percentual<br>em volume (%)",   // ✅ quebra exatamente como solicitado
+  "Percentual<br>em volume (%)",   // ✅ quebra: Percentual \ em volume (%)
   "Pele, olhos e órgãos sensoriais",
   "Sistema respiratório",
   "Trato gastrointestinal e fígado",
@@ -242,91 +259,153 @@ const HEADERS = [
   "Desregulador endócrino"
 ];
 
-const ROWS = [ /* mantém exatamente o mesmo array que você já tem */ ];
+/* ✅ ROWS completo */
+const ROWS = [
+  ["Diammonium peroxodisulphate", 29, "sim", "sim", "sim", "", "sim", "", "sim", "", "", "", "", ""],
+  ["Distillates (petroleum), hydrotreated light", 17, "sim", "sim", "sim", "sim", "", "", "", "", "", "", "sim", ""],
+  ["Guar gum", 15, "sim", "sim", "", "", "sim", "", "", "", "", "", "", ""],
+  ["Tetramethylammonium chloride", 9, "sim", "sim", "sim", "sim", "", "", "sim", "", "", "", "", ""],
+  ["Vinylidene chloride/methylacrylate copolymer", 6, "Não avaliado", "", "", "", "", "", "", "", "", "", "", ""],
+  ["Methanol", 5, "sim", "sim", "sim", "sim", "sim", "sim", "sim", "", "sim", "sim", "sim", "sim"],
+  ["1,2,3-Propanetriol", 4, "sim", "sim", "sim", "sim", "", "sim", "sim", "", "", "", "", ""],
+  ["2,2′,2″-Nitrilotriethanol", 2, "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "", "sim", "sim"],
+  ["Sorbitol", 2, "sim", "sim", "sim", "", "", "", "sim", "", "", "", "", ""],
+  ["Sodium tetraborate decahydrate", 2, "sim", "sim", "sim", "sim", "", "sim", "sim", "", "", "sim", "", "sim"],
+  ["Sodium borate (borax)", 1, "sim", "sim", "sim", "sim", "", "sim", "sim", "", "", "sim", "", "sim"],
+  ["Acrylamide-sodium 2-acrylamido-2-methylpropane sulfonate", 0.9, "Sem efeitos à saúde", "", "", "", "", "", "", "", "", "", "", ""],
+  ["Ethoxylated branched C7-9, C8-rich alcohols", 0.8, "sim", "sim", "", "", "", "", "", "", "", "", "", ""],
+  ["Ethoxylated branched C9-11, C10-rich alcohols", 0.8, "sim", "sim", "", "", "", "", "", "", "", "", "", ""],
+  ["Sodium hydroxide (lye)", 0.8, "sim", "sim", "sim", "sim", "", "", "sim", "", "", "", "", ""],
+  ["Bis(hydrogenated tallow alkyl)dimethylammonium bentonite", 0.6, "", "", "", "", "", "", "", "", "", "", "", ""],
+  ["Ethoxylated propoxylated 4-nonylphenol-formaldehyde resin", 0.6, "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim"],
+  ["Heavy aromatic naphtha", 0.4, "sim", "sim", "sim", "sim", "", "", "", "", "", "", "", ""],
+  ["Alcohols, C11-14-isoalcs, C13-rich, ethoxylated", 0.4, "sim", "sim", "sim", "", "", "", "", "", "", "", "", ""],
+  ["Alkyldimethylammonium chlorides, benzyl-C10-16", 0.4, "Não avaliado", "", "", "", "", "", "", "", "", "", "", ""],
+  ["Magnesium silicate hydrate (talc)", 0.3, "sim", "sim", "sim", "sim", "", "", "sim", "sim", "", "", "", ""],
+  ["Poly(oxy-1,2-ethanediyl)", 0.2, "sim", "sim", "sim", "sim", "sim", "sim", "", "", "", "", "", ""],
+  ["Alcohols, C12-13-alkyl, ethoxylated", 0.2, "sim", "sim", "sim", "sim", "", "", "", "", "", "", "", ""],
+  ["Alcohol ethoxylate C10/16 with 6.5 EO", 0.2, "sim", "sim", "sim", "sim", "", "", "", "", "", "", "", ""],
+  ["Sodium chloride", 0.1, "sim", "sim", "sim", "", "", "", "sim", "", "", "", "sim", ""],
+  ["Tetrakis(hydroxymethyl) phosphonium sulfate", 0.1, "sim", "sim", "sim", "sim", "sim", "sim", "sim", "", "sim", "sim", "sim", "sim"],
+  ["Non-crystalline silica", 0.1, "sim", "sim", "sim", "sim", "", "", "sim", "", "", "sim", "", "sim"],
+  ["Boric acid", 0.0042, "sim", "sim", "sim", "sim", "sim", "sim", "sim", "", "", "sim", "sim", "sim"]
+];
 
 const CHECK_HTML = `
-<span class="chk">
-<svg viewBox="0 0 24 24" fill="none">
-<path d="M20 6L9 17l-5-5" stroke="#2ecc71" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-</span>`;
+  <span class="chk" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none">
+      <path d="M20 6L9 17l-5-5" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </span>
+`;
 
 function makeColgroup(){
-  const cg=document.createElement("colgroup");
-  ["c1","c2","c3","c4","c5","c6","c7","c8","c9","c10","c11","c12","c13","c14"].forEach(c=>{
-    const col=document.createElement("col"); col.className=c; cg.appendChild(col);
+  const cg = document.createElement("colgroup");
+  const classes = ["c1","c2","c3","c4","c5","c6","c7","c8","c9","c10","c11","c12","c13","c14"];
+  classes.forEach(cls=>{
+    const col = document.createElement("col");
+    col.className = cls;
+    cg.appendChild(col);
   });
   return cg;
 }
 
 function buildHeaderTable(){
-  const head=document.getElementById("headTable");
-  head.innerHTML="";
-  head.appendChild(makeColgroup());
-  const tr=document.createElement("tr");
+  const headTable = document.getElementById("headTable");
+  headTable.innerHTML = "";
+  headTable.appendChild(makeColgroup());
+
+  const thead = document.createElement("thead");
+  const tr = document.createElement("tr");
 
   HEADERS.forEach(h=>{
-    const th=document.createElement("th");
-    th.innerHTML=h;   // permite <br>
+    const th = document.createElement("th");
+    th.innerHTML = h; // ✅ necessário por causa do <br>
     tr.appendChild(th);
   });
 
-  const thead=document.createElement("thead");
   thead.appendChild(tr);
-  head.appendChild(thead);
+  headTable.appendChild(thead);
 }
 
 function renderCellValue(v){
-  const txt=String(v||"").trim();
-  const low=txt.toLowerCase();
-  if(txt==="") return '<span class="empty">—</span>';
-  if(low==="sim") return CHECK_HTML;
+  const txt = String(v ?? "").trim();
+  const low = txt.toLowerCase();
+
+  if(txt === "") return '<span class="empty">—</span>';
+  if(low === "sim") return CHECK_HTML;
   return `<span class="note">${txt}</span>`;
 }
 
 function buildBodyTable(){
-  const body=document.getElementById("bodyTable");
-  body.innerHTML="";
-  body.appendChild(makeColgroup());
-  const tbody=document.createElement("tbody");
+  const bodyTable = document.getElementById("bodyTable");
+  bodyTable.innerHTML = "";
+  bodyTable.appendChild(makeColgroup());
 
-  ROWS.forEach(r=>{
-    const row=r.slice(0,14);
-    while(row.length<14) row.push("");
-    const tr=document.createElement("tr");
+  const tbody = document.createElement("tbody");
 
-    row.forEach((v,i)=>{
-      const td=document.createElement("td");
-      if(i===0) td.textContent=v;
-      else if(i===1) td.textContent=v||"—";
-      else td.innerHTML=renderCellValue(v);
+  ROWS.forEach(row=>{
+    const tr = document.createElement("tr");
+
+    const safeRow = row.slice(0, HEADERS.length);
+    while(safeRow.length < HEADERS.length) safeRow.push("");
+
+    safeRow.forEach((v, idx)=>{
+      const td = document.createElement("td");
+
+      if(idx === 0){
+        td.textContent = v;
+      } else if(idx === 1){
+        td.textContent = (v === "" ? "—" : String(v));
+      } else {
+        td.innerHTML = renderCellValue(v);
+      }
       tr.appendChild(td);
     });
 
     tbody.appendChild(tr);
   });
 
-  body.appendChild(tbody);
+  bodyTable.appendChild(tbody);
 }
 
-let last=null, pauseUntil=0;
-function loop(ts){
-  const box=document.getElementById("scrollBox");
-  if(!last) last=ts;
-  const dt=(ts-last)/1000; last=ts;
+/* ✅ Auto-scroll com pausa quando você mexe */
+let lastTs = null;
+let pausedUntil = 0;
 
-  if(performance.now()>pauseUntil){
-    box.scrollTop+=14*dt;
-    if(box.scrollTop>=box.scrollHeight-box.clientHeight-2) box.scrollTop=0;
+function autoScrollLoop(ts){
+  const box = document.getElementById("scrollBox");
+
+  if(lastTs == null) lastTs = ts;
+  const dt = (ts - lastTs) / 1000;
+  lastTs = ts;
+
+  if(performance.now() > pausedUntil){
+    const pps = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--autoScrollPPS")) || 12;
+    box.scrollTop += pps * dt;
+
+    const max = box.scrollHeight - box.clientHeight;
+    if(box.scrollTop >= max - 1) box.scrollTop = 0;
   }
-  requestAnimationFrame(loop);
+
+  requestAnimationFrame(autoScrollLoop);
 }
 
-document.getElementById("scrollBox").addEventListener("wheel",()=>pauseUntil=performance.now()+2500,{passive:true});
+function pauseAutoScroll(ms=2500){
+  pausedUntil = performance.now() + ms;
+}
+
+function bindPauseEvents(){
+  const box = document.getElementById("scrollBox");
+  ["wheel","touchstart","touchmove","mousedown","pointerdown","scroll"].forEach(evt=>{
+    box.addEventListener(evt, ()=>pauseAutoScroll(2500), {passive:true});
+  });
+}
 
 buildHeaderTable();
 buildBodyTable();
-requestAnimationFrame(loop);
+bindPauseEvents();
+requestAnimationFrame(autoScrollLoop);
 </script>
 </body>
 </html>
