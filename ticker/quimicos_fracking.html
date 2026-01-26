@@ -88,24 +88,22 @@ html, body{
   border-bottom:none;
 }
 
-/* ✅ agora é rolável (vertical + horizontal) */
+/* ✅ rolável (vertical + horizontal) */
 .table-body-wrapper{
   position:absolute;
   top: 58px;
   left:10px; right:10px; bottom:40px;
 
-  overflow: auto;                 /* ✅ barras de rolagem */
+  overflow: auto;
   border-radius:0 0 12px 12px;
   background: var(--panel);
   border:1px solid rgba(255,255,255,.16);
   border-top:none;
 
-  /* deixa a barra mais discreta (Chrome/Edge) */
-  scrollbar-width: thin;          /* Firefox */
+  scrollbar-width: thin;
   scrollbar-color: rgba(255,255,255,.35) rgba(0,0,0,.15);
 }
 
-/* Webkit scrollbar */
 .table-body-wrapper::-webkit-scrollbar{ height:10px; width:10px; }
 .table-body-wrapper::-webkit-scrollbar-track{ background: rgba(0,0,0,.12); border-radius: 10px; }
 .table-body-wrapper::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.28); border-radius: 10px; }
@@ -116,8 +114,8 @@ table{
   table-layout: fixed;
   color: var(--text);
   font-size: 11px;
-  width: max-content;            /* ✅ permite horizontal se precisar */
-  min-width: 100%;               /* ✅ ocupa o wrapper quando cabe */
+  width: max-content;
+  min-width: 100%;
 }
 
 th, td{
@@ -127,7 +125,7 @@ th, td{
   hyphens: auto;
 }
 
-/* ✅ LARGURAS padrão */
+/* ✅ LARGURAS */
 col.c1{  width: 330px; }
 col.c2{  width: 120px; }
 col.c3{  width: 130px; }
@@ -182,6 +180,17 @@ td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
 }
 .chk svg{ width: 12px; height: 12px; display:block; }
 .empty{ opacity:.35; }
+
+.note{
+  display:inline-block;
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-size: 10px;
+  line-height: 1.2;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.16);
+  color: rgba(255,255,255,.92);
+}
 
 .footer{
   position:absolute;
@@ -257,7 +266,6 @@ td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
           <table id="headTable"></table>
         </div>
 
-        <!-- ✅ agora rolável manualmente -->
         <div class="table-body-wrapper" id="scrollBox">
           <table id="bodyTable"></table>
         </div>
@@ -291,35 +299,36 @@ const HEADERS = [
   "Desregulador endócrino"
 ];
 
+/* ✅ ROWS corrigido (mesma ordem/quantidade do Excel: 14 colunas) */
 const ROWS = [
-  ["Diammonium peroxodisulphate",29,"sim","sim","sim","","sim","","sim","","","","",""],
-  ["Distillates (petroleum), hydrotreated light",17,"sim","sim","sim","sim","","","","","","","sim",""],
-  ["Guar gum",15,"sim","sim","","","sim","","","","","","",""],
-  ["Tetramethylammonium chloride",9,"sim","sim","sim","sim","","","sim","","","","",""],
-  ["Vinylidene chloride/ methylacrylate copolymer",6,"sim","","","","","","","","","","",""],
-  ["Methanol",5,"sim","sim","sim","sim","","","sim","","","","",""],
-  ["1,2,3-Propanetriol",4,"sim","sim","","","","","","","","","",""],
-  ["2,2,2-nitrotriethanol",2,"sim","sim","sim","sim","","","","","","","",""],
-  ["Sorbitol",2,"sim","sim","","","","","","","","","",""],
-  ["Sodium tetraborate decahydrate",2,"sim","sim","sim","","","sim","","","","","","","sim"],
-  ["Sodium borate (borax)",2,"sim","sim","sim","","","sim","","","","","","","sim"],
-  ["Acrylamide-sodium 2-acrylamido-2-methyl-1-propanesulfonate",0.9,"","","","","","","","","","","",""],
-  ["Ethoxylated branched C7-9, C8rich alcohols",0.8,"sim","sim","","","","","","","","","",""],
-  ["Ethoxylated branched C9-11, C10rich alcohols",0.8,"sim","sim","","","","","","","","","",""],
-  ["Sodium hydroxide (lye)",0.8,"sim","sim","sim","sim","","","sim","","","","",""],
-  ["Bis(hydrogenated tallow alkyl)dimethylammonium bentonite",0.6,"","","","","","","","","","","",""],
-  ["Ethoxylated propoxylated 4-nonylphenol-formaldehyde",0.6,"","","","","","","","","","","",""],
-  ["Heavy aromatic naphtha",0.4,"sim","sim","sim","sim","","","","","","","",""],
-  ["Alcohols, C11-14isoalk, C13-rich, ethoxylated",0.4,"sim","sim","","","","","","","","","",""],
-  ["Alkylbenzyldimethylammonium chlorides, benzyl C10-16",0.4,"sim","sim","sim","sim","","","sim","","","","",""],
-  ["Magnesium silicate hydrate (talc)",0.3,"","","","","","","","","","","",""],
-  ["Poly(oxy-1,2-ethanediyl)",0.2,"","","","","","","","","","","",""],
-  ["Alcohols, C12-13 alkyl, ethoxylated",0.2,"sim","sim","","","","","","","","","",""],
-  ["Alcohol ethoxylate C10-16 with 6.5 EO",0.2,"sim","sim","","","","","","","","","",""],
-  ["Sodium chloride",0.1,"","","","","","","","","","","",""],
-  ["Tetrakis(hydroxymethyl)phosphonium sulfate",0.1,"sim","sim","sim","sim","","","sim","","","","",""],
-  ["Non-crystalline silica",0.1,"sim","sim","sim","","","","","sim","","","","",""],
-  ["Boric acid",0.0042,"sim","sim","sim","","","","","","","","","","sim"]
+  ["Diammonium peroxodisulphate", 29, "sim", "sim", "sim", "", "sim", "", "sim", "", "", "", "", ""],
+  ["Distillates (petroleum), hydrotreated light", 17, "sim", "sim", "sim", "sim", "", "", "", "", "", "", "sim", ""],
+  ["Guar gum", 15, "sim", "sim", "", "", "sim", "", "", "", "", "", "", ""],
+  ["Tetramethylammonium chloride", 9, "sim", "sim", "sim", "sim", "", "", "sim", "", "", "", "", ""],
+  ["Vinylidene chloride/methylacrylate copolymer", 6, "Não avaliado", "", "", "", "", "", "", "", "", "", "", ""],
+  ["Methanol", 5, "sim", "sim", "sim", "sim", "sim", "sim", "sim", "", "sim", "sim", "sim", "sim"],
+  ["1,2,3-Propanetriol", 4, "sim", "sim", "sim", "sim", "", "sim", "sim", "", "", "", "", ""],
+  ["2,2′,2″-Nitrilotriethanol", 2, "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "", "sim", "sim"],
+  ["Sorbitol", 2, "sim", "sim", "sim", "", "", "", "sim", "", "", "", "", ""],
+  ["Sodium tetraborate decahydrate", 2, "sim", "sim", "sim", "sim", "", "sim", "sim", "", "", "sim", "", "sim"],
+  ["Sodium borate (borax)", 1, "sim", "sim", "sim", "sim", "", "sim", "sim", "", "", "sim", "", "sim"],
+  ["Acrylamide-sodium 2-acrylamido-2-methylpropane sulfonate", 0.9, "Sem efeitos à saúde", "", "", "", "", "", "", "", "", "", "", ""],
+  ["Ethoxylated branched C7-9, C8-rich alcohols", 0.8, "sim", "sim", "", "", "", "", "", "", "", "", "", ""],
+  ["Ethoxylated branched C9-11, C10-rich alcohols", 0.8, "sim", "sim", "", "", "", "", "", "", "", "", "", ""],
+  ["Sodium hydroxide (lye)", 0.8, "sim", "sim", "sim", "sim", "", "", "sim", "", "", "", "", ""],
+  ["Bis(hydrogenated tallow alkyl)dimethylammonium bentonite", 0.6, "", "", "", "", "", "", "", "", "", "", "", ""],
+  ["Ethoxylated propoxylated 4-nonylphenol-formaldehyde resin", 0.6, "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim"],
+  ["Heavy aromatic naphtha", 0.4, "sim", "sim", "sim", "sim", "", "", "", "", "", "", "", ""],
+  ["Alcohols, C11-14-isoalcs, C13-rich, ethoxylated", 0.4, "sim", "sim", "sim", "", "", "", "", "", "", "", "", ""],
+  ["Alkyldimethylammonium chlorides, benzyl-C10-16", 0.4, "Não avaliado", "", "", "", "", "", "", "", "", "", "", ""],
+  ["Magnesium silicate hydrate (talc)", 0.3, "sim", "sim", "sim", "sim", "", "", "sim", "sim", "", "", "", ""],
+  ["Poly(oxy-1,2-ethanediyl)", 0.2, "sim", "sim", "sim", "sim", "sim", "sim", "", "", "", "", "", ""],
+  ["Alcohols, C12-13-alkyl, ethoxylated", 0.2, "sim", "sim", "sim", "sim", "", "", "", "", "", "", "", ""],
+  ["Alcohol ethoxylate C10/16 with 6.5 EO", 0.2, "sim", "sim", "sim", "sim", "", "", "", "", "", "", "", ""],
+  ["Sodium chloride", 0.1, "sim", "sim", "sim", "", "", "", "sim", "", "", "", "sim", ""],
+  ["Tetrakis(hydroxymethyl) phosphonium sulfate", 0.1, "sim", "sim", "sim", "sim", "sim", "sim", "sim", "", "sim", "sim", "sim", "sim"],
+  ["Non-crystalline silica", 0.1, "sim", "sim", "sim", "sim", "", "", "sim", "", "", "sim", "", "sim"],
+  ["Boric acid", 0.0042, "sim", "sim", "sim", "sim", "sim", "sim", "sim", "", "", "sim", "sim", "sim"]
 ];
 
 const CHECK_HTML = `
@@ -359,6 +368,18 @@ function buildHeaderTable(){
   headTable.appendChild(thead);
 }
 
+function renderCellValue(v){
+  const raw = (v ?? "");
+  const txt = String(raw).trim();
+  const low = txt.toLowerCase();
+
+  if(txt === "") return '<span class="empty">—</span>';
+  if(low === "sim") return CHECK_HTML;
+
+  /* ✅ mostra textos do Excel (ex.: "Não avaliado", "Sem efeitos à saúde") */
+  return `<span class="note">${txt}</span>`;
+}
+
 function buildBodyTable(){
   const bodyTable = document.getElementById("bodyTable");
   bodyTable.innerHTML = "";
@@ -368,7 +389,12 @@ function buildBodyTable(){
 
   ROWS.forEach(row=>{
     const tr = document.createElement("tr");
-    row.forEach((v, idx)=>{
+
+    /* ✅ garante 14 células sempre, mesmo se alguém editar errado no futuro */
+    const safeRow = row.slice(0, HEADERS.length);
+    while(safeRow.length < HEADERS.length) safeRow.push("");
+
+    safeRow.forEach((v, idx)=>{
       const td = document.createElement("td");
 
       if(idx === 0){
@@ -376,11 +402,12 @@ function buildBodyTable(){
       } else if(idx === 1){
         td.textContent = (v === "" ? "—" : String(v));
       } else {
-        const yes = (String(v).toLowerCase().trim() === "sim");
-        td.innerHTML = yes ? CHECK_HTML : '<span class="empty">—</span>';
+        td.innerHTML = renderCellValue(v);
       }
+
       tr.appendChild(td);
     });
+
     tbody.appendChild(tr);
   });
 
@@ -408,7 +435,6 @@ function autoScrollLoop(ts){
   const pps = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--autoScrollPPS")) || 12;
   box.scrollTop += pps * dt;
 
-  // loop suave ao chegar no fim
   const max = box.scrollHeight - box.clientHeight;
   if(box.scrollTop >= max - 1){
     box.scrollTop = 0;
@@ -431,7 +457,6 @@ function bindPauseEvents(){
 buildHeaderTable();
 buildBodyTable();
 bindPauseEvents();
-
 rafId = requestAnimationFrame(autoScrollLoop);
 </script>
 </body>
