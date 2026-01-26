@@ -9,14 +9,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 
 :root{
-  /* ✅ cores pedidas */
   --text:#8b1e1e;
   --table-bg:#f9d6d6;
 
   --red:#9e0202;
   --card: rgba(158,2,2,.58);
 
-  /* grid adaptado ao texto vinho */
   --grid: rgba(139,30,30,.20);
   --gridStrong: rgba(139,30,30,.38);
   --gridStrong2: rgba(139,30,30,.30);
@@ -77,6 +75,7 @@ html, body{
   overflow:hidden;
 }
 
+/* ✅ Cabeçalho fixo */
 .table-header{
   position:absolute;
   top:10px; left:10px; right:10px;
@@ -88,12 +87,20 @@ html, body{
   border-bottom:none;
 }
 
-/* ✅ rolável (vertical + horizontal) */
+/* ✅ Container scroll do cabeçalho (barra escondida) */
+.table-header-scroll{
+  width:100%;
+  overflow:auto;
+  scrollbar-width: none; /* Firefox */
+}
+.table-header-scroll::-webkit-scrollbar{ height:0; width:0; } /* Chrome/Edge */
+.table-header-scroll{ pointer-events:none; } /* impede usuário rolar o header por engano */
+
+/* ✅ Corpo rolável */
 .table-body-wrapper{
   position:absolute;
-  top: 58px; /* altura do cabeçalho */
+  top: 58px;
   left:10px; right:10px; bottom:40px;
-
   overflow: auto;
   border-radius:0 0 12px 12px;
   background: var(--table-bg);
@@ -223,7 +230,9 @@ td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
       <div class="table-viewport">
 
         <div class="table-header">
-          <table id="headTable"></table>
+          <div class="table-header-scroll" id="headScroll">
+            <table id="headTable"></table>
+          </div>
         </div>
 
         <div class="table-body-wrapper" id="scrollBox">
@@ -244,7 +253,7 @@ td:nth-child(2){ font-variant-numeric: tabular-nums; font-weight:700; }
 <script>
 const HEADERS = [
   "Produto químico",
-  "Percentual<br>em volume (%)",   // ✅ quebra: Percentual \ em volume (%)
+  "Percentual<br>em volume (%)",
   "Pele, olhos e órgãos sensoriais",
   "Sistema respiratório",
   "Trato gastrointestinal e fígado",
@@ -259,7 +268,7 @@ const HEADERS = [
   "Desregulador endócrino"
 ];
 
-/* ✅ ROWS completo */
+/* ✅ ROWS (com Bis(...) corrigido conforme a planilha: sim em Pele / Respiratório / Imunológico) */
 const ROWS = [
   ["Diammonium peroxodisulphate", 29, "sim", "sim", "sim", "", "sim", "", "sim", "", "", "", "", ""],
   ["Distillates (petroleum), hydrotreated light", 17, "sim", "sim", "sim", "sim", "", "", "", "", "", "", "sim", ""],
@@ -276,7 +285,10 @@ const ROWS = [
   ["Ethoxylated branched C7-9, C8-rich alcohols", 0.8, "sim", "sim", "", "", "", "", "", "", "", "", "", ""],
   ["Ethoxylated branched C9-11, C10-rich alcohols", 0.8, "sim", "sim", "", "", "", "", "", "", "", "", "", ""],
   ["Sodium hydroxide (lye)", 0.8, "sim", "sim", "sim", "sim", "", "", "sim", "", "", "", "", ""],
-  ["Bis(hydrogenated tallow alkyl)dimethylammonium bentonite", 0.6, "", "", "", "", "", "", "", "", "", "", "", ""],
+
+  /* ✅ BIS(...) com "sim" onde existe na planilha */
+  ["Bis(hydrogenated tallow alkyl)dimethylammonium bentonite", 0.6, "sim", "sim", "", "", "sim", "", "", "", "", "", "", ""],
+
   ["Ethoxylated propoxylated 4-nonylphenol-formaldehyde resin", 0.6, "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim", "sim"],
   ["Heavy aromatic naphtha", 0.4, "sim", "sim", "sim", "sim", "", "", "", "", "", "", "", ""],
   ["Alcohols, C11-14-isoalcs, C13-rich, ethoxylated", 0.4, "sim", "sim", "sim", "", "", "", "", "", "", "", "", ""],
@@ -320,7 +332,7 @@ function buildHeaderTable(){
 
   HEADERS.forEach(h=>{
     const th = document.createElement("th");
-    th.innerHTML = h; // ✅ necessário por causa do <br>
+    th.innerHTML = h;
     tr.appendChild(th);
   });
 
@@ -369,7 +381,21 @@ function buildBodyTable(){
   bodyTable.appendChild(tbody);
 }
 
-/* ✅ Auto-scroll com pausa quando você mexe */
+/* ✅ sincroniza scroll horizontal do cabeçalho com o corpo */
+function syncHeaderScroll(){
+  const box = document.getElementById("scrollBox");
+  const headScroll = document.getElementById("headScroll");
+  headScroll.scrollLeft = box.scrollLeft;
+}
+
+/* ✅ garante mesma largura do headTable e bodyTable (para não “descolar”) */
+function fitHeaderWidth(){
+  const bodyTable = document.getElementById("bodyTable");
+  const headTable = document.getElementById("headTable");
+  const w = bodyTable.scrollWidth;
+  headTable.style.width = w + "px";
+}
+
 let lastTs = null;
 let pausedUntil = 0;
 
@@ -395,16 +421,29 @@ function pauseAutoScroll(ms=2500){
   pausedUntil = performance.now() + ms;
 }
 
-function bindPauseEvents(){
+function bindEvents(){
   const box = document.getElementById("scrollBox");
+
+  // pausa auto-scroll ao interagir
   ["wheel","touchstart","touchmove","mousedown","pointerdown","scroll"].forEach(evt=>{
     box.addEventListener(evt, ()=>pauseAutoScroll(2500), {passive:true});
+  });
+
+  // ✅ sincroniza cabeçalho sempre que rolar (vertical ou horizontal)
+  box.addEventListener("scroll", syncHeaderScroll, {passive:true});
+
+  // ✅ se o iframe mudar tamanho, recalcula largura e mantém alinhamento
+  window.addEventListener("resize", ()=>{
+    fitHeaderWidth();
+    syncHeaderScroll();
   });
 }
 
 buildHeaderTable();
 buildBodyTable();
-bindPauseEvents();
+fitHeaderWidth();
+bindEvents();
+syncHeaderScroll();
 requestAnimationFrame(autoScrollLoop);
 </script>
 </body>
