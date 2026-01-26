@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>No-Fracking — Países (Ticker)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --text: #ffffff;
+      --shadow: 0 10px 26px rgba(0,0,0,.45);
+      --overlay: rgba(0,0,0,.45); /* escurece para ler melhor */
+      --speed: 70s;               /* menor = mais rápido */
+      --gap: 44px;                /* espaço entre itens */
+      --padX: 28px;
+      --padY: 18px;
+      --radius: 18px;
+    }
+
+    *{ box-sizing: border-box; }
+
+    html, body{
+      width:100%;
+      height:100%;
+      margin:0;
+      overflow:hidden;
+      font-family: "Montserrat", Arial, sans-serif;
+    }
+
+    /* FUNDO COESUS EMPILHADO (REPETIDO) */
+    body{
+      background-image: url("https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fundo_COESUS_ok.jpg");
+      background-repeat: repeat;
+      background-size: auto; /* mantém a imagem sem esticar */
+      background-position: top left;
+    }
+
+    /* camada de contraste para legibilidade */
+    .overlay{
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,.55),
+        rgba(0,0,0,.35)
+      );
+      pointer-events:none;
+    }
+
+    .wrap{
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 22px;
+    }
+
+    .card{
+      width: min(1100px, 96vw);
+      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(6px);
+      padding: var(--padY) var(--padX);
+    }
+
+    .title{
+      color: var(--text);
+      font-weight: 700;
+      font-size: clamp(16px, 2.2vw, 22px);
+      letter-spacing: .3px;
+      margin: 0 0 10px 0;
+      text-transform: uppercase;
+      opacity: .95;
+    }
+
+    .subtitle{
+      color: rgba(255,255,255,.85);
+      font-weight: 500;
+      font-size: clamp(12px, 1.5vw, 14px);
+      margin: 0 0 14px 0;
+      line-height: 1.25;
+    }
+
+    /* faixa do ticker */
+    .ticker{
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 14px;
+      background: rgba(0,0,0,.28);
+      border: 1px solid rgba(255,255,255,.14);
+      padding: 12px 0;
+    }
+
+    /* efeito degradê nas bordas */
+    .ticker::before, .ticker::after{
+      content:"";
+      position:absolute;
+      top:0; bottom:0;
+      width: 80px;
+      z-index: 2;
+      pointer-events:none;
+    }
+    .ticker::before{
+      left:0;
+      background: linear-gradient(to right, rgba(0,0,0,.60), rgba(0,0,0,0));
+    }
+    .ticker::after{
+      right:0;
+      background: linear-gradient(to left, rgba(0,0,0,.60), rgba(0,0,0,0));
+    }
+
+    .track{
+      display:flex;
+      width: max-content;
+      align-items:center;
+      gap: var(--gap);
+      padding: 0 14px;
+      animation: scroll var(--speed) linear infinite;
+      will-change: transform;
+    }
+
+    /* duplicação para rolagem contínua */
+    .track > .set{
+      display:flex;
+      align-items:center;
+      gap: var(--gap);
+      padding-right: var(--gap);
+    }
+
+    .pill{
+      color: var(--text);
+      font-weight: 700;
+      font-size: clamp(12px, 1.8vw, 16px);
+      letter-spacing: .2px;
+      white-space: nowrap;
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.22);
+      box-shadow: 0 6px 16px rgba(0,0,0,.25);
+    }
+
+    .dot{
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.85);
+      opacity: .65;
+      flex: 0 0 auto;
+    }
+
+    @keyframes scroll{
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); } /* como duplicamos, -50% fecha certinho */
+    }
+
+    /* acessibilidade: reduz movimento */
+    @media (prefers-reduced-motion: reduce){
+      .track{ animation: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="overlay"></div>
+
+  <div class="wrap">
+    <div class="card">
+      <h1 class="title">No-Fracking — Países com restrições / proibições</h1>
+      <p class="subtitle">Ticker contínuo (HTML) com fundo COESUS repetido. Edite a lista abaixo como quiser.</p>
+
+      <div class="ticker" aria-label="Ticker de países">
+        <div class="track" id="track">
+          <!-- SET 1 -->
+          <div class="set" id="set1">
+            <span class="pill">França</span><span class="dot"></span>
+            <span class="pill">Alemanha</span><span class="dot"></span>
+            <span class="pill">Bulgária</span><span class="dot"></span>
+            <span class="pill">Irlanda</span><span class="dot"></span>
+            <span class="pill">Espanha</span><span class="dot"></span>
+            <span class="pill">Escócia</span><span class="dot"></span>
+            <span class="pill">País de Gales</span><span class="dot"></span>
+            <span class="pill">Irlanda do Norte</span><span class="dot"></span>
+            <span class="pill">Países Baixos</span><span class="dot"></span>
+            <span class="pill">Bélgica</span><span class="dot"></span>
+            <span class="pill">Dinamarca</span><span class="dot"></span>
+            <span class="pill">Suécia</span><span class="dot"></span>
+            <span class="pill">República Tcheca</span><span class="dot"></span>
+            <span class="pill">Luxemburgo</span><span class="dot"></span>
+            <span class="pill">Itália</span><span class="dot"></span>
+          </div>
+
+          <!-- SET 2 (clonado via JS para rolagem perfeita) -->
+          <div class="set" id="set2" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Clona o conjunto 1 para o conjunto 2 (rolagem contínua sem "buraco")
+    const set1 = document.getElementById("set1");
+    const set2 = document.getElementById("set2");
+    set2.innerHTML = set1.innerHTML;
+
+    // Ajuste automático do "to" do keyframes usando pixels (mais preciso)
+    // Se quiser manter só o CSS, pode remover tudo abaixo.
+    const track = document.getElementById("track");
+
+    function setAnimationDistance(){
+      // metade do conteúdo total (porque duplicado)
+      const half = set1.scrollWidth;
+      // cria keyframes dinâmicos para -half px
+      const styleId = "dynKeyframes";
+      let st = document.getElementById(styleId);
+      if(!st){
+        st = document.createElement("style");
+        st.id = styleId;
+        document.head.appendChild(st);
+      }
+      st.textContent = `
+        @keyframes scroll{
+          from { transform: translateX(0); }
+          to   { transform: translateX(${-half}px); }
+        }
+      `;
+    }
+
+    window.addEventListener("load", setAnimationDistance);
+    window.addEventListener("resize", () => {
+      // pequeno debounce
+      clearTimeout(window.__t);
+      window.__t = setTimeout(setAnimationDistance, 120);
+    });
+  </script>
+</body>
+</html>
