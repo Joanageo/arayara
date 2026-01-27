@@ -2,57 +2,99 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Ticker Fracking</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
 html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  font-family: 'Montserrat', Arial, sans-serif;
 }
 
-.ticker-container {
-  width: 100%;
-  height: 60px;
-  background-image: url("https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fundo_COESUS_ok.jpg");
-  background-repeat: repeat;
-  background-size: auto 100%;
+/* Fundo com imagem */
+body {
+  background-image: url('https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fundo_COESUS_ok.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Faixa do ticker */
+.ticker-wrapper {
+  width: 100vw;
+  height: 28px;
   display: flex;
   align-items: center;
   overflow: hidden;
-  border-top: 2px solid #9e0202;
-  border-bottom: 2px solid #9e0202;
+  background: rgba(0,0,0,0.15);
 }
 
+/* Trilho animado */
 .ticker-track {
   display: flex;
   width: max-content;
-  animation: scroll 45s linear infinite;
+  animation: scroll 35s linear infinite;
 }
 
+/* Texto normal */
 .ticker-text {
   white-space: nowrap;
-  font-family: Montserrat, Arial, sans-serif;
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 400;
   color: #ffffff;
-  text-shadow: 1px 1px 3px #000000aa;
-  padding-right: 80px;
+  padding-right: 60px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+}
+
+/* Destaque do prefixo */
+.ticker-highlight {
+  font-weight: 600;
+  color: #fff3d6;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-right: 6px;
 }
 
 @keyframes scroll {
-  from { transform: translateX(0%); }
-  to   { transform: translateX(-50%); }
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 </style>
 </head>
 
 <body>
 
-<div class="ticker-container">
+<div class="ticker-wrapper">
   <div class="ticker-track">
-    <div class="ticker-text">PAÍSES QUE JÁ PROIBIRAM O FRACKING: França • Alemanha • Bulgária • Irlanda • Espanha • Escócia • País de Gales • República Tcheca • Luxemburgo • Holanda • Dinamarca • Suíça • Áustria</div>
-    <div class="ticker-text">PAÍSES QUE JÁ PROIBIRAM O FRACKING: França • Alemanha • Bulgária • Irlanda • Espanha • Escócia • País de Gales • República Tcheca • Luxemburgo • Holanda • Dinamarca • Suíça • Áustria</div>
+
+    <div class="ticker-text">
+      <span class="ticker-highlight">PAÍSES:</span>
+      ALEMANHA • FRANÇA • BULGÁRIA • POLÔNIA • HOLANDA • SUÉCIA • ESCÓCIA (MORATÓRIA) • ISRAEL • URUGUAI (EM DISCUSSÃO)
+      &nbsp;&nbsp;&nbsp;
+      <span class="ticker-highlight">ESTADOS / PROVÍNCIAS:</span>
+      VICTORIA (AUSTRÁLIA) • ENTRE RIOS (ARGENTINA – JUL/2017) • PAISSANDU (URUGUAI) • FRIBOURG (SUÍÇA) • AOTEAROA (NOVA ZELÂNDIA) • BRITISH COLUMBIA (CANADÁ) • QUÉBEC (CANADÁ) • VERMONT (EUA) • NOVA YORK (EUA) • MARYLAND (EUA – JUN/2017)
+      &nbsp;&nbsp;&nbsp;
+      <span class="ticker-highlight">CIDADES:</span>
+      OHIO (EUA) • NOVA YORK (EUA) • MARYLAND (EUA) • PITTSBURG (EUA) • MIAMI (EUA) • WASHINGTON DC (EUA) • VISTA ALEGRE (ARGENTINA) • CANTÁBRIA (ESPANHA)
+    </div>
+
+    <div class="ticker-text">
+      <span class="ticker-highlight">PAÍSES:</span>
+      ALEMANHA • FRANÇA • BULGÁRIA • POLÔNIA • HOLANDA • SUÉCIA • ESCÓCIA (MORATÓRIA) • ISRAEL • URUGUAI (EM DISCUSSÃO)
+      &nbsp;&nbsp;&nbsp;
+      <span class="ticker-highlight">ESTADOS / PROVÍNCIAS:</span>
+      VICTORIA (AUSTRÁLIA) • ENTRE RIOS (ARGENTINA – JUL/2017) • PAISSANDU (URUGUAI) • FRIBOURG (SUÍÇA) • AOTEAROA (NOVA ZELÂNDIA) • BRITISH COLUMBIA (CANADÁ) • QUÉBEC (CANADÁ) • VERMONT (EUA) • NOVA YORK (EUA) • MARYLAND (EUA – JUN/2017)
+      &nbsp;&nbsp;&nbsp;
+      <span class="ticker-highlight">CIDADES:</span>
+      OHIO (EUA) • NOVA YORK (EUA) • MARYLAND (EUA) • PITTSBURG (EUA) • MIAMI (EUA) • WASHINGTON DC (EUA) • VISTA ALEGRE (ARGENTINA) • CANTÁBRIA (ESPANHA)
+    </div>
+
   </div>
 </div>
 
