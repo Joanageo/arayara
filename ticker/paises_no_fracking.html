@@ -27,24 +27,25 @@ body {
 /* Faixa do ticker */
 .ticker-wrapper {
   width: 100vw;
-  height: 28px; /* igual ao original */
+  height: 28px;
   display: flex;
   align-items: center;
   overflow: hidden;
   background: rgba(0,0,0,0.15);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
 /* Trilho animado */
 .ticker-track {
   display: flex;
   width: max-content;
-  animation: scroll 70s linear infinite; /* velocidade reduzida 2x */
+  animation: scroll 70s linear infinite;
 }
 
 /* Texto normal */
 .ticker-text {
   white-space: nowrap;
-  font-size: 12px; /* igual ao original */
+  font-size: 12px;
   font-weight: 400;
   color: #ffffff;
   padding-right: 60px;
@@ -70,27 +71,50 @@ body {
 
 <body>
 
+<!-- TICKER 1 — PAÍSES -->
 <div class="ticker-wrapper">
   <div class="ticker-track">
 
     <div class="ticker-text">
       <span class="ticker-highlight">PAÍSES QUE JÁ PROIBIRAM O FRACKING:</span>
       ALEMANHA • FRANÇA • BULGÁRIA • POLÔNIA • HOLANDA • SUÉCIA • ESCÓCIA (MORATÓRIA) • ISRAEL • URUGUAI (EM DISCUSSÃO)
-      &nbsp;&nbsp;&nbsp;
-      <span class="ticker-highlight">ESTADOS / PROVÍNCIAS QUE JÁ PROIBIRAM O FRACKING:</span>
-      VICTORIA (AUSTRÁLIA) • ENTRE RIOS (ARGENTINA – JUL/2017) • PAISSANDU (URUGUAI) • FRIBOURG (SUÍÇA) • AOTEAROA (NOVA ZELÂNDIA) • BRITISH COLUMBIA (CANADÁ) • QUÉBEC (CANADÁ) • VERMONT (EUA) • NOVA YORK (EUA) • MARYLAND (EUA – JUN/2017)
-      &nbsp;&nbsp;&nbsp;
-      <span class="ticker-highlight">CIDADES QUE JÁ PROIBIRAM O FRACKING:</span>
-      OHIO (EUA) • NOVA YORK (EUA) • MARYLAND (EUA) • PITTSBURG (EUA) • MIAMI (EUA) • WASHINGTON DC (EUA) • VISTA ALEGRE (ARGENTINA) • CANTÁBRIA (ESPANHA)
     </div>
 
     <div class="ticker-text">
       <span class="ticker-highlight">PAÍSES QUE JÁ PROIBIRAM O FRACKING:</span>
       ALEMANHA • FRANÇA • BULGÁRIA • POLÔNIA • HOLANDA • SUÉCIA • ESCÓCIA (MORATÓRIA) • ISRAEL • URUGUAI (EM DISCUSSÃO)
-      &nbsp;&nbsp;&nbsp;
+    </div>
+
+  </div>
+</div>
+
+<!-- TICKER 2 — ESTADOS / PROVÍNCIAS -->
+<div class="ticker-wrapper">
+  <div class="ticker-track">
+
+    <div class="ticker-text">
       <span class="ticker-highlight">ESTADOS / PROVÍNCIAS QUE JÁ PROIBIRAM O FRACKING:</span>
       VICTORIA (AUSTRÁLIA) • ENTRE RIOS (ARGENTINA – JUL/2017) • PAISSANDU (URUGUAI) • FRIBOURG (SUÍÇA) • AOTEAROA (NOVA ZELÂNDIA) • BRITISH COLUMBIA (CANADÁ) • QUÉBEC (CANADÁ) • VERMONT (EUA) • NOVA YORK (EUA) • MARYLAND (EUA – JUN/2017)
-      &nbsp;&nbsp;&nbsp;
+    </div>
+
+    <div class="ticker-text">
+      <span class="ticker-highlight">ESTADOS / PROVÍNCIAS QUE JÁ PROIBIRAM O FRACKING:</span>
+      VICTORIA (AUSTRÁLIA) • ENTRE RIOS (ARGENTINA – JUL/2017) • PAISSANDU (URUGUAI) • FRIBOURG (SUÍÇA) • AOTEAROA (NOVA ZELÂNDIA) • BRITISH COLUMBIA (CANADÁ) • QUÉBEC (CANADÁ) • VERMONT (EUA) • NOVA YORK (EUA) • MARYLAND (EUA – JUN/2017)
+    </div>
+
+  </div>
+</div>
+
+<!-- TICKER 3 — CIDADES -->
+<div class="ticker-wrapper">
+  <div class="ticker-track">
+
+    <div class="ticker-text">
+      <span class="ticker-highlight">CIDADES QUE JÁ PROIBIRAM O FRACKING:</span>
+      OHIO (EUA) • NOVA YORK (EUA) • MARYLAND (EUA) • PITTSBURG (EUA) • MIAMI (EUA) • WASHINGTON DC (EUA) • VISTA ALEGRE (ARGENTINA) • CANTÁBRIA (ESPANHA)
+    </div>
+
+    <div class="ticker-text">
       <span class="ticker-highlight">CIDADES QUE JÁ PROIBIRAM O FRACKING:</span>
       OHIO (EUA) • NOVA YORK (EUA) • MARYLAND (EUA) • PITTSBURG (EUA) • MIAMI (EUA) • WASHINGTON DC (EUA) • VISTA ALEGRE (ARGENTINA) • CANTÁBRIA (ESPANHA)
     </div>
