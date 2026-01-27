@@ -1,21 +1,60 @@
-<div class="ticker-text">
-  <span class="ticker-highlight">PAÍSES:</span>
-  ALEMANHA • FRANÇA • BULGÁRIA • POLÔNIA • HOLANDA • SUÉCIA • ESCÓCIA (MORATÓRIA) • ISRAEL • URUGUAI (EM DISCUSSÃO)
-  &nbsp;&nbsp;&nbsp;
-  <span class="ticker-highlight">ESTADOS / PROVÍNCIAS:</span>
-  VICTORIA (AUSTRÁLIA) • ENTRE RIOS (ARGENTINA – JUL/2017) • PAISSANDU (URUGUAI) • FRIBOURG (SUÍÇA) • AOTEAROA (NOVA ZELÂNDIA) • BRITISH COLUMBIA (CANADÁ) • QUÉBEC (CANADÁ) • VERMONT (EUA) • NOVA YORK (EUA) • MARYLAND (EUA – JUN/2017)
-  &nbsp;&nbsp;&nbsp;
-  <span class="ticker-highlight">CIDADES:</span>
-  OHIO (EUA) • NOVA YORK (EUA) • MARYLAND (EUA) • PITTSBURG (EUA) • MIAMI (EUA) • WASHINGTON DC (EUA) • VISTA ALEGRE (ARGENTINA) • CANTÁBRIA (ESPANHA)
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Ticker Fracking</title>
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.ticker-container {
+  width: 100%;
+  height: 60px;
+  background-image: url("https://raw.githubusercontent.com/Joanageo/arayara/refs/heads/main/Fundo_COESUS_ok.jpg");
+  background-repeat: repeat;
+  background-size: auto 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-top: 2px solid #9e0202;
+  border-bottom: 2px solid #9e0202;
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: scroll 45s linear infinite;
+}
+
+.ticker-text {
+  white-space: nowrap;
+  font-family: Montserrat, Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 1px 1px 3px #000000aa;
+  padding-right: 80px;
+}
+
+@keyframes scroll {
+  from { transform: translateX(0%); }
+  to   { transform: translateX(-50%); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="ticker-container">
+  <div class="ticker-track">
+    <div class="ticker-text">PAÍSES QUE JÁ PROIBIRAM O FRACKING: França • Alemanha • Bulgária • Irlanda • Espanha • Escócia • País de Gales • República Tcheca • Luxemburgo • Holanda • Dinamarca • Suíça • Áustria</div>
+    <div class="ticker-text">PAÍSES QUE JÁ PROIBIRAM O FRACKING: França • Alemanha • Bulgária • Irlanda • Espanha • Escócia • País de Gales • República Tcheca • Luxemburgo • Holanda • Dinamarca • Suíça • Áustria</div>
+  </div>
 </div>
 
-<div class="ticker-text">
-  <span class="ticker-highlight">PAÍSES:</span>
-  ALEMANHA • FRANÇA • BULGÁRIA • POLÔNIA • HOLANDA • SUÉCIA • ESCÓCIA (MORATÓRIA) • ISRAEL • URUGUAI (EM DISCUSSÃO)
-  &nbsp;&nbsp;&nbsp;
-  <span class="ticker-highlight">ESTADOS / PROVÍNCIAS:</span>
-  VICTORIA (AUSTRÁLIA) • ENTRE RIOS (ARGENTINA – JUL/2017) • PAISSANDU (URUGUAI) • FRIBOURG (SUÍÇA) • AOTEAROA (NOVA ZELÂNDIA) • BRITISH COLUMBIA (CANADÁ) • QUÉBEC (CANADÁ) • VERMONT (EUA) • NOVA YORK (EUA) • MARYLAND (EUA – JUN/2017)
-  &nbsp;&nbsp;&nbsp;
-  <span class="ticker-highlight">CIDADES:</span>
-  OHIO (EUA) • NOVA YORK (EUA) • MARYLAND (EUA) • PITTSBURG (EUA) • MIAMI (EUA) • WASHINGTON DC (EUA) • VISTA ALEGRE (ARGENTINA) • CANTÁBRIA (ESPANHA)
-</div>
+</body>
+</html>
